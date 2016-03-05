@@ -22,7 +22,6 @@ public class UserCalendarServiceImpl extends GenericCrudImpl<UserCalendarDTO, Lo
     @Override
     protected void closeEntityManager()
 	{
-    	eman.close();
 	}
 
     @Override

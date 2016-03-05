@@ -20,7 +20,6 @@ public class UserCalendarEventsServiceImpl extends GenericCrudImpl<UserCalendarE
     @Override
     protected void closeEntityManager()
 	{
-    	eman.close();
 	}
 
     public UserCalendarEventsServiceImpl()

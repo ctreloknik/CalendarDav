@@ -19,7 +19,6 @@ public class UserServiceImpl extends GenericCrudImpl<UsersDTO, Long> implements 
     @Override
     protected void closeEntityManager()
 	{
-    	//eman.close();
 	}
 
     @Override
