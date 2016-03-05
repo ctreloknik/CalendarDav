@@ -26,7 +26,9 @@ public class UserCalendarEventsDTO
 	private String name;
 	private String description;
 	private Date startDatetime;
+	private Date startTime;
 	private Date endDatetime;
+	private Date endTime;
 	private Date notificationTime;
 	private Boolean allDay;
 	private Date repeatTime;
@@ -39,7 +41,8 @@ public class UserCalendarEventsDTO
 	
 	public UserCalendarEventsDTO(Long userCalendarEventsId,
 			UserCalendarDTO userCalendar, String name, String description,
-			Date startDatetime, Date endDatetime, Date notificationTime,
+			Date startDatetime, Date endDatetime, Date startTime,
+			Date endTime, Date notificationTime,
 			Boolean allDay, Date repeatTime)
 	{
 		this.userCalendarEventsId = userCalendarEventsId;
@@ -48,6 +51,8 @@ public class UserCalendarEventsDTO
 		this.description = description;
 		this.startDatetime = startDatetime;
 		this.endDatetime = endDatetime;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.notificationTime = notificationTime;
 		this.allDay = allDay;
 		this.repeatTime = repeatTime;
@@ -90,7 +95,7 @@ public class UserCalendarEventsDTO
         this.name = name;
     }
 
-    @Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    @Column(name = "DESCRIPTION", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public String getDescription()
     {
         return description;
@@ -122,8 +127,30 @@ public class UserCalendarEventsDTO
     {
         this.endDatetime = endDatetime;
     }
+    
+    @Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public Date getStartTime()
+    {
+        return startTime;
+    }
 
-    @Column(name = "NOTIFICATION_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public void setStartTime(Date startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    @Column(name = "END_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public Date getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime)
+    {
+        this.endTime = endTime;
+    }
+
+    @Column(name = "NOTIFICATION_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public Date getNotificationTime()
     {
         return notificationTime;
@@ -134,7 +161,7 @@ public class UserCalendarEventsDTO
         this.notificationTime = notificationTime;
     }
 
-    @Column(name = "ALL_DAY", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    @Column(name = "ALL_DAY", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public Boolean getAllDay()
     {
         return allDay;
@@ -145,7 +172,7 @@ public class UserCalendarEventsDTO
         this.allDay = allDay;
     }
 
-    @Column(name = "REPEAT_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    @Column(name = "REPEAT_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public Date getRepeatTime()
     {
         return repeatTime;
