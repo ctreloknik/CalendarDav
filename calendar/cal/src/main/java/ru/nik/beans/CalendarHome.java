@@ -1,17 +1,18 @@
 package ru.nik.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
-import ru.nik.dto.UserCalendarDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarServiceBean;
@@ -27,41 +28,43 @@ public class CalendarHome implements Serializable
 	private static final long serialVersionUID = -6706342668540710218L;
 	
 	@EJB
-	private UserCalendarEventsServiceBean eventsServiceBean; 
+	private UserCalendarEventsServiceBean eventsService; 
 
 	@EJB
 	private UserCalendarServiceBean calendarService; 
 	
-	private UserCalendarDTO calendar;
-	private ScheduleModel scheduleModel;
+	private ScheduleModel eventModel;
+	List<UserCalendarEventsDTO> events;
 	
-/*	@PostConstruct
+	@PostConstruct
     public void init()
 	{
-		this.calendar = calendarService.
-	}*/
+	    //Заглушка для тестов работы календаря
+        //List<UserCalendarEventsDTO> events = eventsService.getAll();
+        //return new LazyScheduleModel();
+        
+        events = eventsService.getAll();
 
-	
-    public ScheduleModel getCalendar()
-    {
-    	
-    	//Заглушка для тестов работы календаря
-    	List<UserCalendarEventsDTO> events = new ArrayList<UserCalendarEventsDTO>();
-    	return new LazyScheduleModel();
-    	
-    	/*List<UserCalendarEventsDTO> events = eventsServiceBean.getAll();
-
-        // MAGIC !!!
-        LazyScheduleModel lazyEventModel = new LazyScheduleModel()
+        setEventModel(new LazyScheduleModel()
         {
             public void loadEvents(Date start, Date end)
             {
-                for ( course : )
+                for (UserCalendarEventsDTO ev: events)
                 {
-                    addEvent(new DefaultScheduleEvent(.getName(),
-                            *Service.getStartTimeByCourse( ), .getEndDate()));
+                    addEvent(new DefaultScheduleEvent(ev.getName(),
+                            ev.getStartDatetime(), ev.getEndDatetime()));
                 }
             }
-        };*/
+        });
+	}
+
+    public ScheduleModel getEventModel()
+    {
+        return eventModel;
+    }
+
+    public void setEventModel(ScheduleModel eventModel)
+    {
+        this.eventModel = eventModel;
     }
 }

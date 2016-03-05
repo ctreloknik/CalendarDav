@@ -5,23 +5,22 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<body>
-		<h:panelGrid columns="1" cellpadding="5">
-			<p:commandButton value="Создать событие" type="button"
-				onclick="PF('createCalendar').show();" />
-		</h:panelGrid>
 
-		<p:schedule id="schedule" value="#{calendarHome.calendar}"
-			draggable="false" resizable="false" rightHeaderTemplate="Month"
-			clientTimeZone="local" timeFormat="hh:mm"
-			style="margin-right: 20px; margin-left: 20px">
-			<!-- Отслеживание нажатия на эвент -->
-			<!-- <p:ajax event="eventSelect" listener="# {eventsViewBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" /> -->
+	<h:panelGrid columns="1" cellpadding="5">
+		<p:commandButton value="Создать событие" type="button"
+			onclick="PF('eventEditDlg').show();" />
+	</h:panelGrid>
 
-			<!--    СНЯТЬ                   
+	<p:schedule id="calendar" value="#{calendarHome.eventModel}"
+		draggable="false" rightHeaderTemplate="Month" clientTimeZone="local"
+		timeFormat="hh:mm" widgetVar="calendar"
+		style="margin-right:20px; margin-left:20px; height:50%; width:50%">
+		<!-- Отслеживание нажатия на эвент -->
+		<!-- <p:ajax event="eventSelect" listener="# {eventsViewBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" /> -->
+
+		<!--    СНЯТЬ                   
 			<p:ajax event="dateSelect" listener="#{eventsViewBean.onDateSelect}"
 				update="eventDetails" oncomplete="PF('eventDialog').show();" />
  -->
-		</p:schedule>
-	</body>
+	</p:schedule>
 </ui:composition>
