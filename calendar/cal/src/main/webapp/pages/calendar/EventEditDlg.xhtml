@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<p:panel id="eventPanel">
+			<p:dialog header="Создание события" widgetVar="createCalendar"
+				modal="true" height="100">
+				<p:outputLabel value="Название события:" />
+				<p:inputText value="#{eventHome.event.name}" />
+
+				<p:outputLabel for="bStartDate" value="Дата начала:" />
+				<p:calendar id="bStartDate" value="#{eventHome.event.startDatetime}"
+					showOn="button" />
+
+				<p:outputLabel for="bEndDate" value="Дата конца:" />
+				<p:calendar id="bEndDate" value="#{eventHome.event.endDatetime}"
+					showOn="button" />
+
+				<p:outputLabel for="time" value="Время начала:" />
+				<p:calendar id="time" value="#{eventHome.event.startTime}"
+					pattern="HH:mm" timeOnly="true" />
+
+				<p:outputLabel for="time" value="Время конца:" />
+				<p:calendar id="time" value="#{eventHome.event.endTime}"
+					pattern="HH:mm" timeOnly="true" />
+					
+				<h:form>
+					<p:commandButton value="Сохранить" id="saveEvent"
+						actionListener="#{eventHome.saveEvent()}" ajax="false"
+						update="eventPanel" />
+				</h:form>
+			</p:dialog>
+		</p:panel>
+	</h:form>
+</ui:composition>
