@@ -7,31 +7,46 @@
 
 	<h:form>
 		<p:panel id="eventPanel">
-			<p:dialog header="Создание события" widgetVar="createCalendar"
-				modal="true" height="100">
-				<p:outputLabel value="Название события:" />
-				<p:inputText value="#{eventHome.event.name}" />
+			<p:dialog id="eventEditDlg" header="Событие"
+				widgetVar="eventEditDlg" modal="true">
+				<p:panelGrid id="dialogEventGrid" columns="2"
+					style="border-style: none">
+					<p:outputLabel value="Название события:" />
+					<p:inputText value="#{eventHome.event.name}" />
 
-				<p:outputLabel for="bStartDate" value="Дата начала:" />
-				<p:calendar id="bStartDate" value="#{eventHome.event.startDatetime}"
-					showOn="button" />
+					<p:outputLabel for="bStartDate" value="Дата начала:" />
+					<p:calendar id="bStartDate"
+						value="#{eventHome.event.startDatetime}" showOn="button" />
 
-				<p:outputLabel for="bEndDate" value="Дата конца:" />
-				<p:calendar id="bEndDate" value="#{eventHome.event.endDatetime}"
-					showOn="button" />
+					<p:outputLabel for="bStartTime" value="Время начала:" />
+					<p:calendar id="bStartTime" value="#{eventHome.event.startTime}"
+						pattern="HH:mm" showOn="button" timeOnly="true" />
 
-				<p:outputLabel for="time" value="Время начала:" />
-				<p:calendar id="time" value="#{eventHome.event.startTime}"
-					pattern="HH:mm" timeOnly="true" />
+					<p:outputLabel for="bEndDate" value="Дата конца:" />
+					<p:calendar id="bEndDate" value="#{eventHome.event.endDatetime}"
+						showOn="button" />
 
-				<p:outputLabel for="time" value="Время конца:" />
-				<p:calendar id="time" value="#{eventHome.event.endTime}"
-					pattern="HH:mm" timeOnly="true" />
-					
+					<p:outputLabel for="bEndTime" value="Время конца:" />
+					<p:calendar id="bEndTime" value="#{eventHome.event.endTime}"
+						pattern="HH:mm" showOn="button" timeOnly="true" />
+
+					<p:outputLabel for="bRepeatTime" value="Повторять:" />
+					<p:calendar id="bRepeatTime" value="#{eventHome.event.repeatTime}"
+						pattern="HH:mm" showOn="button" timeOnly="true" />
+
+					<p:outputLabel for="allDay" value="Весь день:" />
+					<h:selectBooleanCheckbox id="allDay"
+						value="#{eventHome.event.allDay}" />
+				</p:panelGrid>
+
 				<h:form>
 					<p:commandButton value="Сохранить" id="saveEvent"
 						actionListener="#{eventHome.saveEvent()}" ajax="false"
-						update="eventPanel" />
+						oncomplete="PF('calendar').update();PF('eventEditDlg').hide();" />
+
+					<p:commandButton value="Отмена" id="cancel"
+						action="#{eventHome.init()}"
+						oncomplete="PF('eventEditDlg').hide();" />
 				</h:form>
 			</p:dialog>
 		</p:panel>
