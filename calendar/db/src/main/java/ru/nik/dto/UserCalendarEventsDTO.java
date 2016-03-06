@@ -31,9 +31,11 @@ public class UserCalendarEventsDTO
 	private Date endTime;
 	private Date notificationTime;
 	private Boolean allDay;
-	private Date repeatTime;
+	private Integer repeatTime;
 	
 	private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
+	private List<EventCategoriesDTO> eventCategories = new ArrayList<EventCategoriesDTO>();
+    
 	
 	public UserCalendarEventsDTO() 
 	{
@@ -43,7 +45,7 @@ public class UserCalendarEventsDTO
 			UserCalendarDTO userCalendar, String name, String description,
 			Date startDatetime, Date endDatetime, Date startTime,
 			Date endTime, Date notificationTime,
-			Boolean allDay, Date repeatTime)
+			Boolean allDay, Integer repeatTime)
 	{
 		this.userCalendarEventsId = userCalendarEventsId;
 		this.userCalendar = userCalendar;
@@ -173,12 +175,12 @@ public class UserCalendarEventsDTO
     }
 
     @Column(name = "REPEAT_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
-    public Date getRepeatTime()
+    public Integer getRepeatTime()
     {
         return repeatTime;
     }
 
-    public void setRepeatTime(Date repeatTime)
+    public void setRepeatTime(Integer repeatTime)
     {
         this.repeatTime = repeatTime;
     }
@@ -192,6 +194,17 @@ public class UserCalendarEventsDTO
     public void setEventMembers(List<EventMembersDTO> eventMembers)
     {
         this.eventMembers = eventMembers;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "event")
+    public List<EventCategoriesDTO> getEventCategories()
+    {
+        return eventCategories;
+    }
+
+    public void setEventCategories(List<EventCategoriesDTO> eventCategories)
+    {
+        this.eventCategories = eventCategories;
     }
 	
 	
