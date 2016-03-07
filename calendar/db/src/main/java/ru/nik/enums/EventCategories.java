@@ -67,4 +67,17 @@ public enum EventCategories
                 return category.name;
         return "";
     }
+    
+    /**
+     * Получает ИД по названию.
+     * @param имя идентификатор
+     * @return
+     */
+    public static Integer getIdByName(String name)
+    {
+        for (EventCategories category : values())
+            if (category.name.equals(name))
+                return category.id;
+        return -1;
+    }
 }

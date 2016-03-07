@@ -18,52 +18,45 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER_CALENDAR_EVENTS")
-//@BatchSize(size=100)
+// @BatchSize(size=100)
 public class UserCalendarEventsDTO
 {
-	private Long userCalendarEventsId;
-	private UserCalendarDTO userCalendar;
-	private String name;
-	private String description;
-	private Date startDatetime;
-	private Date startTime;
-	private Date endDatetime;
-	private Date endTime;
-	private Date notificationTime;
-	private Boolean allDay;
-	private Integer repeatTime;
-	
-	private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
-	private List<EventCategoriesDTO> eventCategories = new ArrayList<EventCategoriesDTO>();
-    
-	
-	public UserCalendarEventsDTO() 
-	{
-	}
-	
-	public UserCalendarEventsDTO(Long userCalendarEventsId,
-			UserCalendarDTO userCalendar, String name, String description,
-			Date startDatetime, Date endDatetime, Date startTime,
-			Date endTime, Date notificationTime,
-			Boolean allDay, Integer repeatTime)
-	{
-		this.userCalendarEventsId = userCalendarEventsId;
-		this.userCalendar = userCalendar;
-		this.name = name;
-		this.description = description;
-		this.startDatetime = startDatetime;
-		this.endDatetime = endDatetime;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.notificationTime = notificationTime;
-		this.allDay = allDay;
-		this.repeatTime = repeatTime;
-	}
+    private Long userCalendarEventsId;
+    private UserCalendarDTO userCalendar;
+    private String name;
+    private String description;
+    private Date startDatetime;
+    private Date endDatetime;
+    private Date notificationTime;
+    private Boolean allDay;
+    private Integer repeatTime;
 
-	@Id
-    @Column(name = "USER_CALENDAR_EVENTS_ID", unique = true, 
-    	nullable = false, insertable = true, updatable = true, precision = 22, scale = 0)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
+    private List<EventCategoriesDTO> eventCategories = new ArrayList<EventCategoriesDTO>();
+
+    public UserCalendarEventsDTO()
+    {
+    }
+
+    public UserCalendarEventsDTO(Long userCalendarEventsId,
+            UserCalendarDTO userCalendar, String name, String description,
+            Date startDatetime, Date endDatetime, Date notificationTime,
+            Boolean allDay, Integer repeatTime)
+    {
+        this.userCalendarEventsId = userCalendarEventsId;
+        this.userCalendar = userCalendar;
+        this.name = name;
+        this.description = description;
+        this.startDatetime = startDatetime;
+        this.endDatetime = endDatetime;
+        this.notificationTime = notificationTime;
+        this.allDay = allDay;
+        this.repeatTime = repeatTime;
+    }
+
+    @Id
+    @Column(name = "USER_CALENDAR_EVENTS_ID", unique = true, nullable = false, insertable = true, updatable = true, precision = 22, scale = 0)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getUserCalendarEventsId()
     {
         return userCalendarEventsId;
@@ -74,7 +67,8 @@ public class UserCalendarEventsDTO
         this.userCalendarEventsId = userCalendarEventsId;
     }
 
-    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade =
+    {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_CALENDAR_ID", unique = false, nullable = true, insertable = true, updatable = true)
     public UserCalendarDTO getUserCalendar()
     {
@@ -129,8 +123,8 @@ public class UserCalendarEventsDTO
     {
         this.endDatetime = endDatetime;
     }
-    
-    @Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+
+    /*@Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getStartTime()
     {
         return startTime;
@@ -150,7 +144,7 @@ public class UserCalendarEventsDTO
     public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
-    }
+    }*/
 
     @Column(name = "NOTIFICATION_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public Date getNotificationTime()
@@ -185,7 +179,7 @@ public class UserCalendarEventsDTO
         this.repeatTime = repeatTime;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "userCalendarEventsDTO")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userCalendarEventsDTO")
     public List<EventMembersDTO> getEventMembers()
     {
         return eventMembers;
@@ -196,7 +190,7 @@ public class UserCalendarEventsDTO
         this.eventMembers = eventMembers;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "event")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "event")
     public List<EventCategoriesDTO> getEventCategories()
     {
         return eventCategories;
@@ -206,6 +200,5 @@ public class UserCalendarEventsDTO
     {
         this.eventCategories = eventCategories;
     }
-	
-	
+
 }

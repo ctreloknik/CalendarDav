@@ -7,32 +7,33 @@
 
 	<h:form>
 		<p:panel id="eventPanel">
-			<p:dialog id="eventEditDlg" header="Событие"
-				widgetVar="eventEditDlg" modal="true">
+			<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
+				modal="true" resizable="false" minWidth="400">
+
+				<p:outputLabel value="Название события:" />
+				<p:inputText value="#{eventHome.event.name}" />
+
 				<p:panelGrid id="dialogEventGrid" columns="2"
 					style="border-style: none">
-					<p:outputLabel value="Название события:" />
-					<p:inputText value="#{eventHome.event.name}" />
 
-					<p:outputLabel for="bStartDate" value="Дата начала:" />
-					<p:calendar id="bStartDate"
-						value="#{eventHome.event.startDatetime}" showOn="button" />
+					<p:outputLabel for="bStartDate" value="Начало:" />
+					<p:calendar id="bStartDate" pattern="MM/dd/yyyy HH:mm"
+						value="#{eventHome.event.startDatetime}"/>
 
-					<p:outputLabel for="bStartTime" value="Время начала:" />
-					<p:calendar id="bStartTime" value="#{eventHome.event.startTime}"
-						pattern="HH:mm" showOn="button" timeOnly="true" />
+					<p:outputLabel for="bEndDate" value="Конец:" />
+					<p:calendar id="bEndDate" pattern="MM/dd/yyyy HH:mm"
+						value="#{eventHome.event.endDatetime}"/>
 
-					<p:outputLabel for="bEndDate" value="Дата конца:" />
-					<p:calendar id="bEndDate" value="#{eventHome.event.endDatetime}"
-						showOn="button" />
-
-					<p:outputLabel for="bEndTime" value="Время конца:" />
-					<p:calendar id="bEndTime" value="#{eventHome.event.endTime}"
-						pattern="HH:mm" showOn="button" timeOnly="true" />
-
-					<p:outputLabel for="bRepeatTime" value="Повторять:" />
-					<p:calendar id="bRepeatTime" value="#{eventHome.event.repeatTime}"
-						pattern="HH:mm" showOn="button" timeOnly="true" />
+					<p:outputLabel value="Категории:" />
+					<p:selectManyMenu id="categoriesMenu"
+						value="#{eventHome.selectedCategories}" var="c" filter="true"
+						filterMatchMode="contains" showCheckbox="true">
+						<f:selectItems value="#{eventHome.allCategories}" var="category"
+							itemValue="#{category}" />
+						<p:column>
+							<h:outputText value="#{c}" />
+						</p:column>
+					</p:selectManyMenu>
 
 					<p:outputLabel for="allDay" value="Весь день:" />
 					<h:selectBooleanCheckbox id="allDay"
@@ -45,7 +46,7 @@
 						oncomplete="PF('calendar').update();PF('eventEditDlg').hide();" />
 
 					<p:commandButton value="Отмена" id="cancel"
-						action="#{eventHome.init()}"
+						actionListener="#{eventHome.init()}"
 						oncomplete="PF('eventEditDlg').hide();" />
 				</h:form>
 			</p:dialog>

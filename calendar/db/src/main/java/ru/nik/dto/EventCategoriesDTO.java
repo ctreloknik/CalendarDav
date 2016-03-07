@@ -24,14 +24,14 @@ public class EventCategoriesDTO
 {
     private Long eventCategoryId;
     private UserCalendarEventsDTO event;
-    private Integer categoryId;
+    private Long categoryId;
     
     public EventCategoriesDTO()
     {
     }
     
     public EventCategoriesDTO(Long eventCategoryId,
-            UserCalendarEventsDTO event, Integer categoryId)
+            UserCalendarEventsDTO event, Long categoryId)
     {
         this.eventCategoryId = eventCategoryId;
         this.event = event;
@@ -53,7 +53,7 @@ public class EventCategoriesDTO
     }
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVENT_ID", unique = false, nullable = true, insertable = true, updatable = true)
+    @JoinColumn(name = "EVENT_ID", unique = false, nullable = false, insertable = true, updatable = true)
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -65,12 +65,12 @@ public class EventCategoriesDTO
     }
 
     @Column(name = "CATEGORY_NAME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
-    public Integer getCategoryId()
+    public Long getCategoryId()
     {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId)
+    public void setCategoryId(Long categoryId)
     {
         this.categoryId = categoryId;
     }

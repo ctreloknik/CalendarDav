@@ -1,5 +1,7 @@
 package ru.nik.services;
 
+import java.util.List;
+
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
@@ -16,5 +18,10 @@ public interface UserCalendarEventsService extends GenericCrud<UserCalendarEvent
      * @return
      */
     public UsersDTO getUserEventById(Long userEventId);
+    
+    /**
+     * Сохранить категории для события
+     */
+    public void saveCategories(UserCalendarEventsDTO event, List<String> categories);
     
 }
