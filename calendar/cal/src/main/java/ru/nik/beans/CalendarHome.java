@@ -39,11 +39,7 @@ public class CalendarHome implements Serializable
 	@PostConstruct
     public void init()
 	{
-	    //Заглушка для тестов работы календаря
-        //List<UserCalendarEventsDTO> events = eventsService.getAll();
-        //return new LazyScheduleModel();
-        
-        events = eventsService.getAll();
+	    events = eventsService.getAll();
 
         setEventModel(new LazyScheduleModel()
         {

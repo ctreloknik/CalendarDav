@@ -12,9 +12,9 @@
 	</h:panelGrid>
 
 	<p:schedule id="calendar" value="#{calendarHome.eventModel}"
-		draggable="false" rightHeaderTemplate="Month" clientTimeZone="local"
+		draggable="false" clientTimeZone="local"
 		timeFormat="hh:mm" widgetVar="calendar"
-		style="margin-right:20px; margin-left:20px; height:50%; width:50%">
+		style="margin-right:20px; margin-left:20px; height:600px; width:600px">
 		<!-- Отслеживание нажатия на эвент -->
 		<!-- <p:ajax event="eventSelect" listener="# {eventsViewBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" /> -->
 
@@ -23,4 +23,7 @@
 				update="eventDetails" oncomplete="PF('eventDialog').show();" />
  -->
 	</p:schedule>
+	
+	<ui:include src="/pages/calendar/EventEditDlg.xhtml" />
+	
 </ui:composition>
