@@ -19,6 +19,8 @@ import javax.persistence.Table;
 public class UsersDTO
 {
     private Long userId;
+    private String userLogin;
+    private String userPass;
     
     private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
 
@@ -26,9 +28,11 @@ public class UsersDTO
     {
     }
     
-    public UsersDTO(Long userId)
+    public UsersDTO(Long userId, String userLogin, String userPass)
     {
         this.userId = userId;
+        this.setUserLogin(userLogin);
+        this.setUserPass(userPass);
     }
 
     @Id
@@ -43,6 +47,28 @@ public class UsersDTO
         this.userId = userId;
     }
     
+    @Column(name = "USER_LOGIN", unique = true, nullable = false, insertable = true, updatable = true)
+    public String getUserLogin()
+    {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin)
+    {
+        this.userLogin = userLogin;
+    }
+
+    @Column(name = "USER_PASS", unique = true, nullable = false, insertable = true, updatable = true)
+    public String getUserPass()
+    {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass)
+    {
+        this.userPass = userPass;
+    }
+
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     public List<EventMembersDTO> getEventMembers()
     {
