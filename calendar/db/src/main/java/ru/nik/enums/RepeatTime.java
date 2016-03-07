@@ -53,4 +53,17 @@ public enum RepeatTime
                 return time.name;
         return "";
     }
+    
+    /**
+     * Получает ИД по названию.
+     * @param имя идентификатор
+     * @return
+     */
+    public static Integer getIdByName(String name)
+    {
+        for (RepeatTime time : values())
+            if (time.name.equals(name))
+                return time.id;
+        return -1;
+    }
 }

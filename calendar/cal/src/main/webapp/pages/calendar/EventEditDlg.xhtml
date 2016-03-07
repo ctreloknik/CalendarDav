@@ -32,13 +32,19 @@
 
 					<p:panel style="border-style: none">
 						<p:outputLabel value="Категории:" />
-						<p:selectCheckboxMenu id="categoriesMenu" style="min-width: 200px"
+						<p:selectCheckboxMenu id="categoriesMenu"
+							style="min-width: 200px; display: block"
 							value="#{eventHome.selectedCategories}" label="Категории"
 							filter="true" filterMatchMode="startsWith"
 							panelStyle="width:200px">
 							<f:selectItems value="#{eventHome.allCategories}" />
 						</p:selectCheckboxMenu>
 
+						<p:outputLabel for="city" value="Повторять: " />
+						<p:selectOneMenu id="city" value="#{eventHome.selectedRepeatTime}"
+							style="min-width: 200px; display: block">
+							<f:selectItems value="#{eventHome.repeatTimeList}" />
+						</p:selectOneMenu>
 					</p:panel>
 
 				</p:panelGrid>

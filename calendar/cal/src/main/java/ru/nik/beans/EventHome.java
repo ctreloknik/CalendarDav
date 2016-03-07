@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.enums.EventCategories;
+import ru.nik.enums.RepeatTime;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarServiceBean;
 
@@ -29,8 +30,12 @@ public class EventHome implements Serializable
 	private UserCalendarServiceBean userCalendarService;
 	
 	private UserCalendarEventsDTO event;
+	
 	private List<String> selectedCategories = new ArrayList<String>();
 	private List<String> categories = new ArrayList<String>();
+	
+	private List<String> repeatTimeList = new ArrayList<String>();
+	private String selectedRepeatTime;
 	
 	@PostConstruct
     public void init()
@@ -38,6 +43,10 @@ public class EventHome implements Serializable
         event = new UserCalendarEventsDTO();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
+        
+        selectedRepeatTime = "";
+        for (RepeatTime rt : RepeatTime.values())
+            repeatTimeList.add(rt.getName());
     }
 	
     public UserCalendarEventsDTO getEvent()
@@ -65,8 +74,24 @@ public class EventHome implements Serializable
         return categories;
     }
 
+    public List<String> getRepeatTimeList()
+    {
+        return repeatTimeList;
+    }
+
+    public String getSelectedRepeatTime()
+    {
+        return selectedRepeatTime;
+    }
+
+    public void setSelectedRepeatTime(String selectedRepeatTime)
+    {
+        this.selectedRepeatTime = selectedRepeatTime;
+    }
+
     public void saveEvent()
 	{
+        event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
         event.setUserCalendar(userCalendarService.find(1L));
         event = eventsServiceBean.create(event);
 	    eventsServiceBean.saveCategories(event, selectedCategories);
@@ -84,6 +109,8 @@ public class EventHome implements Serializable
         event = null;
         categories.clear();
         selectedCategories.clear();
+        selectedRepeatTime = "";
+        repeatTimeList.clear();
         init();
     }
 
