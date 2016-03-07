@@ -5,25 +5,27 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+	<h:form>
+		<h:panelGrid columns="1" cellpadding="5">
+			<p:commandButton value="Создать событие" type="button"
+				onclick="PF('eventEditDlg').show();" />
+		</h:panelGrid>
 
-	<h:panelGrid columns="1" cellpadding="5">
-		<p:commandButton value="Создать событие" type="button"
-			onclick="PF('eventEditDlg').show();" />
-	</h:panelGrid>
+		<p:schedule id="calendar" value="#{calendarHome.eventModel}"
+			draggable="false" clientTimeZone="local" timeFormat="hh:mm"
+			widgetVar="calendar"
+			style="margin-right:20px; margin-left:20px; height:600px; width:600px">
+			<!-- Отслеживание нажатия на эвент -->
+			<!--  <p:ajax event="eventSelect" listener="#{eventHome.onEventSelect}"
+				update="dialogEventGrid" oncomplete="PF('eventEditDlg').show();" />
+			-->
+			<p:ajax event="eventSelect" listener="#{eventHome.onDateSelect}"
+				update="eventsListDetails" oncomplete="PF('eventListDialog').show();" />
+			<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
+				update="eventsListDetails" oncomplete="PF('eventListDialog').show();" />
+		</p:schedule>
 
-	<p:schedule id="calendar" value="#{calendarHome.eventModel}"
-		draggable="false" clientTimeZone="local"
-		timeFormat="hh:mm" widgetVar="calendar"
-		style="margin-right:20px; margin-left:20px; height:600px; width:600px">
-		<!-- Отслеживание нажатия на эвент -->
-		<!-- <p:ajax event="eventSelect" listener="# {eventsViewBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" /> -->
-
-		<!--    СНЯТЬ                   
-			<p:ajax event="dateSelect" listener="#{eventsViewBean.onDateSelect}"
-				update="eventDetails" oncomplete="PF('eventDialog').show();" />
- -->
-	</p:schedule>
-	
-	<ui:include src="/pages/calendar/EventEditDlg.xhtml" />
-	
+		<ui:include src="/pages/calendar/EventEditDlg.xhtml" />
+		<ui:include src="/pages/calendar/EventsListDlg.xhtml" />
+	</h:form>
 </ui:composition>
