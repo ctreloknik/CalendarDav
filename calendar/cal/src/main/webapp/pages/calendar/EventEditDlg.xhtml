@@ -5,60 +5,58 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form>
-		<p:panel id="eventPanel">
-			<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
-				modal="true" resizable="false" minWidth="450">
+	<p:panel id="eventPanel">
+		<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
+			modal="true" resizable="false" minWidth="450">
 
-				<p:outputLabel value="Название события:" />
-				<p:inputText value="#{eventHome.event.name}" />
+			<p:outputLabel value="Название события:" />
+			<p:inputText value="#{eventHome.event.name}" />
 
-				<p:panelGrid id="dialogEventGrid" columns="2"
-					style="border-style: none">
+			<h:panelGrid id="dialogEventGrid" columns="2"
+				style="border-style: none">
 
-					<p:panel style="border-style: none">
-						<p:outputLabel for="bStartDate" value="Начало:" />
-						<p:calendar id="bStartDate" pattern="MM/dd/yyyy HH:mm"
-							value="#{eventHome.event.startDatetime}" style="display: block" />
+				<p:panel style="border-style: none">
+					<p:outputLabel for="bStartDate" value="Начало:" />
+					<p:calendar id="bStartDate" pattern="dd/MM/yyyy HH:mm"
+						value="#{eventHome.event.startDatetime}" style="display: block" />
 
-						<p:outputLabel for="bEndDate" value="Конец:" />
-						<p:calendar id="bEndDate" pattern="MM/dd/yyyy HH:mm"
-							value="#{eventHome.event.endDatetime}" style="display: block" />
+					<p:outputLabel for="bEndDate" value="Конец:" />
+					<p:calendar id="bEndDate" pattern="dd/MM/yyyy HH:mm"
+						value="#{eventHome.event.endDatetime}" style="display: block" />
 
-						<p:outputLabel for="allDay" value="Весь день:" />
-						<h:selectBooleanCheckbox id="allDay"
-							value="#{eventHome.event.allDay}" />
-					</p:panel>
+					<p:outputLabel for="allDay" value="Весь день:" />
+					<h:selectBooleanCheckbox id="allDay"
+						value="#{eventHome.event.allDay}" />
+				</p:panel>
 
-					<p:panel style="border-style: none">
-						<p:outputLabel value="Категории:" />
-						<p:selectCheckboxMenu id="categoriesMenu"
-							style="min-width: 200px; display: block"
-							value="#{eventHome.selectedCategories}" label="Категории"
-							filter="true" filterMatchMode="startsWith"
-							panelStyle="width:200px">
-							<f:selectItems value="#{eventHome.allCategories}" />
-						</p:selectCheckboxMenu>
+				<p:panel style="border-style: none">
+					<p:outputLabel value="Категории:" />
+					<p:selectCheckboxMenu id="categoriesMenu"
+						style="min-width: 200px; display: block"
+						value="#{eventHome.selectedCategories}" label="Категории"
+						filter="true" filterMatchMode="startsWith"
+						panelStyle="width:240px">
+						<f:selectItems value="#{eventHome.allCategories}" />
+					</p:selectCheckboxMenu>
 
-						<p:outputLabel for="city" value="Повторять: " />
-						<p:selectOneMenu id="city" value="#{eventHome.selectedRepeatTime}"
-							style="min-width: 200px; display: block">
-							<f:selectItems value="#{eventHome.repeatTimeList}" />
-						</p:selectOneMenu>
-					</p:panel>
+					<p:outputLabel for="city" value="Повторять: " />
+					<p:selectOneMenu id="city" value="#{eventHome.selectedRepeatTime}"
+						style="min-width: 200px; display: block">
+						<f:selectItems value="#{eventHome.repeatTimeList}" />
+					</p:selectOneMenu>
+				</p:panel>
 
-				</p:panelGrid>
+			</h:panelGrid>
 
-				<h:form>
-					<p:commandButton value="Сохранить" id="saveEvent"
-						actionListener="#{eventHome.saveEvent()}" ajax="false"
-						oncomplete="PF('calendar').update();PF('eventEditDlg').hide();" />
+			<h:form>
+				<p:commandButton value="Сохранить" id="saveEvent"
+					actionListener="#{eventHome.saveEvent()}" ajax="false"
+					oncomplete="PF('calendar').update();PF('eventEditDlg').hide();" />
 
-					<p:commandButton value="Отмена" id="cancel"
-						actionListener="#{eventHome.init()}"
-						oncomplete="PF('eventEditDlg').hide();" />
-				</h:form>
-			</p:dialog>
-		</p:panel>
-	</h:form>
+				<p:commandButton value="Отмена" id="cancel"
+					actionListener="#{eventHome.init()}"
+					oncomplete="PF('eventEditDlg').hide();" />
+			</h:form>
+		</p:dialog>
+	</p:panel>
 </ui:composition>

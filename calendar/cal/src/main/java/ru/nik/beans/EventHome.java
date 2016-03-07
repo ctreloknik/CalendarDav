@@ -2,6 +2,7 @@ package ru.nik.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +10,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
+import javax.print.attribute.standard.SheetCollate;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.ScheduleEvent;
 
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.enums.EventCategories;
@@ -30,6 +35,7 @@ public class EventHome implements Serializable
 	private UserCalendarServiceBean userCalendarService;
 	
 	private UserCalendarEventsDTO event;
+	private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
 	
 	private List<String> selectedCategories = new ArrayList<String>();
 	private List<String> categories = new ArrayList<String>();
@@ -87,6 +93,18 @@ public class EventHome implements Serializable
     public void setSelectedRepeatTime(String selectedRepeatTime)
     {
         this.selectedRepeatTime = selectedRepeatTime;
+    }
+    
+    public void onDateSelect(SelectEvent selectEvent)
+    {
+        calendarEvents = eventsServiceBean.getAll();
+        Date d = (Date) selectEvent.getObject();
+        //DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    }
+    
+    public List<UserCalendarEventsDTO> getAllEvents()
+    {
+        return eventsServiceBean.getAll();
     }
 
     public void saveEvent()
