@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel id="eventsListPanel">
+		<h:panelGrid id="eventsListDetails" columns="1">
+			<p:dataTable var="events" value="#{eventHome.allEvents}">
+				<!-- убрать в будущем колонку. только для тестов-->
+				<p:column headerText="id">
+					<h:outputText value="#{events.userCalendarEventsId}" />
+				</p:column>
+				
+				<p:column headerText="Название">
+					<h:outputText value="#{events.name}" />
+				</p:column>
+
+				<p:column headerText="Описание">
+					<h:outputText value="#{events.description}" />
+				</p:column>
+
+				<p:column headerText="Начало">
+					<h:outputText value="#{events.startDatetime}" />
+				</p:column>
+
+				<p:column headerText="Конец">
+					<h:outputText value="#{events.endDatetime}" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</p:panel>
+</ui:composition>
