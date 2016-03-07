@@ -21,6 +21,10 @@ public class UsersDTO
     private Long userId;
     private String userLogin;
     private String userPass;
+    private String lastName;
+    private String firstName;
+    private String middleName;
+    private String email;
     
     private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
 
@@ -67,6 +71,50 @@ public class UsersDTO
     public void setUserPass(String userPass)
     {
         this.userPass = userPass;
+    }
+
+    @Column(name = "LAST_NAME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "FIRST_NAME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "MIDDLE_NAME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public String getMiddleName()
+    {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName)
+    {
+        this.middleName = middleName;
+    }
+
+    @Column(name = "EMALE", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
