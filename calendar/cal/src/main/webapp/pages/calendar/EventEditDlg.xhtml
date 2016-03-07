@@ -8,7 +8,7 @@
 	<h:form>
 		<p:panel id="eventPanel">
 			<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
-				modal="true" resizable="false" minWidth="400">
+				modal="true" resizable="false" minWidth="450">
 
 				<p:outputLabel value="Название события:" />
 				<p:inputText value="#{eventHome.event.name}" />
@@ -16,28 +16,31 @@
 				<p:panelGrid id="dialogEventGrid" columns="2"
 					style="border-style: none">
 
-					<p:outputLabel for="bStartDate" value="Начало:" />
-					<p:calendar id="bStartDate" pattern="MM/dd/yyyy HH:mm"
-						value="#{eventHome.event.startDatetime}"/>
+					<p:panel style="border-style: none">
+						<p:outputLabel for="bStartDate" value="Начало:" />
+						<p:calendar id="bStartDate" pattern="MM/dd/yyyy HH:mm"
+							value="#{eventHome.event.startDatetime}" style="display: block" />
 
-					<p:outputLabel for="bEndDate" value="Конец:" />
-					<p:calendar id="bEndDate" pattern="MM/dd/yyyy HH:mm"
-						value="#{eventHome.event.endDatetime}"/>
+						<p:outputLabel for="bEndDate" value="Конец:" />
+						<p:calendar id="bEndDate" pattern="MM/dd/yyyy HH:mm"
+							value="#{eventHome.event.endDatetime}" style="display: block" />
 
-					<p:outputLabel value="Категории:" />
-					<p:selectManyMenu id="categoriesMenu"
-						value="#{eventHome.selectedCategories}" var="c" filter="true"
-						filterMatchMode="contains" showCheckbox="true">
-						<f:selectItems value="#{eventHome.allCategories}" var="category"
-							itemValue="#{category}" />
-						<p:column>
-							<h:outputText value="#{c}" />
-						</p:column>
-					</p:selectManyMenu>
+						<p:outputLabel for="allDay" value="Весь день:" />
+						<h:selectBooleanCheckbox id="allDay"
+							value="#{eventHome.event.allDay}" />
+					</p:panel>
 
-					<p:outputLabel for="allDay" value="Весь день:" />
-					<h:selectBooleanCheckbox id="allDay"
-						value="#{eventHome.event.allDay}" />
+					<p:panel style="border-style: none">
+						<p:outputLabel value="Категории:" />
+						<p:selectCheckboxMenu id="categoriesMenu" style="min-width: 200px"
+							value="#{eventHome.selectedCategories}" label="Категории"
+							filter="true" filterMatchMode="startsWith"
+							panelStyle="width:200px">
+							<f:selectItems value="#{eventHome.allCategories}" />
+						</p:selectCheckboxMenu>
+
+					</p:panel>
+
 				</p:panelGrid>
 
 				<h:form>
