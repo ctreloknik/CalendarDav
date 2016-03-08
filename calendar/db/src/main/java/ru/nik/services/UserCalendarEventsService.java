@@ -34,4 +34,10 @@ public interface UserCalendarEventsService extends GenericCrud<UserCalendarEvent
      */
     public List<UserCalendarEventsDTO> getEventsByDate(Date date);
     
+    /**
+     * Получение ближайших событий.
+     * @return
+     */
+    public List<UserCalendarEventsDTO> getNextEvents();
+    
 }

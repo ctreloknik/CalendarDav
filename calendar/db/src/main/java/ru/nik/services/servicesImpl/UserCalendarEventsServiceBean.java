@@ -72,6 +72,13 @@ public class UserCalendarEventsServiceBean extends UserCalendarEventsServiceImpl
     {
         return super.getEventsByDate(date);
     }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<UserCalendarEventsDTO> getNextEvents()
+    {
+        return super.getNextEvents();
+    }
     
     
 }

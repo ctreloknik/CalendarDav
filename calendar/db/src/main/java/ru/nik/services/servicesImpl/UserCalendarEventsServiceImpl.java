@@ -86,4 +86,18 @@ public class UserCalendarEventsServiceImpl extends GenericCrudImpl<UserCalendarE
         return q.getResultList();
     }
     
+    /**
+     * Получение ближайших событий.
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<UserCalendarEventsDTO> getNextEvents()
+    {
+        Query q = getEntityManager().createQuery(
+                "SELECT DISTINCT c from UserCalendarEventsDTO e "
+                + "WHERE e.startDatetime > current_date ORDER BY e.startDatetime");
+        return q.getResultList();
+    }
+    
 }
