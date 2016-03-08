@@ -7,7 +7,7 @@
 
 	<p:panel id="eventsListPanel">
 		<h:panelGrid id="eventsListDetails" columns="1">
-			<p:dataTable var="events" value="#{eventHome.allEvents}">
+			<p:dataTable var="events" value="#{eventHome.calendarEvents}">
 				<!-- убрать в будущем колонку. только для тестов-->
 				<p:column headerText="id">
 					<h:outputText value="#{events.userCalendarEventsId}" />

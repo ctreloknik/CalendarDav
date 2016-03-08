@@ -65,6 +65,16 @@ public class EventHome implements Serializable
         this.event = event;
     }
     
+    public List<UserCalendarEventsDTO> getCalendarEvents()
+    {
+        return calendarEvents;
+    }
+
+    public void setCalendarEvents(List<UserCalendarEventsDTO> calendarEvents)
+    {
+        this.calendarEvents = calendarEvents;
+    }
+
     public List<String> getSelectedCategories()
     {
         return selectedCategories;
@@ -97,9 +107,7 @@ public class EventHome implements Serializable
     
     public void onDateSelect(SelectEvent selectEvent)
     {
-        calendarEvents = eventsServiceBean.getAll();
-        Date d = (Date) selectEvent.getObject();
-        //DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent.getObject());
     }
     
     public List<UserCalendarEventsDTO> getAllEvents()

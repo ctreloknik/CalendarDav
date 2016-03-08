@@ -1,84 +1,61 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<web-app version="3.0"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-    <display-name>mojarra-regression-test</display-name>
-    <description>A simple regression test to make it easier to get your bug fixed. The only reason we need a web.xml is to set the PROJECT_STAGE to Develoment.  If you have a web.xml, then you need to map the FacesServlet.</description>
+	<display-name>mojarra-regression-test</display-name>
+	<description>A simple regression test to make it easier to get your bug fixed. The only reason we need a web.xml is to set the PROJECT_STAGE to Develoment.  If you have a web.xml, then you need to map the FacesServlet.</description>
 
-    <context-param>
-        <description>
+	<context-param>
+		<description>
             Tell the runtime where we are in the project development
             lifecycle.  Valid values are: 
             Development, UnitTest, SystemTest, or Production.
             The runtime will display helpful hints to correct common mistakes
             when the value is Development.
         </description>
-        <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
-    </context-param>
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
-    </context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
 
-    <!-- Faces Servlet -->
-    <welcome-file-list>
-        <welcome-file>pages/Basic.xhtml</welcome-file>
-    </welcome-file-list>
-    <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+	<!-- Faces Servlet -->
+	<welcome-file-list>
+		<welcome-file>pages/Basic.xhtml</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-        <url-pattern>*.jsf</url-pattern>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.jsf</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 
-    <!-- Protected Areas 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Only admins</web-resource-name>
-            <url-pattern>/pages/protected/admin/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ADMIN</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Users and admins</web-resource-name>
-            <url-pattern>/pages/protected/user/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ADMIN</role-name>
-            <role-name>USER</role-name>
-        </auth-constraint>
-    </security-constraint>
-	-->
-    
-    <!-- Validation By Form 
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/pages/public/login.xhtml</form-login-page>
-            <form-error-page>/pages/public/loginError.xhtml</form-error-page>
-        </form-login-config>
-    </login-config>
- 	-->
+	<!-- Protected Areas <security-constraint> <web-resource-collection> <web-resource-name>Only 
+		admins</web-resource-name> <url-pattern>/pages/protected/admin/*</url-pattern> 
+		</web-resource-collection> <auth-constraint> <role-name>ADMIN</role-name> 
+		</auth-constraint> </security-constraint> <security-constraint> <web-resource-collection> 
+		<web-resource-name>Users and admins</web-resource-name> <url-pattern>/pages/protected/user/*</url-pattern> 
+		</web-resource-collection> <auth-constraint> <role-name>ADMIN</role-name> 
+		<role-name>USER</role-name> </auth-constraint> </security-constraint> -->
 
-    <!-- Allowed Roles
-    <security-role>
-        <role-name>ADMIN</role-name>
-    </security-role>
-    <security-role>
-        <role-name>USER</role-name>
-    </security-role>
-     -->
+	<!-- Validation By Form <login-config> <auth-method>FORM</auth-method> <form-login-config> 
+		<form-login-page>/pages/public/login.xhtml</form-login-page> <form-error-page>/pages/public/loginError.xhtml</form-error-page> 
+		</form-login-config> </login-config> -->
+
+	<!-- Allowed Roles <security-role> <role-name>ADMIN</role-name> </security-role> 
+		<security-role> <role-name>USER</role-name> </security-role> -->
 </web-app>
