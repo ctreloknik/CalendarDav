@@ -12,9 +12,11 @@
 				<p:column headerText="id">
 					<h:outputText value="#{events.userCalendarEventsId}" />
 				</p:column>
-				
+
 				<p:column headerText="Название">
-					<h:outputText value="#{events.name}" />
+					<p:commandLink value="#{events.name}"
+						actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
+						oncomplete="PF('eventEditDlg').show();" />
 				</p:column>
 
 				<p:column headerText="Описание">
@@ -28,6 +30,7 @@
 				<p:column headerText="Конец">
 					<h:outputText value="#{events.endDatetime}" />
 				</p:column>
+
 			</p:dataTable>
 		</h:panelGrid>
 	</p:panel>
