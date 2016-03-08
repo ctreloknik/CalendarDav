@@ -1,5 +1,6 @@
 package ru.nik.services.servicesImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -63,6 +64,13 @@ public class UserCalendarEventsServiceBean extends UserCalendarEventsServiceImpl
     public void saveCategories(UserCalendarEventsDTO event, List<String> categories)
     {
         super.saveCategories(event, categories);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<UserCalendarEventsDTO> getEventsByDate(Date date)
+    {
+        return super.getEventsByDate(date);
     }
     
     

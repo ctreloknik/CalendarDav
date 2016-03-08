@@ -1,5 +1,7 @@
 package ru.nik.services.servicesImpl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -59,6 +61,29 @@ public class UserCalendarEventsServiceImpl extends GenericCrudImpl<UserCalendarE
             ec.setCategoryId(EventCategories.getIdByName(string).longValue());
             eman.merge(ec);
         }
+    }
+    
+    /**
+     * Получить события за указанную дату.
+     * @param date дата
+     * @return список событий
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<UserCalendarEventsDTO> getEventsByDate(Date date)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH,1);
+        Date date2 = cal.getTime();
+        Query q = getEntityManager().createQuery(
+                "SELECT e FROM UserCalendarEventsDTO e " +
+                "WHERE ( :date BETWEEN e.startDatetime AND e.endDatetime) "
+                + "OR (e.startDatetime BETWEEN :date AND :date2) "
+                + "OR (e.endDatetime BETWEEN :date AND :date2)");
+        q.setParameter("date", date);
+        q.setParameter("date2", date2);
+        return q.getResultList();
     }
     
 }
