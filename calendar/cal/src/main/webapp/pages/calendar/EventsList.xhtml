@@ -15,7 +15,8 @@
 
 				<p:column headerText="Название">
 					<p:commandLink value="#{events.name}"
-						actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
+						onclick="#{eventHome.loadEvent(events.userCalendarEventsId)}"
+						update=":calendarForm:eventEditDlg"
 						oncomplete="PF('eventEditDlg').show();" />
 				</p:column>
 

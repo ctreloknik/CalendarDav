@@ -51,7 +51,7 @@
 			<h:form>
 				<p:commandButton value="Сохранить" id="saveEvent"
 					actionListener="#{eventHome.saveEvent()}" ajax="false"
-					oncomplete="PF('calendar').update();PF('eventEditDlg').hide();" />
+					oncomplete="PF('eventEditDlg').update();PF('eventEditDlg').hide();" />
 
 				<p:commandButton value="Отмена" id="cancel"
 					actionListener="#{eventHome.init()}"
