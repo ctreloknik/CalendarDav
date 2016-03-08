@@ -114,6 +114,11 @@ public class EventHome implements Serializable
     {
         return eventsServiceBean.getAll();
     }
+    
+    public void loadEvent(Long eventId)
+    {
+        event = eventsServiceBean.find(eventId);
+    }
 
     public void saveEvent()
 	{
