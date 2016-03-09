@@ -12,21 +12,32 @@
 			<p:outputLabel value="Название события:" />
 			<p:inputText value="#{eventHome.event.name}" />
 
-			<h:panelGrid id="dialogEventGrid" columns="2"
-				style="border-style: none">
+			<h:panelGrid id="dialogEventGrid" columns="2">
 
 				<p:panel style="border-style: none">
-					<p:outputLabel for="bStartDate" value="Начало:" />
-					<p:calendar id="bStartDate" pattern="dd/MM/yyyy HH:mm"
-						value="#{eventHome.event.startDatetime}" style="display: block" />
+					<div>
+						<p:outputLabel for="bStartDate" value="Начало:"
+							style="display: inline" />
+						<p:calendar id="bStartDate" pattern="dd/MM/yyyy"
+							value="#{eventHome.event.startDatetime}" style="display: inline" />
 
-					<p:outputLabel for="bEndDate" value="Конец:" />
-					<p:calendar id="bEndDate" pattern="dd/MM/yyyy HH:mm"
-						value="#{eventHome.event.endDatetime}" style="display: block" />
+						<p:calendar id="bStartTime" pattern="HH:mm" timeOnly="true"
+							value="#{eventHome.event.startTime}" style="display: inline" />
+					</div>
 
-					<p:outputLabel for="allDay" value="Весь день:" />
+					<div>
+						<p:outputLabel for="bEndDate" value="Конец:"
+							style="display: inline" />
+						<p:calendar id="bEndDate" pattern="dd/MM/yyyy"
+							value="#{eventHome.event.endDatetime}" style="display: inline" />
+
+						<p:calendar id="bEndTime" pattern="HH:mm" timeOnly="true"
+							value="#{eventHome.event.endTime}" style="display: inline" />
+					</div>
+
+					<p:outputLabel for="allDay" value="Весь день:"/>
 					<h:selectBooleanCheckbox id="allDay"
-						value="#{eventHome.event.allDay}" />
+						value="#{eventHome.event.allDay}"/>
 				</p:panel>
 
 				<p:panel style="border-style: none">
@@ -48,15 +59,14 @@
 
 			</h:panelGrid>
 
-			<h:form>
 				<p:commandButton value="Сохранить" id="saveEvent"
-					action="#{eventHome.saveEvent()}" ajax="false"
+					actionListener="#{eventHome.saveEvent()}" ajax="true"
+					update=":calendarForm :calendarForm:eventEditDlg"
 					oncomplete="PF('eventEditDlg').hide();" />
 
 				<p:commandButton value="Отмена" id="cancel"
 					actionListener="#{eventHome.init()}"
 					oncomplete="PF('eventEditDlg').hide();" />
-			</h:form>
 		</p:dialog>
 	</p:panel>
 </ui:composition>

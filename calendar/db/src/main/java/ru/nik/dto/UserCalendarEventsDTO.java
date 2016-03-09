@@ -27,6 +27,8 @@ public class UserCalendarEventsDTO
     private String description;
     private Date startDatetime;
     private Date endDatetime;
+    private Date startTime;
+    private Date endTime;
     private Date notificationTime;
     private Boolean allDay;
     private Integer repeatTime;
@@ -40,8 +42,8 @@ public class UserCalendarEventsDTO
 
     public UserCalendarEventsDTO(Long userCalendarEventsId,
             UserCalendarDTO userCalendar, String name, String description,
-            Date startDatetime, Date endDatetime, Date notificationTime,
-            Boolean allDay, Integer repeatTime)
+            Date startDatetime, Date endDatetime, Date startTime, Date endTime,
+            Date notificationTime, Boolean allDay, Integer repeatTime)
     {
         this.userCalendarEventsId = userCalendarEventsId;
         this.userCalendar = userCalendar;
@@ -49,6 +51,8 @@ public class UserCalendarEventsDTO
         this.description = description;
         this.startDatetime = startDatetime;
         this.endDatetime = endDatetime;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.notificationTime = notificationTime;
         this.allDay = allDay;
         this.repeatTime = repeatTime;
@@ -124,7 +128,7 @@ public class UserCalendarEventsDTO
         this.endDatetime = endDatetime;
     }
 
-    /*@Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    @Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getStartTime()
     {
         return startTime;
@@ -144,7 +148,7 @@ public class UserCalendarEventsDTO
     public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
-    }*/
+    }
 
     @Column(name = "NOTIFICATION_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
     public Date getNotificationTime()

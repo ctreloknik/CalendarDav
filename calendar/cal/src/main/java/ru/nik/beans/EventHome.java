@@ -152,7 +152,7 @@ public class EventHome implements Serializable
 
     private void update()
     {
-        event = null;
+        event = new UserCalendarEventsDTO();
         // categories.clear();
         selectedCategories.clear();
         selectedRepeatTime = "";
