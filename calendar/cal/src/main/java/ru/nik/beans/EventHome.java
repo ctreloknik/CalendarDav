@@ -116,6 +116,12 @@ public class EventHome implements Serializable
         return eventsServiceBean.getAll();
     }
 
+    public void preCreateEvent()
+    {
+        managed = false;
+        event = new UserCalendarEventsDTO();
+    }
+
     public void loadEvent(Long eventId)
     {
         managed = true;
@@ -124,10 +130,17 @@ public class EventHome implements Serializable
 
     public void saveEvent()
     {
-        event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
-        event.setUserCalendar(userCalendarService.find(1L));
-        event = eventsServiceBean.create(event);
-        eventsServiceBean.saveCategories(event, selectedCategories);
+        if (!managed)
+        {
+            event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
+            event.setUserCalendar(userCalendarService.find(1L));
+            event = eventsServiceBean.create(event);
+            eventsServiceBean.saveCategories(event, selectedCategories);
+        }
+        else
+        {
+            event = eventsServiceBean.update(event);
+        }
         update();
     }
 
@@ -140,11 +153,11 @@ public class EventHome implements Serializable
     private void update()
     {
         event = null;
-        //categories.clear();
+        // categories.clear();
         selectedCategories.clear();
         selectedRepeatTime = "";
-        //repeatTimeList.clear();
-        //init();
+        // repeatTimeList.clear();
+        // init();
     }
 
 }
