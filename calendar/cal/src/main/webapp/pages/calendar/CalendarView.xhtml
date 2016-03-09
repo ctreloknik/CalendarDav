@@ -7,8 +7,10 @@
 
 	<h:form id="calendarForm">
 		<h:panelGrid columns="1" cellpadding="5">
-			<p:commandButton value="Создать событие" type="button"
-				onclick="PF('eventEditDlg').show();" />
+			<p:commandButton value="Создать событие"
+				action="#{eventHome.preCreateEvent()}"
+				update=":calendarForm:eventEditDlg"
+				oncomplete="PF('eventEditDlg').show();" />
 		</h:panelGrid>
 
 		<h:panelGrid id="calendarTableGrid" columns="2" cellpadding="5">
