@@ -11,29 +11,16 @@
 				onclick="PF('eventEditDlg').show();" />
 		</h:panelGrid>
 
-		<p:calendar value="#{calendarHome.calendarDate}" mode="inline"
-			navigator="true" pages="1">
-			<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
-				update="eventsListDetails"
-				oncomplete="PF('eventListDialog').show();" />
-		</p:calendar>
+		<h:panelGrid id="calendarTableGrid" columns="2" cellpadding="5">
+			<p:calendar id="calendar" widgetVar="calendar"
+				value="#{calendarHome.calendarDate}" mode="inline" navigator="true"
+				pages="1">
+				<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
+					update="eventsListDetails" />
+			</p:calendar>
 
-		<p:schedule id="calendar" value="#{calendarHome.eventModel}"
-			draggable="false" clientTimeZone="local" timeFormat="HH:MM"
-			widgetVar="calendar" rightHeaderTemplate="Month"
-			style="margin-right:20px; margin-left:20px; height:600px; width:600px">
-			<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
-				update="eventsListDetails"
-				oncomplete="PF('eventListDialog').show();" />
-
-			<!-- Отключен, так как передается нулл, и дату вытащить не возможно -->
-			<!--
-			<p:ajax event="eventSelect" listener="#{eventHome.onDateSelect}"
-				update="eventsListDetails" oncomplete="PF('eventListDialog').show();" />
-			-->
-		</p:schedule>
-
-		<ui:include src="/pages/calendar/EventEditDlg.xhtml" />
-		<ui:include src="/pages/calendar/EventsListDlg.xhtml" />
+			<ui:include src="/pages/calendar/EventsList.xhtml" />
+		</h:panelGrid>
+		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 	</h:form>
 </ui:composition>
