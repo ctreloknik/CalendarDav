@@ -8,12 +8,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
-import javax.print.attribute.standard.SheetCollate;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.ScheduleEvent;
 
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.enums.EventCategories;
@@ -23,38 +22,39 @@ import ru.nik.services.servicesImpl.UserCalendarServiceBean;
 
 @Named(value = "eventHome")
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class EventHome implements Serializable
 {
-	private static final long serialVersionUID = -3226059638923060660L;
+    private static final long serialVersionUID = -3226059638923060660L;
 
-	@EJB
-	private UserCalendarEventsServiceBean eventsServiceBean;
-	
-	@EJB
-	private UserCalendarServiceBean userCalendarService;
-	
-	private UserCalendarEventsDTO event;
-	private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
-	
-	private List<String> selectedCategories = new ArrayList<String>();
-	private List<String> categories = new ArrayList<String>();
-	
-	private List<String> repeatTimeList = new ArrayList<String>();
-	private String selectedRepeatTime;
-	
-	@PostConstruct
+    @EJB
+    private UserCalendarEventsServiceBean eventsServiceBean;
+
+    @EJB
+    private UserCalendarServiceBean userCalendarService;
+
+    private UserCalendarEventsDTO event;
+    private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
+
+    private List<String> selectedCategories = new ArrayList<String>();
+    private List<String> categories = new ArrayList<String>();
+
+    private List<String> repeatTimeList = new ArrayList<String>();
+    private String selectedRepeatTime = "";
+
+    private Boolean managed = false;
+
+    @PostConstruct
     public void init()
     {
         event = new UserCalendarEventsDTO();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
-        
-        selectedRepeatTime = "";
+
         for (RepeatTime rt : RepeatTime.values())
             repeatTimeList.add(rt.getName());
     }
-	
+
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -64,7 +64,7 @@ public class EventHome implements Serializable
     {
         this.event = event;
     }
-    
+
     public List<UserCalendarEventsDTO> getCalendarEvents()
     {
         return calendarEvents;
@@ -104,44 +104,46 @@ public class EventHome implements Serializable
     {
         this.selectedRepeatTime = selectedRepeatTime;
     }
-    
+
     public void onDateSelect(SelectEvent selectEvent)
     {
-        calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent.getObject());
+        calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
+                .getObject());
     }
-    
+
     public List<UserCalendarEventsDTO> getAllEvents()
     {
         return eventsServiceBean.getAll();
     }
-    
+
     public void loadEvent(Long eventId)
     {
+        managed = true;
         event = eventsServiceBean.find(eventId);
     }
 
     public void saveEvent()
-	{
+    {
         event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
         event.setUserCalendar(userCalendarService.find(1L));
         event = eventsServiceBean.create(event);
-	    eventsServiceBean.saveCategories(event, selectedCategories);
-	    update();
-	}
-    
+        eventsServiceBean.saveCategories(event, selectedCategories);
+        update();
+    }
+
     public void updateEvent()
     {
         eventsServiceBean.update(event);
         update();
     }
-    
+
     private void update()
     {
         event = null;
-        categories.clear();
+        //categories.clear();
         selectedCategories.clear();
         selectedRepeatTime = "";
-        repeatTimeList.clear();
+        //repeatTimeList.clear();
         //init();
     }
 
