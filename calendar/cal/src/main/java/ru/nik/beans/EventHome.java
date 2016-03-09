@@ -142,7 +142,7 @@ public class EventHome implements Serializable
         selectedCategories.clear();
         selectedRepeatTime = "";
         repeatTimeList.clear();
-        init();
+        //init();
     }
 
 }

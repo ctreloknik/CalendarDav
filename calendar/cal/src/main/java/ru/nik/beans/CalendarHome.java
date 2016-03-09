@@ -36,6 +36,8 @@ public class CalendarHome implements Serializable
 	private ScheduleModel eventModel;
 	List<UserCalendarEventsDTO> events;
 	
+	private Date calendarDate;
+	
 	@PostConstruct
     public void init()
 	{
@@ -54,6 +56,17 @@ public class CalendarHome implements Serializable
         });
 	}
 
+    public Date getCalendarDate()
+    {
+        return calendarDate;
+    }
+
+    public void setCalendarDate(Date calendarDate)
+    {
+        this.calendarDate = calendarDate;
+    }
+
+    // ниже то, что уже не требуется. но полная перестройка позже
     public ScheduleModel getEventModel()
     {
         return eventModel;
