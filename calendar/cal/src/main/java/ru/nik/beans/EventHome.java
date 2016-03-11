@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
+import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.enums.EventCategories;
 import ru.nik.enums.RepeatTime;
@@ -134,6 +135,9 @@ public class EventHome implements Serializable
     {
         managed = true;
         event = eventsServiceBean.find(eventId);
+        setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
+        for (EventCategoriesDTO ec : event.getEventCategories())
+            selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
     }
 
     public void saveEvent()
