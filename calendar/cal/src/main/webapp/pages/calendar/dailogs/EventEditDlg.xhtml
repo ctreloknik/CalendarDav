@@ -10,7 +10,12 @@
 			modal="true" resizable="false" minWidth="450">
 
 			<p:outputLabel value="Название события:" />
-			<p:inputText value="#{eventHome.event.name}" />
+			<p:inputText value="#{eventHome.event.name}" style="width: 100%;" />
+
+			<p:outputLabel value="Описание:" style="display: block" />
+			<p:inputTextarea rows="5" cols="30"
+				value="#{eventHome.event.description}"
+				style="display: block; width: 100%; max-height: 100px" />
 
 			<h:panelGrid id="dialogEventGrid" columns="2">
 
@@ -35,9 +40,9 @@
 							value="#{eventHome.event.endTime}" style="display: inline" />
 					</div>
 
-					<p:outputLabel for="allDay" value="Весь день:"/>
+					<p:outputLabel for="allDay" value="Весь день:" />
 					<h:selectBooleanCheckbox id="allDay"
-						value="#{eventHome.event.allDay}"/>
+						value="#{eventHome.event.allDay}" />
 				</p:panel>
 
 				<p:panel style="border-style: none">
@@ -59,14 +64,14 @@
 
 			</h:panelGrid>
 
-				<p:commandButton value="Сохранить" id="saveEvent"
-					actionListener="#{eventHome.saveEvent()}" ajax="true"
-					update=":calendarForm :calendarForm:eventEditDlg"
-					oncomplete="PF('eventEditDlg').hide();" />
+			<p:commandButton value="Сохранить" id="saveEvent"
+				actionListener="#{eventHome.saveEvent()}" ajax="true"
+				update=":calendarForm :calendarForm:eventEditDlg"
+				oncomplete="PF('eventEditDlg').hide();" />
 
-				<p:commandButton value="Отмена" id="cancel"
-					actionListener="#{eventHome.init()}"
-					oncomplete="PF('eventEditDlg').hide();" />
+			<p:commandButton value="Отмена" id="cancel"
+				actionListener="#{eventHome.init()}"
+				oncomplete="PF('eventEditDlg').hide();" />
 		</p:dialog>
 	</p:panel>
 </ui:composition>

@@ -120,6 +120,12 @@ public class EventHome implements Serializable
     {
         managed = false;
         event = new UserCalendarEventsDTO();
+        Date currentDate = new Date();
+        event.setName("Новое событие");
+        event.setStartDatetime(currentDate);
+        event.setEndDatetime(currentDate);
+        event.setStartTime(new Date(System.currentTimeMillis()));
+        event.setEndTime(new Date(System.currentTimeMillis()));
     }
 
     public void loadEvent(Long eventId)
