@@ -7,9 +7,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
@@ -150,10 +151,27 @@ public class EventHome implements Serializable
         update();
     }
 
-    public void updateEvent()
+    public Boolean checkDate()
     {
-        eventsServiceBean.update(event);
-        update();
+        if (event.getStartDatetime().equals(event.getEndDatetime()) && 
+                (event.getStartTime().after(event.getEndTime())))
+        {
+            makeMessAboutWrongDateOrTime();
+            return false;
+        }
+        if (event.getStartDatetime().after(event.getEndDatetime()))
+        {
+            makeMessAboutWrongDateOrTime();
+            return false;
+        }
+               
+        return true;
+    }
+    
+    public void makeMessAboutWrongDateOrTime()
+    {
+        FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "ќшибка!", "¬ведено неверное врем€ или дата."));
     }
 
     private void update()
