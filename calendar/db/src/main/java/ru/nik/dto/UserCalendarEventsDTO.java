@@ -71,9 +71,8 @@ public class UserCalendarEventsDTO
         this.userCalendarEventsId = userCalendarEventsId;
     }
 
-    @ManyToOne(cascade =
-    {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_CALENDAR_ID", unique = false, nullable = true, insertable = true, updatable = true)
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_CALENDAR_ID", unique = false, nullable = false, insertable = true, updatable = true)
     public UserCalendarDTO getUserCalendar()
     {
         return userCalendar;
