@@ -9,6 +9,8 @@
 		<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
 			modal="true" resizable="false" minWidth="450">
 
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
 			<p:outputLabel value="Название события:" />
 			<p:inputText value="#{eventHome.event.name}" style="width: 100%;" />
 
