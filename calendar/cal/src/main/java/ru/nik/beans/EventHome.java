@@ -125,8 +125,9 @@ public class EventHome implements Serializable
         event.setName("Новое событие");
         event.setStartDatetime(currentDate);
         event.setEndDatetime(currentDate);
-        event.setStartTime(new Date(System.currentTimeMillis()));
-        event.setEndTime(new Date(System.currentTimeMillis()));
+        Long curTime = System.currentTimeMillis();
+        event.setStartTime(new Date(curTime));
+        event.setEndTime(new Date(curTime));
     }
 
     public void loadEvent(Long eventId)
@@ -137,18 +138,21 @@ public class EventHome implements Serializable
 
     public void saveEvent()
     {
-        if (!managed)
+        if (checkDate())
         {
-            event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
-            event.setUserCalendar(userCalendarService.find(1L));
-            event = eventsServiceBean.create(event);
-            eventsServiceBean.saveCategories(event, selectedCategories);
+            if (!managed)
+            {
+                event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
+                event.setUserCalendar(userCalendarService.find(1L));
+                event = eventsServiceBean.create(event);
+                eventsServiceBean.saveCategories(event, selectedCategories);
+            }
+            else
+            {
+                event = eventsServiceBean.update(event);
+            }
+            update();
         }
-        else
-        {
-            event = eventsServiceBean.update(event);
-        }
-        update();
     }
 
     public Boolean checkDate()
