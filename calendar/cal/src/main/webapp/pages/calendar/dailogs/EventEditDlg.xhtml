@@ -7,7 +7,7 @@
 
 	<p:panel id="eventPanel">
 		<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
-			modal="true" resizable="false" minWidth="450" >
+			modal="true" resizable="false" minWidth="450">
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -70,8 +70,9 @@
 
 					</h:panelGrid>
 				</p:tab>
-				
+
 				<p:tab title="Участники">
+					<ui:include src="/pages/calendar/MembersList.xhtml" />
 				</p:tab>
 			</p:tabView>
 

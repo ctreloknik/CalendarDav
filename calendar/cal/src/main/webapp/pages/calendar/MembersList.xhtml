@@ -5,6 +5,20 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	
+	<p:dataTable id="membersListGrid" widgetVar="membersListGrid" value=""
+		var="membersList">
+
+		<p:column headerText="ФИО">
+			<h:outputText value="" />
+		</p:column>
+
+		<p:column headerText="">
+			<p:commandButton value="Удалить"/>
+		</p:column>
+
+	</p:dataTable>
+
+	<p:commandButton value="Добавить" actionListener=""
+		oncomplete=""/>
 
 </ui:composition>
