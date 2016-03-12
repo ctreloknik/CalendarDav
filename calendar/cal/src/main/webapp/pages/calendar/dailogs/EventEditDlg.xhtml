@@ -7,64 +7,73 @@
 
 	<p:panel id="eventPanel">
 		<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
-			modal="true" resizable="false" minWidth="450">
+			modal="true" resizable="false" minWidth="450" >
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			
-			<p:outputLabel value="Название события:" />
-			<p:inputText value="#{eventHome.event.name}" style="width: 100%;" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<p:tabView>
+				<p:tab title="Общая информация">
+					<p:outputLabel value="Название события:" />
+					<p:inputText value="#{eventHome.event.name}" style="width: 100%;" />
 
-			<p:outputLabel value="Описание:" style="display: block" />
-			<p:inputTextarea rows="5" cols="30"
-				value="#{eventHome.event.description}"
-				style="display: block; width: 100%; max-height: 100px" />
+					<p:outputLabel value="Описание:" style="display: block" />
+					<p:inputTextarea rows="5" cols="30"
+						value="#{eventHome.event.description}"
+						style="display: block; width: 100%; max-height: 100px" />
 
-			<h:panelGrid id="dialogEventGrid" columns="2">
+					<h:panelGrid id="dialogEventGrid" columns="2">
 
-				<p:panel style="border-style: none">
-					<div>
-						<p:outputLabel for="bStartDate" value="Начало:"
-							style="display: inline" />
-						<p:calendar id="bStartDate" pattern="dd/MM/yyyy"
-							value="#{eventHome.event.startDatetime}" style="display: inline" />
+						<p:panel style="border-style: none">
+							<div>
+								<p:outputLabel for="bStartDate" value="Начало:"
+									style="display: inline" />
+								<p:calendar id="bStartDate" pattern="dd/MM/yyyy"
+									value="#{eventHome.event.startDatetime}"
+									style="display: inline" />
 
-						<p:calendar id="bStartTime" pattern="HH:mm" timeOnly="true"
-							value="#{eventHome.event.startTime}" style="display: inline" />
-					</div>
+								<p:calendar id="bStartTime" pattern="HH:mm" timeOnly="true"
+									value="#{eventHome.event.startTime}" style="display: inline" />
+							</div>
 
-					<div>
-						<p:outputLabel for="bEndDate" value="Конец:"
-							style="display: inline" />
-						<p:calendar id="bEndDate" pattern="dd/MM/yyyy"
-							value="#{eventHome.event.endDatetime}" style="display: inline" />
+							<div>
+								<p:outputLabel for="bEndDate" value="Конец:"
+									style="display: inline" />
+								<p:calendar id="bEndDate" pattern="dd/MM/yyyy"
+									value="#{eventHome.event.endDatetime}" style="display: inline" />
 
-						<p:calendar id="bEndTime" pattern="HH:mm" timeOnly="true"
-							value="#{eventHome.event.endTime}" style="display: inline" />
-					</div>
+								<p:calendar id="bEndTime" pattern="HH:mm" timeOnly="true"
+									value="#{eventHome.event.endTime}" style="display: inline" />
+							</div>
 
-					<p:outputLabel for="allDay" value="Весь день:" />
-					<h:selectBooleanCheckbox id="allDay"
-						value="#{eventHome.event.allDay}" />
-				</p:panel>
+							<p:outputLabel for="allDay" value="Весь день:" />
+							<h:selectBooleanCheckbox id="allDay"
+								value="#{eventHome.event.allDay}" />
+						</p:panel>
 
-				<p:panel style="border-style: none">
-					<p:outputLabel value="Категории:" />
-					<p:selectCheckboxMenu id="categoriesMenu"
-						style="min-width: 200px; display: block"
-						value="#{eventHome.selectedCategories}" label="Категории"
-						filter="true" filterMatchMode="startsWith"
-						panelStyle="width:240px">
-						<f:selectItems value="#{eventHome.allCategories}" />
-					</p:selectCheckboxMenu>
+						<p:panel style="border-style: none">
+							<p:outputLabel value="Категории:" />
+							<p:selectCheckboxMenu id="categoriesMenu"
+								style="min-width: 200px; display: block"
+								value="#{eventHome.selectedCategories}" label="Категории"
+								filter="true" filterMatchMode="startsWith"
+								panelStyle="width:240px">
+								<f:selectItems value="#{eventHome.allCategories}" />
+							</p:selectCheckboxMenu>
 
-					<p:outputLabel for="city" value="Повторять: " />
-					<p:selectOneMenu id="city" value="#{eventHome.selectedRepeatTime}"
-						style="min-width: 200px; display: block">
-						<f:selectItems value="#{eventHome.repeatTimeList}" />
-					</p:selectOneMenu>
-				</p:panel>
+							<p:outputLabel for="city" value="Повторять: " />
+							<p:selectOneMenu id="city"
+								value="#{eventHome.selectedRepeatTime}"
+								style="min-width: 200px; display: block">
+								<f:selectItems value="#{eventHome.repeatTimeList}" />
+							</p:selectOneMenu>
+						</p:panel>
 
-			</h:panelGrid>
+					</h:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Участники">
+				</p:tab>
+			</p:tabView>
 
 			<p:commandButton value="Сохранить" id="saveEvent"
 				actionListener="#{eventHome.saveEvent()}" ajax="true"
