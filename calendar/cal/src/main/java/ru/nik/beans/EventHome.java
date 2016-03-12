@@ -136,8 +136,9 @@ public class EventHome implements Serializable
         managed = true;
         event = eventsServiceBean.find(eventId);
         setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
-        //for (EventCategoriesDTO ec : event.getEventCategories())
-          //  selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
+        List<EventCategoriesDTO> cat = eventsServiceBean.getEventCategories(event.getUserCalendarEventsId());
+        for (EventCategoriesDTO ec : cat)
+            selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
     }
 
     public void saveEvent()

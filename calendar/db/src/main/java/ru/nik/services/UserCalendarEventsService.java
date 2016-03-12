@@ -3,6 +3,7 @@ package ru.nik.services;
 import java.util.Date;
 import java.util.List;
 
+import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
@@ -39,5 +40,12 @@ public interface UserCalendarEventsService extends GenericCrud<UserCalendarEvent
      * @return
      */
     public List<UserCalendarEventsDTO> getNextEvents();
+    
+    /**
+     * Получить категории события по ид события.
+     * @param eventId ид события
+     * @return категории.
+     */
+    public List<EventCategoriesDTO> getEventCategories(Long eventId);
     
 }

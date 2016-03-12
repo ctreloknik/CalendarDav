@@ -88,8 +88,22 @@ public class UserCalendarEventsServiceImpl extends GenericCrudImpl<UserCalendarE
     public List<UserCalendarEventsDTO> getNextEvents()
     {
         Query q = getEntityManager().createQuery(
-                "SELECT DISTINCT c from UserCalendarEventsDTO e "
+                "SELECT DISTINCT e from UserCalendarEventsDTO e "
                 + "WHERE e.startDatetime > current_date ORDER BY e.startDatetime");
+        return q.getResultList();
+    }
+    
+    /**
+     * Получить категории события по ид события.
+     * @param eventId ид события
+     * @return категории.
+     */
+    public List<EventCategoriesDTO> getEventCategories(Long eventId)
+    {
+        Query q = getEntityManager().createQuery(
+                "SELECT ec from EventCategoriesDTO ec "
+                + "WHERE ec.event.userCalendarEventsId =:eventId");
+        q.setParameter("eventId", eventId);
         return q.getResultList();
     }
     

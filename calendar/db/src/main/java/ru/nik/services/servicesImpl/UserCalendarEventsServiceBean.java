@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
@@ -79,6 +80,12 @@ public class UserCalendarEventsServiceBean extends UserCalendarEventsServiceImpl
     {
         return super.getNextEvents();
     }
-    
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<EventCategoriesDTO> getEventCategories(Long eventId)
+    {
+        return super.getEventCategories(eventId);
+    }
     
 }
