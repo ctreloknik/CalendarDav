@@ -34,6 +34,8 @@ public class EventHome implements Serializable
 
     @EJB
     private UserCalendarServiceBean userCalendarService;
+    
+    private MembersBlock membersBlock = new MembersBlock();
 
     private UserCalendarEventsDTO event;
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
@@ -57,6 +59,18 @@ public class EventHome implements Serializable
             repeatTimeList.add(rt.getName());
     }
 
+    public MembersBlock getMembersBlock()
+    {
+        return membersBlock;
+    }
+
+    public void setMembersBlock(MembersBlock membersBlock)
+    {
+        this.membersBlock = membersBlock;
+    }
+
+    ////// Getters and setters //////
+    
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -107,6 +121,8 @@ public class EventHome implements Serializable
         this.selectedRepeatTime = selectedRepeatTime;
     }
 
+    ////// Ìועמהû הכÿ נאבמעû ס סמבûעטÿלט //////
+    
     public void onDateSelect(SelectEvent selectEvent)
     {
         calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
@@ -140,25 +156,26 @@ public class EventHome implements Serializable
         List<EventCategoriesDTO> cat = eventsServiceBean.getEventCategories(event.getUserCalendarEventsId());
         for (EventCategoriesDTO ec : cat)
             selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
+        membersBlock.getCurrentMembersForEvent(event.getUserCalendarEventsId());
     }
 
     public void saveEvent()
     {
         if (checkDate())
+            return;
+
+        if (!managed)
         {
-            if (!managed)
-            {
-                event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
-                event.setUserCalendar(userCalendarService.find(1L));
-                event = eventsServiceBean.create(event);
-                eventsServiceBean.saveCategories(event, selectedCategories);
-            }
-            else
-            {
-                event = eventsServiceBean.update(event);
-            }
-            update();
+            event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
+            event.setUserCalendar(userCalendarService.find(1L));
+            event = eventsServiceBean.create(event);
+            eventsServiceBean.saveCategories(event, selectedCategories);
         }
+        else
+        {
+            event = eventsServiceBean.update(event);
+        }
+        update();
     }
 
     public Boolean checkDate()
