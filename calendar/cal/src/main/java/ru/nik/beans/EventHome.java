@@ -129,6 +129,7 @@ public class EventHome implements Serializable
         Long curTime = System.currentTimeMillis();
         event.setStartTime(new Date(curTime));
         event.setEndTime(new Date(curTime));
+        update();
     }
 
     public void loadEvent(Long eventId)
