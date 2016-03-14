@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 
 import ru.nik.dto.EventMembersDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
@@ -15,15 +16,16 @@ import ru.nik.services.servicesImpl.UserServiceBean;
  * @author Nikita
  *
  */
+@ManagedBean
 public class MembersBlock
 {
     @EJB
-    private EventmembersServiceBean membersService;
+    private EventmembersServiceBean membersService = new EventmembersServiceBean();
     
     @EJB
-    private UserServiceBean userService;
+    private UserServiceBean userService = new UserServiceBean();
     
-    //private List<UsersDTO> users = new ArrayList<UsersDTO>();
+    private List<UsersDTO> users = new ArrayList<UsersDTO>();
     private List<EventMembersDTO> currentUsers = new ArrayList<EventMembersDTO>();
     private List<UsersDTO> addedUsers = new ArrayList<UsersDTO>();
     private List<EventMembersDTO> deletedUsers = new ArrayList<EventMembersDTO>();
@@ -65,7 +67,8 @@ public class MembersBlock
 
     public List<UsersDTO> getAllUsers()
     {
-        return userService.getAll();
+        users = userService.getAll();
+        return users;
     }
     
     public void getCurrentMembersForEvent(Long eventId)

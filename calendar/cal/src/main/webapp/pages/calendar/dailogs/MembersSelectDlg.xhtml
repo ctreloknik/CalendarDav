@@ -7,6 +7,16 @@
 
 	<p:dialog id="membersSelectDlg" header="Выбрать участников" widgetVar="membersSelectDlg"
 		modal="true" resizable="false" minWidth="450">
+		
+		<p:dataTable id="selectMembers" widgetVar="selectMembers"
+		value="#{eventHome.membersBlock.allUsers}" var="usersList">
+
+		<p:column headerText="ФИО">
+			<p:commandLink value="#{usersList.toString()}"
+				/>
+		</p:column>
+
+	</p:dataTable>
 	</p:dialog>
 
 </ui:composition>
