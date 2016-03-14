@@ -128,4 +128,9 @@ public class UsersDTO
         this.eventMembers = eventMembers;
     }
     
+    public String toString()
+    {
+        return firstName + " " + lastName + " " + middleName;
+    }
+    
 }
