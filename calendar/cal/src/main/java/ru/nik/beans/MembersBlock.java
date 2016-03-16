@@ -16,7 +16,6 @@ import ru.nik.services.servicesImpl.UserServiceBean;
  * @author Nikita
  *
  */
-@ManagedBean
 public class MembersBlock
 {
     @EJB

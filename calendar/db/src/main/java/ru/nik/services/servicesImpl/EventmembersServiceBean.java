@@ -59,4 +59,11 @@ public class EventmembersServiceBean extends EventMembersServiceImpl
         super.remove(id);
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<EventMembersDTO> getMembersByEventId(Long eventId)
+    {
+        return super.getMembersByEventId(eventId);
+    }
+    
 }

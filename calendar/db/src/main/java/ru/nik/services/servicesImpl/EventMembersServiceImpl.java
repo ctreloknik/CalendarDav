@@ -1,5 +1,7 @@
 package ru.nik.services.servicesImpl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,8 +22,7 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
     @Override
     protected void closeEntityManager()
 	{
-    	eman.close();
-	}
+    }
 
     @Override
     protected EntityManager getEntityManager()
@@ -34,6 +35,11 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
 		super(EventMembersDTO.class);
 	}
     
+    /**
+     * Получение сущности участника по ИД события.
+     * @param eventMemberId
+     * @return
+     */
     public UsersDTO getUserByEventMemberId(Long eventMemberId)
     {
         Query q = getEntityManager().createQuery(
@@ -43,4 +49,17 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
         return (UsersDTO) q.getSingleResult();
     }
 
+    /**
+     * Получить список участников по ИД события.
+     * @return участники.
+     */
+    @SuppressWarnings("unchecked")
+    public List<EventMembersDTO> getMembersByEventId(Long eventId)
+    {
+        Query q = getEntityManager().createQuery(
+                "select em from EventMembersDTO em "
+                + "where em.event.eventId =:eventId");
+        q.setParameter("eventId", eventId);
+        return q.getResultList();
+    }
 }

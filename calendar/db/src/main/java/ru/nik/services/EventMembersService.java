@@ -1,5 +1,7 @@
 package ru.nik.services;
 
+import java.util.List;
+
 import ru.nik.dto.EventMembersDTO;
 import ru.nik.dto.UsersDTO;
 
@@ -16,4 +18,9 @@ public interface EventMembersService extends GenericCrud<EventMembersDTO, Long>
      */
     public UsersDTO getUserByEventMemberId(Long eventMemberId);
     
+    /**
+     * Получить список участников по ИД события.
+     * @return участники.
+     */
+    public List<EventMembersDTO> getMembersByEventId(Long eventId);
 }
