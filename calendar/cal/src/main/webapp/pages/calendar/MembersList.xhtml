@@ -13,7 +13,8 @@
 		</p:column>
 
 		<p:column headerText="">
-			<p:commandButton value="Удалить" />
+			<p:commandButton value="Удалить"
+				actionListener="#{eventHome.deleteMember(membersList.eventMemberId)}" />
 		</p:column>
 
 	</p:dataTable>

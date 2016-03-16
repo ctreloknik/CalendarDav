@@ -13,7 +13,9 @@
 
 		<p:column headerText="ФИО">
 			<p:commandLink value="#{usersList.toString()}"
-				/>
+				actionListener="#{eventHome.addMemder(usersList.userId)}"
+				update=":calendarForm:informationTabView"
+				oncomplete="PF('membersSelectDlg').hide();"/>
 		</p:column>
 
 	</p:dataTable>

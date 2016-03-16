@@ -11,8 +11,8 @@
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
-			<p:tabView>
-				<p:tab title="Общая информация">
+			<p:tabView widgetVar="informationTabView" id="informationTabView">
+				<p:tab title="Общая информация" id="commonInfoTab">
 					<p:outputLabel value="Название события:" />
 					<p:inputText value="#{eventHome.event.name}" style="width: 100%;" />
 
@@ -71,7 +71,7 @@
 					</h:panelGrid>
 				</p:tab>
 
-				<p:tab title="Участники">
+				<p:tab title="Участники" id="eventMembersTab">
 					<ui:include src="/pages/calendar/MembersList.xhtml" />
 				</p:tab>
 			</p:tabView>
