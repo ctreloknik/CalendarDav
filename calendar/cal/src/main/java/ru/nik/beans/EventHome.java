@@ -215,7 +215,7 @@ public class EventHome implements Serializable
 
     public void saveEvent()
     {
-        if (checkDate())
+        if (!checkDate())
             return;
 
         if (!managed)

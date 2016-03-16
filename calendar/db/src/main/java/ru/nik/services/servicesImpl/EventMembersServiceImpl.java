@@ -58,7 +58,7 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
     {
         Query q = getEntityManager().createQuery(
                 "select em from EventMembersDTO em "
-                + "where em.event.eventId =:eventId");
+                + "where em.userCalendarEventsDTO.userCalendarEventsId =:eventId");
         q.setParameter("eventId", eventId);
         return q.getResultList();
     }
