@@ -59,8 +59,8 @@ public class EventHome implements Serializable
     private Boolean managed = false;
 
     //////// По возможности вынести работу с участниками в отдельный класс
-    private List<UsersDTO> addedUsers = new ArrayList<UsersDTO>();
-    private List<EventMembersDTO> deletedUsers = new ArrayList<EventMembersDTO>();
+    private List<Long> addedUsers = new ArrayList<Long>();
+    private List<Long> deletedUsers = new ArrayList<Long>();
     
     
     @PostConstruct
@@ -96,22 +96,22 @@ public class EventHome implements Serializable
 
     ////// Getters and setters //////
     
-    public List<UsersDTO> getAddedUsers()
+    public List<Long> getAddedUsers()
     {
         return addedUsers;
     }
 
-    public void setAddedUsers(List<UsersDTO> addedUsers)
+    public void setAddedUsers(List<Long> addedUsers)
     {
         this.addedUsers = addedUsers;
     }
 
-    public List<EventMembersDTO> getDeletedUsers()
+    public List<Long> getDeletedUsers()
     {
         return deletedUsers;
     }
 
-    public void setDeletedUsers(List<EventMembersDTO> deletedUsers)
+    public void setDeletedUsers(List<Long> deletedUsers)
     {
         this.deletedUsers = deletedUsers;
     }
@@ -175,6 +175,20 @@ public class EventHome implements Serializable
     {
         return usersService.getAll();
     }
+    
+    //////Методы для работы с участниками //////
+    
+    // исправить в дальнейшем передачу, чтобы не было явно видно ИД
+    public void addMemder(Long userId)
+    {
+        addedUsers.add(userId);
+    }
+    
+    public void deleteMember(Long eventMemberId)
+    {
+        deletedUsers.add(eventMemberId);
+    }
+    
     
     ////// Методы для работы с событиями //////
     
