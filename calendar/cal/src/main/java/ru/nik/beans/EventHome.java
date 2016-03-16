@@ -16,11 +16,15 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import ru.nik.dto.EventCategoriesDTO;
+import ru.nik.dto.EventMembersDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
+import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
 import ru.nik.enums.RepeatTime;
+import ru.nik.services.servicesImpl.EventmembersServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarServiceBean;
+import ru.nik.services.servicesImpl.UserServiceBean;
 
 @Named(value = "eventHome")
 @ManagedBean
@@ -31,11 +35,17 @@ public class EventHome implements Serializable
 
     @EJB
     private UserCalendarEventsServiceBean eventsServiceBean;
+    
+    @EJB
+    private UserServiceBean usersService;
+    
+    @EJB
+    private EventmembersServiceBean membersService;
 
     @EJB
     private UserCalendarServiceBean userCalendarService;
     
-    private MembersBlock membersBlock = new MembersBlock();
+    //private MembersBlock membersBlock;
 
     private UserCalendarEventsDTO event;
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
@@ -48,6 +58,11 @@ public class EventHome implements Serializable
 
     private Boolean managed = false;
 
+    //////// По возможности вынести работу с участниками в отдельный класс
+    private List<UsersDTO> addedUsers = new ArrayList<UsersDTO>();
+    private List<EventMembersDTO> deletedUsers = new ArrayList<EventMembersDTO>();
+    
+    
     @PostConstruct
     public void init()
     {
@@ -58,7 +73,16 @@ public class EventHome implements Serializable
         for (RepeatTime rt : RepeatTime.values())
             repeatTimeList.add(rt.getName());
     }
+    
+    /*private void initBlocks()
+    {
+        MembersBlock membersBlock = new MembersBlock();
+        this.setMembersBlock(membersBlock);
+    }*/
+    
+    ////// Getters and setters for blocks //////
 
+    /*
     public MembersBlock getMembersBlock()
     {
         return membersBlock;
@@ -68,9 +92,30 @@ public class EventHome implements Serializable
     {
         this.membersBlock = membersBlock;
     }
+    */
 
     ////// Getters and setters //////
     
+    public List<UsersDTO> getAddedUsers()
+    {
+        return addedUsers;
+    }
+
+    public void setAddedUsers(List<UsersDTO> addedUsers)
+    {
+        this.addedUsers = addedUsers;
+    }
+
+    public List<EventMembersDTO> getDeletedUsers()
+    {
+        return deletedUsers;
+    }
+
+    public void setDeletedUsers(List<EventMembersDTO> deletedUsers)
+    {
+        this.deletedUsers = deletedUsers;
+    }
+
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -121,6 +166,16 @@ public class EventHome implements Serializable
         this.selectedRepeatTime = selectedRepeatTime;
     }
 
+    public List<EventMembersDTO> getEventMembers()
+    {
+        return membersService.getMembersByEventId(event.getUserCalendarEventsId());
+    }
+    
+    public List<UsersDTO> getAllUsers()
+    {
+        return usersService.getAll();
+    }
+    
     ////// Методы для работы с событиями //////
     
     public void onDateSelect(SelectEvent selectEvent)
@@ -156,7 +211,6 @@ public class EventHome implements Serializable
         List<EventCategoriesDTO> cat = eventsServiceBean.getEventCategories(event.getUserCalendarEventsId());
         for (EventCategoriesDTO ec : cat)
             selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
-        membersBlock.getCurrentMembersForEvent(event.getUserCalendarEventsId());
     }
 
     public void saveEvent()

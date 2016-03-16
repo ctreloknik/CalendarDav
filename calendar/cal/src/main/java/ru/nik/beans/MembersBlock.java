@@ -18,16 +18,17 @@ import ru.nik.services.servicesImpl.UserServiceBean;
  */
 public class MembersBlock
 {
-    @EJB
-    private EventmembersServiceBean membersService = new EventmembersServiceBean();
-    
-    @EJB
-    private UserServiceBean userService = new UserServiceBean();
+    private EventHome eventHome;
     
     private List<UsersDTO> users = new ArrayList<UsersDTO>();
     private List<EventMembersDTO> currentUsers = new ArrayList<EventMembersDTO>();
     private List<UsersDTO> addedUsers = new ArrayList<UsersDTO>();
     private List<EventMembersDTO> deletedUsers = new ArrayList<EventMembersDTO>();
+    
+    public MembersBlock(EventHome eventHome)
+    {
+        this.eventHome = eventHome;
+    }
     
     /*public List<UsersDTO> getUsers()
     {
@@ -66,7 +67,6 @@ public class MembersBlock
 
     public List<UsersDTO> getAllUsers()
     {
-        users = userService.getAll();
         return users;
     }
     
@@ -74,7 +74,7 @@ public class MembersBlock
     {
         // заглушка для тестов
         // требуется получать участников для конкретного события
-        currentUsers = membersService.getAll();
+        //currentUsers = membersService.getAll();
     }
     
     public void saveMembers(UserCalendarEventsDTO event)
@@ -85,7 +85,7 @@ public class MembersBlock
             evm = new EventMembersDTO();
             evm.setUser(user);
             evm.setUserCalendarEventsDTO(event);
-            membersService.create(evm);
+            //membersService.create(evm);
         }
     }
 }
