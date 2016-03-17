@@ -9,8 +9,6 @@
 		<p:dialog id="eventEditDlg" header="Событие" widgetVar="eventEditDlg"
 			modal="true" resizable="false" minWidth="450">
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
 			<p:tabView widgetVar="informationTabView" id="informationTabView">
 				<p:tab title="Общая информация" id="commonInfoTab">
 					<p:outputLabel value="Название события:" />
@@ -78,7 +76,7 @@
 
 			<p:commandButton value="Сохранить" id="saveEvent"
 				actionListener="#{eventHome.saveEvent()}" ajax="true"
-				update=":calendarForm :calendarForm:eventEditDlg"
+				update=":calendarForm :calendarForm:messages :calendarForm:eventEditDlg"
 				oncomplete="PF('eventEditDlg').hide();" />
 
 			<p:commandButton value="Отмена" id="cancel"

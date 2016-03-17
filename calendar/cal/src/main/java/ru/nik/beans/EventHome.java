@@ -59,6 +59,7 @@ public class EventHome implements Serializable
     private Boolean managed = false;
 
     //////// По возможности вынести работу с участниками в отдельный класс
+    private List<EventMembersDTO> currentMembers;
     private List<Long> addedUsers = new ArrayList<Long>();
     private List<Long> deletedUsers = new ArrayList<Long>();
     
@@ -67,6 +68,7 @@ public class EventHome implements Serializable
     public void init()
     {
         event = new UserCalendarEventsDTO();
+        currentMembers = new ArrayList<EventMembersDTO>();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
 
@@ -94,7 +96,7 @@ public class EventHome implements Serializable
     }
     */
 
-    ////// Getters and setters //////
+    ////// Getters and setters for members //////
     
     public List<Long> getAddedUsers()
     {
@@ -116,6 +118,18 @@ public class EventHome implements Serializable
         this.deletedUsers = deletedUsers;
     }
 
+    public List<EventMembersDTO> getCurrentMembers()
+    {
+        return currentMembers;
+    }
+
+    public void setCurrentMembers(List<EventMembersDTO> currentMembers)
+    {
+        this.currentMembers = currentMembers;
+    }
+
+    //////Getters and setters //////
+    
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -182,6 +196,11 @@ public class EventHome implements Serializable
     public void addMemder(Long userId)
     {
         addedUsers.add(userId);
+        EventMembersDTO eventMem = new EventMembersDTO();
+        eventMem.setUser(usersService.find(userId));
+        eventMem.setIsConfirmed(false);
+        eventMem.setUserCalendarEventsDTO(event);
+        currentMembers.add(eventMem);
     }
     
     public void deleteMember(Long eventMemberId)
@@ -272,6 +291,7 @@ public class EventHome implements Serializable
     private void update()
     {
         event = new UserCalendarEventsDTO();
+        currentMembers.clear();
         // categories.clear();
         selectedCategories.clear();
         selectedRepeatTime = "";

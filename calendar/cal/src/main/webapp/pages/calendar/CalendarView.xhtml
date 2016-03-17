@@ -6,6 +6,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="calendarForm">
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			
 		<h:panelGrid columns="1" cellpadding="5">
 			<p:commandButton value="Создать событие"
 				action="#{eventHome.preCreateEvent()}"
