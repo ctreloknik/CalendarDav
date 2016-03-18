@@ -6,23 +6,26 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="calendarForm">
-		<h:panelGrid columns="1" cellpadding="5">
-			<p:commandButton value="Создать событие"
-				action="#{eventHome.preCreateEvent()}"
-				update=":calendarForm:eventEditDlg"
-				oncomplete="PF('eventEditDlg').show();" />
-		</h:panelGrid>
-
-		<h:panelGrid id="calendarTableGrid" columns="2" cellpadding="5">
+		<div class="col-md-3">
 			<p:calendar id="calendar" widgetVar="calendar"
 				value="#{calendarHome.calendarDate}" mode="inline" navigator="true"
 				pages="1">
 				<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
 					update="eventsListDetails" />
 			</p:calendar>
+		</div>
 
+		<div class="col-md-6">
 			<ui:include src="/pages/calendar/EventsList.xhtml" />
-		</h:panelGrid>
+		</div>
+
+		<div class="col-md-3">
+			<p:commandButton value="Создать событие"
+				action="#{eventHome.preCreateEvent()}"
+				update=":calendarForm:eventEditDlg"
+				oncomplete="PF('eventEditDlg').show();" />
+
+		</div>
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 	</h:form>
 </ui:composition>
