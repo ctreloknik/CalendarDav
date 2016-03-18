@@ -233,7 +233,7 @@ public class EventHome implements Serializable
         Long curTime = System.currentTimeMillis();
         event.setStartTime(new Date(curTime));
         event.setEndTime(new Date(curTime));
-        update();
+        clear();
     }
 
     public void loadEvent(Long eventId)
@@ -291,6 +291,11 @@ public class EventHome implements Serializable
     private void update()
     {
         event = new UserCalendarEventsDTO();
+        clear();
+    }
+    
+    private void clear()
+    {
         currentMembers.clear();
         // categories.clear();
         selectedCategories.clear();
