@@ -75,8 +75,8 @@ public class UserCalendarEventsServiceImpl extends
                 ec.setEvent(event);
                 ec.setCategoryId(EventCategories.getIdByName(cat).longValue());
                 eman.merge(ec);
-                isExist = false;
             }
+            isExist = false;
         }
     }
 
