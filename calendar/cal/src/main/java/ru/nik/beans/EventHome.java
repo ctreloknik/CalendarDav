@@ -178,6 +178,8 @@ public class EventHome implements Serializable
         int i = 0;
         for (Long delUserId : deletedUsers)
         {
+            if (delUserId == null)
+                break;
             if (allMembers.get(i).getUser().getUserId().equals(delUserId))
             {
                 allMembers.remove(i);
@@ -186,6 +188,8 @@ public class EventHome implements Serializable
         }
         for (Long userId : addedUsers)
         {
+            if (userId == null)
+                break;
             EventMembersDTO eventMem = new EventMembersDTO();
             eventMem.setUser(usersService.find(userId));
             eventMem.setIsConfirmed(false);
@@ -242,6 +246,7 @@ public class EventHome implements Serializable
 
     public void loadEvent(Long eventId)
     {
+        clear();
         managed = true;
         event = eventsServiceBean.find(eventId);
         setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
@@ -262,6 +267,7 @@ public class EventHome implements Serializable
             event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
             event.setUserCalendar(userCalendarService.find(1L));
             event = eventsServiceBean.create(event);
+            //calendarEvents.add(event);
         }
         else
         {
@@ -304,9 +310,11 @@ public class EventHome implements Serializable
 
     private void clear()
     {
-        currentMembers.clear();
+        currentMembers = new ArrayList<EventMembersDTO>();
+        addedUsers = new ArrayList<Long>();
+        deletedUsers = new ArrayList<Long>();
         // categories.clear();
-        selectedCategories.clear();
+        selectedCategories = new ArrayList<String>();
         selectedRepeatTime = "";
         // repeatTimeList.clear();
         // init();
