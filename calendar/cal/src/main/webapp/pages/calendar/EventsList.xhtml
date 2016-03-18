@@ -25,11 +25,11 @@
 				</p:column>
 
 				<p:column headerText="Начало">
-					<h:outputText value="#{events.startDatetime}" />
+					<h:outputText value="#{events.startDatetime} #{events.startTime}" />
 				</p:column>
 
 				<p:column headerText="Конец">
-					<h:outputText value="#{events.endDatetime}" />
+					<h:outputText value="#{events.endDatetime} #{events.endTime}" />
 				</p:column>
 
 			</p:dataTable>

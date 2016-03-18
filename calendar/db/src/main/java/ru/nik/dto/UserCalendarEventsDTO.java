@@ -131,7 +131,7 @@ public class UserCalendarEventsDTO
         this.endDatetime = endDatetime;
     }
 
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.TIME)
     @Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getStartTime()
     {
@@ -143,7 +143,7 @@ public class UserCalendarEventsDTO
         this.startTime = startTime;
     }
 
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.TIME)
     @Column(name = "END_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getEndTime()
     {
