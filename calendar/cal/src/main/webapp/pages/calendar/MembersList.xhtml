@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:dataTable id="membersListGrid" widgetVar="membersListGrid"
-		value="#{eventHome.currentMembers}" var="membersList">
+		value="#{eventHome.eventMembers}" var="membersList">
 
 		<p:column headerText="ФИО">
 			<h:outputText value="#{membersList.user.toString()}" />

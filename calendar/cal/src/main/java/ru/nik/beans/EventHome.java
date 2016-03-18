@@ -35,17 +35,17 @@ public class EventHome implements Serializable
 
     @EJB
     private UserCalendarEventsServiceBean eventsServiceBean;
-    
+
     @EJB
     private UserServiceBean usersService;
-    
+
     @EJB
     private EventmembersServiceBean membersService;
 
     @EJB
     private UserCalendarServiceBean userCalendarService;
-    
-    //private MembersBlock membersBlock;
+
+    // private MembersBlock membersBlock;
 
     private UserCalendarEventsDTO event;
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
@@ -58,12 +58,11 @@ public class EventHome implements Serializable
 
     private Boolean managed = false;
 
-    //////// По возможности вынести работу с участниками в отдельный класс
+    // ////// По возможности вынести работу с участниками в отдельный класс
     private List<EventMembersDTO> currentMembers;
     private List<Long> addedUsers = new ArrayList<Long>();
     private List<Long> deletedUsers = new ArrayList<Long>();
-    
-    
+
     @PostConstruct
     public void init()
     {
@@ -75,29 +74,22 @@ public class EventHome implements Serializable
         for (RepeatTime rt : RepeatTime.values())
             repeatTimeList.add(rt.getName());
     }
-    
-    /*private void initBlocks()
-    {
-        MembersBlock membersBlock = new MembersBlock();
-        this.setMembersBlock(membersBlock);
-    }*/
-    
-    ////// Getters and setters for blocks //////
 
     /*
-    public MembersBlock getMembersBlock()
-    {
-        return membersBlock;
-    }
+     * private void initBlocks() { MembersBlock membersBlock = new
+     * MembersBlock(); this.setMembersBlock(membersBlock); }
+     */
 
-    public void setMembersBlock(MembersBlock membersBlock)
-    {
-        this.membersBlock = membersBlock;
-    }
-    */
+    // //// Getters and setters for blocks //////
 
-    ////// Getters and setters for members //////
-    
+    /*
+     * public MembersBlock getMembersBlock() { return membersBlock; } public
+     * void setMembersBlock(MembersBlock membersBlock) { this.membersBlock =
+     * membersBlock; }
+     */
+
+    // //// Getters and setters for members //////
+
     public List<Long> getAddedUsers()
     {
         return addedUsers;
@@ -128,8 +120,8 @@ public class EventHome implements Serializable
         this.currentMembers = currentMembers;
     }
 
-    //////Getters and setters //////
-    
+    // ////Getters and setters //////
+
     public UserCalendarEventsDTO getEvent()
     {
         return event;
@@ -182,35 +174,47 @@ public class EventHome implements Serializable
 
     public List<EventMembersDTO> getEventMembers()
     {
-        return membersService.getMembersByEventId(event.getUserCalendarEventsId());
+        List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(currentMembers);
+        int i = 0;
+        for (Long delUserId : deletedUsers)
+        {
+            if (allMembers.get(i).getUser().getUserId().equals(delUserId))
+            {
+                allMembers.remove(i);
+            }
+            i++;
+        }
+        for (Long userId : addedUsers)
+        {
+            EventMembersDTO eventMem = new EventMembersDTO();
+            eventMem.setUser(usersService.find(userId));
+            eventMem.setIsConfirmed(false);
+            eventMem.setUserCalendarEventsDTO(event);
+            allMembers.add(eventMem);
+        }
+        return allMembers;
     }
-    
+
     public List<UsersDTO> getAllUsers()
     {
         return usersService.getAll();
     }
-    
-    //////Методы для работы с участниками //////
-    
+
+    // ////Методы для работы с участниками //////
+
     // исправить в дальнейшем передачу, чтобы не было явно видно ИД
     public void addMemder(Long userId)
     {
         addedUsers.add(userId);
-        EventMembersDTO eventMem = new EventMembersDTO();
-        eventMem.setUser(usersService.find(userId));
-        eventMem.setIsConfirmed(false);
-        eventMem.setUserCalendarEventsDTO(event);
-        currentMembers.add(eventMem);
     }
-    
+
     public void deleteMember(Long eventMemberId)
     {
         deletedUsers.add(eventMemberId);
     }
-    
-    
-    ////// Методы для работы с событиями //////
-    
+
+    // //// Методы для работы с событиями //////
+
     public void onDateSelect(SelectEvent selectEvent)
     {
         calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
@@ -241,9 +245,11 @@ public class EventHome implements Serializable
         managed = true;
         event = eventsServiceBean.find(eventId);
         setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
-        List<EventCategoriesDTO> cat = eventsServiceBean.getEventCategories(event.getUserCalendarEventsId());
+        List<EventCategoriesDTO> cat = eventsServiceBean
+                .getEventCategories(event.getUserCalendarEventsId());
         for (EventCategoriesDTO ec : cat)
-            selectedCategories.add(EventCategories.getNameById(ec.getCategoryId().intValue()));
+            selectedCategories.add(EventCategories.getNameById(ec
+                    .getCategoryId().intValue()));
     }
 
     public void saveEvent()
@@ -256,19 +262,19 @@ public class EventHome implements Serializable
             event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
             event.setUserCalendar(userCalendarService.find(1L));
             event = eventsServiceBean.create(event);
-            eventsServiceBean.saveCategories(event, selectedCategories);
         }
         else
         {
             event = eventsServiceBean.update(event);
         }
+        eventsServiceBean.saveCategories(event, selectedCategories);
         update();
     }
 
     public Boolean checkDate()
     {
-        if (event.getStartDatetime().equals(event.getEndDatetime()) && 
-                (event.getStartTime().after(event.getEndTime())))
+        if (event.getStartDatetime().equals(event.getEndDatetime())
+                && (event.getStartTime().after(event.getEndTime())))
         {
             makeMessAboutWrongDateOrTime();
             return false;
@@ -278,14 +284,16 @@ public class EventHome implements Serializable
             makeMessAboutWrongDateOrTime();
             return false;
         }
-               
+
         return true;
     }
-    
+
     public void makeMessAboutWrongDateOrTime()
     {
-        FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!", "Введено неверное время или дата."));
+        FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!",
+                        "Введено неверное время или дата."));
     }
 
     private void update()
@@ -293,7 +301,7 @@ public class EventHome implements Serializable
         event = new UserCalendarEventsDTO();
         clear();
     }
-    
+
     private void clear()
     {
         currentMembers.clear();
