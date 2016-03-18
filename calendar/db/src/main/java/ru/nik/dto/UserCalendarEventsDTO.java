@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USER_CALENDAR_EVENTS")
@@ -105,6 +107,7 @@ public class UserCalendarEventsDTO
         this.description = description;
     }
 
+    @Temporal(value = TemporalType.DATE)
     @Column(name = "START_DATETIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getStartDatetime()
     {
@@ -116,6 +119,7 @@ public class UserCalendarEventsDTO
         this.startDatetime = startDatetime;
     }
 
+    @Temporal(value = TemporalType.DATE)
     @Column(name = "END_DATETIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getEndDatetime()
     {
@@ -127,6 +131,7 @@ public class UserCalendarEventsDTO
         this.endDatetime = endDatetime;
     }
 
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "START_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getStartTime()
     {
@@ -138,6 +143,7 @@ public class UserCalendarEventsDTO
         this.startTime = startTime;
     }
 
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "END_TIME", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
     public Date getEndTime()
     {
@@ -149,7 +155,7 @@ public class UserCalendarEventsDTO
         this.endTime = endTime;
     }
 
-    @Column(name = "NOTIFICATION_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
+    @Column(name = "NOTIFICATION_TIME", unique = false, nullable = true, insertable = true, updatable = true)
     public Date getNotificationTime()
     {
         return notificationTime;
@@ -160,7 +166,7 @@ public class UserCalendarEventsDTO
         this.notificationTime = notificationTime;
     }
 
-    @Column(name = "ALL_DAY", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
+    @Column(name = "ALL_DAY", unique = false, nullable = true, insertable = true, updatable = true)
     public Boolean getAllDay()
     {
         return allDay;
@@ -171,7 +177,7 @@ public class UserCalendarEventsDTO
         this.allDay = allDay;
     }
 
-    @Column(name = "REPEAT_TIME", unique = false, nullable = true, insertable = true, updatable = true, length = 64)
+    @Column(name = "REPEAT_TIME", unique = false, nullable = true, insertable = true, updatable = true)
     public Integer getRepeatTime()
     {
         return repeatTime;
