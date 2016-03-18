@@ -5,34 +5,34 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:panel id="eventsListPanel">
-		<h:panelGrid id="eventsListDetails" columns="1">
-			<p:dataTable var="events" value="#{eventHome.calendarEvents}">
-				<!-- убрать в будущем колонку. только для тестов-->
-				<p:column headerText="id">
-					<h:outputText value="#{events.userCalendarEventsId}" />
-				</p:column>
 
-				<p:column headerText="Название">
-					<p:commandLink value="#{events.name}"
-						actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
-						update=":calendarForm:eventEditDlg"
-						oncomplete="PF('eventEditDlg').show();" />
-				</p:column>
+		<p:dataTable var="events" value="#{eventHome.calendarEvents}">
+			<!-- убрать в будущем колонку. только для тестов-->
+			<p:column headerText="id">
+				<h:outputText value="#{events.userCalendarEventsId}" />
+			</p:column>
 
-				<p:column headerText="Описание">
-					<h:outputText value="#{events.description}" />
-				</p:column>
+
+			<p:column headerText="Название">
+				<p:commandLink value="#{events.name}"
+					actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
+					update=":calendarForm:eventEditDlg"
+					oncomplete="PF('eventEditDlg').show();" />
+			</p:column>
+
+			<p:column headerText="Описание">
+				<h:outputText value="#{events.description}" />
+			</p:column>
+
 
 				<p:column headerText="Начало">
 					<h:outputText value="#{events.startDatetime} #{events.startTime}" />
 				</p:column>
 
+
 				<p:column headerText="Конец">
 					<h:outputText value="#{events.endDatetime} #{events.endTime}" />
 				</p:column>
 
-			</p:dataTable>
-		</h:panelGrid>
-	</p:panel>
+
 </ui:composition>
