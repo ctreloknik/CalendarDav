@@ -57,27 +57,51 @@ public class UserCalendarEventsServiceImpl extends
     {
         List<EventCategoriesDTO> currentCategories = getEventCategories(event
                 .getUserCalendarEventsId());
-        boolean isExist = false;
         EventCategoriesDTO ec;
         for (String cat : categories)
         {
-            for (EventCategoriesDTO curCat : currentCategories)
-            {
-                if (curCat.getCategoryId().equals(EventCategories.getIdByName(cat).longValue()))
-                {
-                    isExist = true;
-                    break;
-                }
-            }
-            if (!isExist)
+            if (!isExist(cat, currentCategories))
             {
                 ec = new EventCategoriesDTO();
                 ec.setEvent(event);
                 ec.setCategoryId(EventCategories.getIdByName(cat).longValue());
                 eman.merge(ec);
             }
-            isExist = false;
         }
+        for (EventCategoriesDTO cat : currentCategories)
+        {
+            if (!isExist(cat.getCategoryId().intValue(), categories))
+            {
+                eman.remove(cat);
+            }
+        }
+    }
+
+    // //////// переделать на получение данных из бд !!!!!!!
+    private boolean isExist(String categoryName,
+            List<EventCategoriesDTO> categories)
+    {
+        for (EventCategoriesDTO cat : categories)
+        {
+            if (cat.getCategoryId().equals(
+                    EventCategories.getIdByName(categoryName).longValue()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isExist(Integer categiryId, List<String> categories)
+    {
+        for (String cat : categories)
+        {
+            if (cat.equals(EventCategories.getNameById(categiryId)))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
