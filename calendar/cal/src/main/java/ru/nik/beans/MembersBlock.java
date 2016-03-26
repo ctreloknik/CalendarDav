@@ -3,14 +3,8 @@ package ru.nik.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-
 import ru.nik.dto.EventMembersDTO;
-import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
-import ru.nik.services.servicesImpl.EventmembersServiceBean;
-import ru.nik.services.servicesImpl.UserServiceBean;
 
 /**
  * @author Nikita
@@ -19,73 +13,106 @@ import ru.nik.services.servicesImpl.UserServiceBean;
 public class MembersBlock
 {
     private EventHome eventHome;
-    
-    private List<UsersDTO> users = new ArrayList<UsersDTO>();
-    private List<EventMembersDTO> currentUsers = new ArrayList<EventMembersDTO>();
-    private List<UsersDTO> addedUsers = new ArrayList<UsersDTO>();
-    private List<EventMembersDTO> deletedUsers = new ArrayList<EventMembersDTO>();
-    
+
+    private List<EventMembersDTO> currentMembers;
+    private List<Long> addedUsers = new ArrayList<Long>();
+    private List<Long> deletedUsers = new ArrayList<Long>();
+
     public MembersBlock(EventHome eventHome)
     {
         this.eventHome = eventHome;
     }
-    
-    /*public List<UsersDTO> getUsers()
-    {
-        return users;
-    }
-    public void setUsers(List<UsersDTO> users)
-    {
-        this.users = users;
-    }
-    */
-    
-    public List<EventMembersDTO> getCurrentUsers()
-    {
-        return currentUsers;
-    }
-    public void setCurrentUsers(List<EventMembersDTO> currentUsers)
-    {
-        this.currentUsers = currentUsers;
-    }
-    public List<UsersDTO> getAddedUsers()
+
+    /*
+     * public List<UsersDTO> getUsers() { return users; } public void
+     * setUsers(List<UsersDTO> users) { this.users = users; }
+     */
+
+    public List<Long> getAddedUsers()
     {
         return addedUsers;
     }
-    public void setAddedUsers(List<UsersDTO> addedUsers)
+
+    public void setAddedUsers(List<Long> addedUsers)
     {
         this.addedUsers = addedUsers;
     }
-    public List<EventMembersDTO> getDeletedUsers()
+
+    public List<Long> getDeletedUsers()
     {
         return deletedUsers;
     }
-    public void setDeletedUsers(List<EventMembersDTO> deletedUsers)
+
+    public void setDeletedUsers(List<Long> deletedUsers)
     {
         this.deletedUsers = deletedUsers;
     }
 
+    public List<EventMembersDTO> getCurrentMembers()
+    {
+        return currentMembers;
+    }
+
+    public void setCurrentMembers(List<EventMembersDTO> currentMembers)
+    {
+        this.currentMembers = currentMembers;
+    }
+
+    // ////ћетоды дл€ работы с участниками //////
+
+    // исправить в дальнейшем передачу, чтобы не было €вно видно »ƒ
+    public void addMemder(Long userId)
+    {
+        addedUsers.add(userId);
+    }
+
+    public void deleteMember(Long eventMemberId)
+    {
+        deletedUsers.add(eventMemberId);
+    }
+
+    public List<EventMembersDTO> getEventMembers()
+    {
+        List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(
+                currentMembers);
+        int i = 0;
+        for (Long delUserId : deletedUsers)
+        {
+            if (delUserId == null)
+                break;
+            if (allMembers.get(i).getUser().getUserId().equals(delUserId))
+            {
+                allMembers.remove(i);
+            }
+            i++;
+        }
+        for (Long userId : addedUsers)
+        {
+            if (userId == null)
+                break;
+            EventMembersDTO eventMem = new EventMembersDTO();
+            eventMem.setUser(eventHome.getUsersService().find(userId));
+            eventMem.setIsConfirmed(false);
+            eventMem.setUserCalendarEventsDTO(eventHome.getEvent());
+            allMembers.add(eventMem);
+        }
+        return allMembers;
+    }
+
     public List<UsersDTO> getAllUsers()
     {
-        return users;
+        return eventHome.getUsersService().getAll();
     }
-    
-    public void getCurrentMembersForEvent(Long eventId)
-    {
-        // заглушка дл€ тестов
-        // требуетс€ получать участников дл€ конкретного событи€
-        //currentUsers = membersService.getAll();
-    }
-    
-    public void saveMembers(UserCalendarEventsDTO event)
+
+    public void saveMembers()
     {
         EventMembersDTO evm;
-        for (UsersDTO user : addedUsers)
+        for (Long userId : addedUsers)
         {
             evm = new EventMembersDTO();
-            evm.setUser(user);
-            evm.setUserCalendarEventsDTO(event);
-            //membersService.create(evm);
+            evm.setUser(eventHome.getUsersService().find(userId));
+            evm.setUserCalendarEventsDTO(eventHome.getEvent());
+            eventHome.getMembersService().create(evm);
         }
     }
 }

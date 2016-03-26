@@ -45,7 +45,7 @@ public class EventHome implements Serializable
     @EJB
     private UserCalendarServiceBean userCalendarService;
 
-    // private MembersBlock membersBlock;
+    private MembersBlock membersBlock;
 
     private UserCalendarEventsDTO event;
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
@@ -59,15 +59,17 @@ public class EventHome implements Serializable
     private Boolean managed = false;
 
     // ////// По возможности вынести работу с участниками в отдельный класс
-    private List<EventMembersDTO> currentMembers;
+/*    private List<EventMembersDTO> currentMembers;
     private List<Long> addedUsers = new ArrayList<Long>();
-    private List<Long> deletedUsers = new ArrayList<Long>();
+    private List<Long> deletedUsers = new ArrayList<Long>();*/
 
     @PostConstruct
     public void init()
     {
+        initBlocks();
+        
         event = new UserCalendarEventsDTO();
-        currentMembers = new ArrayList<EventMembersDTO>();
+        //currentMembers = new ArrayList<EventMembersDTO>();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
 
@@ -75,22 +77,49 @@ public class EventHome implements Serializable
             repeatTimeList.add(rt.getName());
     }
 
-    /*
-     * private void initBlocks() { MembersBlock membersBlock = new
-     * MembersBlock(); this.setMembersBlock(membersBlock); }
-     */
+    private void initBlocks()
+    {
+        MembersBlock membersBlock = new MembersBlock(this);
+        this.setMembersBlock(membersBlock);
+    }
+    
+    // //// Getters and setters for services //////
+
+    public UserServiceBean getUsersService()
+    {
+        return usersService;
+    }
+
+    public void setUsersService(UserServiceBean usersService)
+    {
+        this.usersService = usersService;
+    }
+
+    public EventmembersServiceBean getMembersService()
+    {
+        return membersService;
+    }
+
+    public void setMembersService(EventmembersServiceBean membersService)
+    {
+        this.membersService = membersService;
+    }
 
     // //// Getters and setters for blocks //////
 
-    /*
-     * public MembersBlock getMembersBlock() { return membersBlock; } public
-     * void setMembersBlock(MembersBlock membersBlock) { this.membersBlock =
-     * membersBlock; }
-     */
+    public MembersBlock getMembersBlock()
+    {
+        return membersBlock;
+    }
+
+    public void setMembersBlock(MembersBlock membersBlock)
+    {
+        this.membersBlock = membersBlock;
+    }
 
     // //// Getters and setters for members //////
 
-    public List<Long> getAddedUsers()
+/*    public List<Long> getAddedUsers()
     {
         return addedUsers;
     }
@@ -118,7 +147,7 @@ public class EventHome implements Serializable
     public void setCurrentMembers(List<EventMembersDTO> currentMembers)
     {
         this.currentMembers = currentMembers;
-    }
+    }*/
 
     // ////Getters and setters //////
 
@@ -172,7 +201,7 @@ public class EventHome implements Serializable
         this.selectedRepeatTime = selectedRepeatTime;
     }
 
-    // ////Методы для работы с участниками //////
+    /*// ////Методы для работы с участниками //////
 
     // исправить в дальнейшем передачу, чтобы не было явно видно ИД
     public void addMemder(Long userId)
@@ -184,10 +213,11 @@ public class EventHome implements Serializable
     {
         deletedUsers.add(eventMemberId);
     }
-    
+
     public List<EventMembersDTO> getEventMembers()
     {
-        List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(currentMembers);
+        List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(
+                currentMembers);
         int i = 0;
         for (Long delUserId : deletedUsers)
         {
@@ -215,8 +245,7 @@ public class EventHome implements Serializable
     public List<UsersDTO> getAllUsers()
     {
         return usersService.getAll();
-    }
-
+    }*/
 
     // //// Методы для работы с событиями //////
 
@@ -268,7 +297,7 @@ public class EventHome implements Serializable
             event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
             event.setUserCalendar(userCalendarService.find(1L));
             event = eventsServiceBean.create(event);
-            //calendarEvents.add(event);
+            // calendarEvents.add(event);
         }
         else
         {
