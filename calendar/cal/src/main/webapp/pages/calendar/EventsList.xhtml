@@ -8,17 +8,26 @@
 
 	<p:dataTable widgetVar="eventsListDetails" id="eventsListDetails"
 		var="events" value="#{eventHome.calendarEvents}">
+		<p:column>
+			<p:commandButton icon="ui-icon-info"
+				actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
+				update=":calendarForm:eventEditDlg"
+				oncomplete="PF('eventEditDlg').show();">
+			</p:commandButton>
+
+			<p:commandButton icon="ui-icon-close"
+				actionListener="#{eventHome.deleteEvent(events.userCalendarEventsId)}"
+				update=":calendarForm:eventsListDetails">
+			</p:commandButton>
+		</p:column>
+
 		<!-- убрать в будущем колонку. только для тестов-->
 		<p:column headerText="id">
 			<h:outputText value="#{events.userCalendarEventsId}" />
 		</p:column>
 
-
 		<p:column headerText="Название">
-			<p:commandLink value="#{events.name}"
-				actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
-				update=":calendarForm:eventEditDlg"
-				oncomplete="PF('eventEditDlg').show();" />
+			<h:outputText value="#{events.name}" />
 		</p:column>
 
 		<p:column headerText="Описание">

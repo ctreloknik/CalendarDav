@@ -234,6 +234,7 @@ public class EventHome implements Serializable
     public void preCreateEvent()
     {
         managed = false;
+        deleteAll();
         event = new UserCalendarEventsDTO();
         Date currentDate = new Date();
         event.setName("Новое событие");
@@ -242,12 +243,12 @@ public class EventHome implements Serializable
         Long curTime = System.currentTimeMillis();
         event.setStartTime(new Date(curTime));
         event.setEndTime(new Date(curTime));
-        clear();
+        initiate();
     }
 
     public void loadEvent(Long eventId)
     {
-        clear();
+        initiate();
         managed = true;
         event = eventsServiceBean.find(eventId);
         setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
@@ -268,14 +269,18 @@ public class EventHome implements Serializable
             event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
             event.setUserCalendar(userCalendarService.find(1L));
             event = eventsServiceBean.create(event);
-            //calendarEvents.add(event);
         }
         else
         {
             event = eventsServiceBean.update(event);
         }
         eventsServiceBean.saveCategories(event, selectedCategories);
-        update();
+        deleteAll();
+    }
+    
+    public void deleteEvent(Long eventId)
+    {
+        eventsServiceBean.remove(eventId);
     }
 
     public Boolean checkDate()
@@ -303,13 +308,7 @@ public class EventHome implements Serializable
                         "Введено неверное время или дата."));
     }
 
-    private void update()
-    {
-        event = new UserCalendarEventsDTO();
-        clear();
-    }
-
-    private void clear()
+    private void initiate()
     {
         currentMembers = new ArrayList<EventMembersDTO>();
         addedUsers = new ArrayList<Long>();
@@ -319,6 +318,20 @@ public class EventHome implements Serializable
         selectedRepeatTime = "";
         // repeatTimeList.clear();
         // init();
+    }
+    
+    private void deleteAll()
+    {
+        event = null;
+        currentMembers = null;
+        addedUsers = null;
+        deletedUsers = null;
+        // categories.clear();
+        selectedCategories = null;
+        selectedRepeatTime = "";
+        // repeatTimeList.clear();
+        // init();
+    
     }
 
 }
