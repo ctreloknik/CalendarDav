@@ -172,6 +172,19 @@ public class EventHome implements Serializable
         this.selectedRepeatTime = selectedRepeatTime;
     }
 
+    // ////Методы для работы с участниками //////
+
+    // исправить в дальнейшем передачу, чтобы не было явно видно ИД
+    public void addMemder(Long userId)
+    {
+        addedUsers.add(userId);
+    }
+
+    public void deleteMember(Long eventMemberId)
+    {
+        deletedUsers.add(eventMemberId);
+    }
+    
     public List<EventMembersDTO> getEventMembers()
     {
         List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(currentMembers);
@@ -204,18 +217,6 @@ public class EventHome implements Serializable
         return usersService.getAll();
     }
 
-    // ////Методы для работы с участниками //////
-
-    // исправить в дальнейшем передачу, чтобы не было явно видно ИД
-    public void addMemder(Long userId)
-    {
-        addedUsers.add(userId);
-    }
-
-    public void deleteMember(Long eventMemberId)
-    {
-        deletedUsers.add(eventMemberId);
-    }
 
     // //// Методы для работы с событиями //////
 
