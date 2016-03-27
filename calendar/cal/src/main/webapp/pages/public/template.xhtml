@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<h:head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"></link>
+
+
+    <title></title>
+    <style>
+        body {
+            background: url(#{resource['images/conference.jpg']});
+            background-attachment: fixed;
+            background-size: 100%
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="main.xhtml">CMS</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <ui:insert name="nav-left">
+                    </ui:insert>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <ui:insert name="nav-right">
+                    </ui:insert>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid">
+        <ui:insert name="content">
+            <div class="col-md-2">
+                <ui:insert name="left_block">
+                </ui:insert>
+            </div>
+
+            <div class="col-md-8">
+                <ui:insert name="center_block">
+                </ui:insert>
+            </div>
+
+            <div class="col-md-2">
+                <ui:insert name="right_block">
+                </ui:insert>
+            </div>
+        </ui:insert>
+    </div>
+</h:body>
+
+</html>

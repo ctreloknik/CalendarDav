@@ -25,6 +25,7 @@ public class UsersDTO
     private String firstName;
     private String middleName;
     private String email;
+    private String role;
     
     private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
 
@@ -115,6 +116,17 @@ public class UsersDTO
     public void setEmail(String email)
     {
         this.email = email;
+    }
+
+    @Column(name = "role", unique = false, nullable = false, insertable = true, updatable = true, length = 64)
+    public String getRole()
+    {
+        return role;
+    }
+
+    public void setRole(String role)
+    {
+        this.role = role;
     }
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")

@@ -44,18 +44,43 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-	<!-- Protected Areas <security-constraint> <web-resource-collection> <web-resource-name>Only 
-		admins</web-resource-name> <url-pattern>/pages/protected/admin/*</url-pattern> 
-		</web-resource-collection> <auth-constraint> <role-name>ADMIN</role-name> 
-		</auth-constraint> </security-constraint> <security-constraint> <web-resource-collection> 
-		<web-resource-name>Users and admins</web-resource-name> <url-pattern>/pages/protected/user/*</url-pattern> 
-		</web-resource-collection> <auth-constraint> <role-name>ADMIN</role-name> 
-		<role-name>USER</role-name> </auth-constraint> </security-constraint> -->
+	<!-- Protected Areas -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Only
+				admins
+			</web-resource-name>
+			<url-pattern>/pages/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMIN</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Users and admins</web-resource-name>
+			<url-pattern>/pages/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMIN</role-name>
+			<role-name>USER</role-name>
+		</auth-constraint>
+	</security-constraint>
 
-	<!-- Validation By Form <login-config> <auth-method>FORM</auth-method> <form-login-config> 
-		<form-login-page>/pages/public/login.xhtml</form-login-page> <form-error-page>/pages/public/loginError.xhtml</form-error-page> 
-		</form-login-config> </login-config> -->
+	<!-- Validation By Form -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/pages/public/login.xhtml</form-login-page>
+			<form-error-page>/pages/public/loginError.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
 
-	<!-- Allowed Roles <security-role> <role-name>ADMIN</role-name> </security-role> 
-		<security-role> <role-name>USER</role-name> </security-role> -->
+	<!-- Allowed Roles -->
+	<security-role>
+		<role-name>ADMIN</role-name>
+	</security-role>
+	<security-role>
+		<role-name>USER</role-name>
+	</security-role>
 </web-app>
