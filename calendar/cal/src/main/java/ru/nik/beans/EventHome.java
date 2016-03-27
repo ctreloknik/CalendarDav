@@ -16,9 +16,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import ru.nik.dto.EventCategoriesDTO;
-import ru.nik.dto.EventMembersDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
-import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
 import ru.nik.enums.RepeatTime;
 import ru.nik.services.servicesImpl.EventmembersServiceBean;
@@ -310,6 +308,8 @@ public class EventHome implements Serializable
     public void deleteEvent(Long eventId)
     {
         eventsServiceBean.remove(eventId);
+    //    calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
+      //          .getObject());
     }
 
     public Boolean checkDate()
@@ -339,9 +339,7 @@ public class EventHome implements Serializable
 
     private void initiate()
     {
-        currentMembers = new ArrayList<EventMembersDTO>();
-        addedUsers = new ArrayList<Long>();
-        deletedUsers = new ArrayList<Long>();
+        membersBlock.initiate();
         // categories.clear();
         selectedCategories = new ArrayList<String>();
         selectedRepeatTime = "";
@@ -349,18 +347,15 @@ public class EventHome implements Serializable
         // init();
     }
     
-    private void deleteAll()
+    public void deleteAll()
     {
         event = null;
-        currentMembers = null;
-        addedUsers = null;
-        deletedUsers = null;
+        membersBlock.deleteAll();
         // categories.clear();
         selectedCategories = null;
         selectedRepeatTime = "";
         // repeatTimeList.clear();
         // init();
-    
     }
 
 }

@@ -146,6 +146,8 @@ public class UserCalendarEventsServiceImpl extends
      *            ид события
      * @return категории.
      */
+    @SuppressWarnings("unchecked")
+    @Override
     public List<EventCategoriesDTO> getEventCategories(Long eventId)
     {
         Query q = getEntityManager().createQuery(

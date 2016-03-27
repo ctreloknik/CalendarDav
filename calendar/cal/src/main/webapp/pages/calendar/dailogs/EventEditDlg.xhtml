@@ -76,11 +76,11 @@
 
 		<p:commandButton value="Сохранить" id="saveEvent"
 			actionListener="#{eventHome.saveEvent()}" ajax="true"
-			update=":calendarForm:calendar :calendarForm:messages :calendarForm:eventsListDetails"
+			update=":calendarForm:messages :calendarForm:eventsListDetails"
 			oncomplete="PF('eventEditDlg').hide();" />
 
 		<p:commandButton value="Отмена" id="cancel"
-			actionListener="#{eventHome.preCreateEvent()}"
+			actionListener="#{eventHome.deleteAll()}"
 			oncomplete="PF('eventEditDlg').hide();" />
 	</p:dialog>
 </ui:composition>

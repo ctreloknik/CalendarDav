@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:dataTable id="membersListGrid" widgetVar="membersListGrid"
-		value="#{eventHome.eventMembers}" var="membersList">
+		value="#{eventHome.membersBlock.eventMembers}" var="membersList">
 
 		<p:column headerText="ФИО">
 			<h:outputText value="#{membersList.user.toString()}" />
@@ -15,7 +15,7 @@
 		<p:column headerText="">
 			<p:commandButton value="Удалить"
 				update=":calendarForm:informationTabView:membersListGrid"
-				actionListener="#{eventHome.deleteMember(membersList.eventMemberId)}" />
+				actionListener="#{eventHome.membersBlock.deleteMember(membersList.eventMemberId)}" />
 		</p:column>
 
 	</p:dataTable>
