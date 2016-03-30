@@ -154,6 +154,7 @@ public class MembersBlock
             evm = new EventMembersDTO();
             evm.setUser(eventHome.getUsersService().find(userId));
             evm.setUserCalendarEventsDTO(eventHome.getEvent());
+            evm.setIsConfirmed(false);
             eventHome.getMembersService().create(evm);
         }
         for (Long userId : deletedUsers)

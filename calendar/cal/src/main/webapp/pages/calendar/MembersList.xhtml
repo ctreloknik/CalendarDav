@@ -15,7 +15,7 @@
 		<p:column headerText="">
 			<p:commandButton value="Удалить"
 				update=":calendarForm:informationTabView:membersListGrid"
-				actionListener="#{eventHome.membersBlock.deleteMember(membersList.eventMemberId)}" />
+				actionListener="#{eventHome.membersBlock.deleteMember(membersList.user.userId)}" />
 		</p:column>
 
 	</p:dataTable>

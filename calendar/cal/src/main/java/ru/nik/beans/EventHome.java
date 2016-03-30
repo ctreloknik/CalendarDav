@@ -54,6 +54,7 @@ public class EventHome implements Serializable
     private List<String> repeatTimeList = new ArrayList<String>();
     private String selectedRepeatTime = "";
 
+    private Date selectedDate;
     private Boolean managed = false;
 
     // ////// По возможности вынести работу с участниками в отдельный класс
@@ -249,6 +250,7 @@ public class EventHome implements Serializable
 
     public void onDateSelect(SelectEvent selectEvent)
     {
+        this.selectedDate = (Date) selectEvent.getObject();
         calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
                 .getObject());
     }
@@ -302,6 +304,7 @@ public class EventHome implements Serializable
             event = eventsServiceBean.update(event);
         }
         eventsServiceBean.saveCategories(event, selectedCategories);
+        membersBlock.saveMembers();
         deleteAll();
     }
     
