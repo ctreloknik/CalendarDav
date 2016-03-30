@@ -33,27 +33,11 @@ public class CalendarHome implements Serializable
 	@EJB
 	private UserCalendarServiceBean calendarService; 
 	
-	private ScheduleModel eventModel;
-	List<UserCalendarEventsDTO> events;
-	
 	private Date calendarDate;
 	
 	@PostConstruct
     public void init()
 	{
-	    events = eventsService.getAll();
-
-        setEventModel(new LazyScheduleModel()
-        {
-            public void loadEvents(Date start, Date end)
-            {
-                for (UserCalendarEventsDTO ev: events)
-                {
-                    addEvent(new DefaultScheduleEvent(ev.getName(),
-                            ev.getStartDatetime(), ev.getEndDatetime()));
-                }
-            }
-        });
 	}
 
     public Date getCalendarDate()
@@ -64,16 +48,5 @@ public class CalendarHome implements Serializable
     public void setCalendarDate(Date calendarDate)
     {
         this.calendarDate = calendarDate;
-    }
-
-    // ниже то, что уже не требуется. но полная перестройка позже
-    public ScheduleModel getEventModel()
-    {
-        return eventModel;
-    }
-
-    public void setEventModel(ScheduleModel eventModel)
-    {
-        this.eventModel = eventModel;
     }
 }
