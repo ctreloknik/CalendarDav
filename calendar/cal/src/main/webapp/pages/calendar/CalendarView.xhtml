@@ -11,7 +11,7 @@
 			<p:calendar id="calendar" widgetVar="calendar"
 				value="#{calendarHome.calendarDate}" mode="inline" navigator="true"
 				pages="1">
-				<p:ajax event="dateSelect" listener="#{eventHome.onDateSelect}"
+				<p:ajax event="dateSelect" listener="#{eventsList.onDateSelect}"
 					update="eventsListDetails" />
 			</p:calendar>
 		</div>
@@ -26,6 +26,9 @@
 				action="#{eventHome.preCreateEvent()}"
 				update=":calendarForm:eventEditDlg"
 				oncomplete="PF('eventEditDlg').show();" />
+
+			<p:commandButton value="Отфильтровать"
+				action="#{eventsList.eventsByFilter()}" />
 
 		</div>
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />

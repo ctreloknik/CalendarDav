@@ -7,7 +7,7 @@
 
 
 	<p:dataTable widgetVar="eventsListDetails" id="eventsListDetails"
-		var="events" value="#{eventHome.calendarEvents}">
+		var="events" value="#{eventsList.calendarEvents}">
 		<p:column>
 			<p:commandButton icon="ui-icon-info"
 				actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"

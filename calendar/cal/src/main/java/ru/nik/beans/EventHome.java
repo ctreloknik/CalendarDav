@@ -13,8 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
-
 import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.enums.EventCategories;
@@ -24,6 +22,11 @@ import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarServiceBean;
 import ru.nik.services.servicesImpl.UserServiceBean;
 
+/**
+ * Класс для работы с событием.
+ * @author Nikita
+ *
+ */
 @Named(value = "eventHome")
 @ManagedBean
 @SessionScoped
@@ -46,7 +49,6 @@ public class EventHome implements Serializable
     private MembersBlock membersBlock;
 
     private UserCalendarEventsDTO event;
-    private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
 
     private List<String> selectedCategories = new ArrayList<String>();
     private List<String> categories = new ArrayList<String>();
@@ -54,7 +56,6 @@ public class EventHome implements Serializable
     private List<String> repeatTimeList = new ArrayList<String>();
     private String selectedRepeatTime = "";
 
-    private Date selectedDate;
     private Boolean managed = false;
 
     // ////// По возможности вынести работу с участниками в отдельный класс
@@ -160,16 +161,6 @@ public class EventHome implements Serializable
         this.event = event;
     }
 
-    public List<UserCalendarEventsDTO> getCalendarEvents()
-    {
-        return calendarEvents;
-    }
-
-    public void setCalendarEvents(List<UserCalendarEventsDTO> calendarEvents)
-    {
-        this.calendarEvents = calendarEvents;
-    }
-
     public List<String> getSelectedCategories()
     {
         return selectedCategories;
@@ -247,19 +238,6 @@ public class EventHome implements Serializable
     }*/
 
     // //// Методы для работы с событиями //////
-
-    public void onDateSelect(SelectEvent selectEvent)
-    {
-        this.selectedDate = (Date) selectEvent.getObject();
-        calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
-                .getObject());
-    }
-
-    public List<UserCalendarEventsDTO> getAllEvents()
-    {
-        return eventsServiceBean.getAll();
-    }
-
     public void preCreateEvent()
     {
         managed = false;
