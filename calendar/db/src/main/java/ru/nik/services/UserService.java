@@ -1,7 +1,5 @@
 package ru.nik.services;
 
-import java.util.List;
-
 import ru.nik.dto.UsersDTO;
 
 /**
@@ -10,6 +8,13 @@ import ru.nik.dto.UsersDTO;
  */
 public interface UserService extends GenericCrud<UsersDTO, Long>
 {
+    /**
+     * Получение пользователя по логину.
+     * @param login - логин пользователя
+     * @return
+     */
+    public UsersDTO getUserByLogin(String login);
+    
     /**
      * Получение пользователя по идентифкатору.
      * @param userId - ид пользователя

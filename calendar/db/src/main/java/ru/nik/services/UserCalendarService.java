@@ -13,6 +13,13 @@ import ru.nik.dto.UsersDTO;
 public interface UserCalendarService extends GenericCrud<UserCalendarDTO, Long>
 {
     /**
+     * Получение календаря по ИД пользователя.
+     * @param userCalendarId ИД
+     * @return
+     */
+    public UserCalendarDTO getCalendarByUserId(Long userId);
+    
+    /**
      * Получение владельца календаря по ИД календаря.
      * @param userCalendarId ИД
      * @return

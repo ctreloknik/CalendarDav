@@ -18,6 +18,13 @@ public class UserCalendarServiceBean extends UserCalendarServiceImpl
 {
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public UserCalendarDTO getCalendarByUserId(Long userId)
+    {
+        return super.getCalendarByUserId(userId);
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public UsersDTO getUserByCalendarId(Long userCalendarId)
     {
         return super.getUserByCalendarId(userCalendarId);

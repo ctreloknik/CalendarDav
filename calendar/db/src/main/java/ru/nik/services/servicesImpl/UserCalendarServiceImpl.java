@@ -1,5 +1,7 @@
 package ru.nik.services.servicesImpl;
 
+import java.util.HashMap;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -44,5 +46,15 @@ public class UserCalendarServiceImpl extends GenericCrudImpl<UserCalendarDTO, Lo
 		q.setParameter("userCalendarId", userCalendarId);
 		return (UsersDTO) q.getSingleResult();
 	}
+
+    @Override
+    public UserCalendarDTO getCalendarByUserId(Long userId)
+    {
+        String jpa = "select uc from UserCalendarDTO uc " +
+                "where uc.user.userId=:userId";
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("userId",userId);
+        return (UserCalendarDTO) this.getResultList(jpa, parameters).get(0);
+    }
 
 }

@@ -29,6 +29,13 @@ public class UserServiceBean extends UserServiceImpl
 	}
 
 	@Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public UsersDTO getUserByLogin(String login)
+    {
+        return super.getUserByLogin(login);
+    }
+
+    @Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<UsersDTO> getAll()
 	{
