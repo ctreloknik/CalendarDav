@@ -34,6 +34,7 @@ public class UserCalendarEventsDTO
     private Date notificationTime;
     private Boolean allDay;
     private Integer repeatTime;
+    private Integer importancy;
 
     private List<EventMembersDTO> eventMembers = new ArrayList<EventMembersDTO>();
     private List<EventCategoriesDTO> eventCategories = new ArrayList<EventCategoriesDTO>();
@@ -45,7 +46,8 @@ public class UserCalendarEventsDTO
     public UserCalendarEventsDTO(Long userCalendarEventsId,
             UserCalendarDTO userCalendar, String name, String description,
             Date startDatetime, Date endDatetime, Date startTime, Date endTime,
-            Date notificationTime, Boolean allDay, Integer repeatTime)
+            Date notificationTime, Boolean allDay, Integer repeatTime,
+            Integer importancy)
     {
         this.userCalendarEventsId = userCalendarEventsId;
         this.userCalendar = userCalendar;
@@ -58,6 +60,7 @@ public class UserCalendarEventsDTO
         this.notificationTime = notificationTime;
         this.allDay = allDay;
         this.repeatTime = repeatTime;
+        this.setImportancy(importancy);
     }
 
     @Id
@@ -73,7 +76,8 @@ public class UserCalendarEventsDTO
         this.userCalendarEventsId = userCalendarEventsId;
     }
 
-    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade =
+    {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_CALENDAR_ID", unique = false, nullable = false, insertable = true, updatable = true)
     public UserCalendarDTO getUserCalendar()
     {
@@ -186,6 +190,17 @@ public class UserCalendarEventsDTO
     public void setRepeatTime(Integer repeatTime)
     {
         this.repeatTime = repeatTime;
+    }
+
+    @Column(name = "IMPORTANCY", unique = false, nullable = true, insertable = true, updatable = true)
+    public Integer getImportancy()
+    {
+        return importancy;
+    }
+
+    public void setImportancy(Integer importancy)
+    {
+        this.importancy = importancy;
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userCalendarEventsDTO")
