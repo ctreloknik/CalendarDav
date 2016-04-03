@@ -10,11 +10,13 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
+import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
 import ru.nik.enums.RepeatTime;
 import ru.nik.services.servicesImpl.EventmembersServiceBean;
@@ -242,14 +244,6 @@ public class EventHome implements Serializable
     {
         managed = false;
         deleteAll();
-        event = new UserCalendarEventsDTO();
-        Date currentDate = new Date();
-        event.setName("Новое событие");
-        event.setStartDatetime(currentDate);
-        event.setEndDatetime(currentDate);
-        Long curTime = System.currentTimeMillis();
-        event.setStartTime(new Date(curTime));
-        event.setEndTime(new Date(curTime));
         initiate();
     }
 
@@ -274,7 +268,7 @@ public class EventHome implements Serializable
         if (!managed)
         {
             event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
-            event.setUserCalendar(userCalendarService.find(1L));
+            event.setUserCalendar(userCalendarService.getCalendarByUserId(getCurrentUser().getUserId()));
             event = eventsServiceBean.create(event);
         }
         else
@@ -284,13 +278,12 @@ public class EventHome implements Serializable
         eventsServiceBean.saveCategories(event, selectedCategories);
         membersBlock.saveMembers();
         deleteAll();
+        initiate();
     }
     
     public void deleteEvent(Long eventId)
     {
         eventsServiceBean.remove(eventId);
-    //    calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
-      //          .getObject());
     }
 
     public Boolean checkDate()
@@ -317,11 +310,27 @@ public class EventHome implements Serializable
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!",
                         "Введено неверное время или дата."));
     }
+    
+
+    private UsersDTO getCurrentUser()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = fc.getExternalContext();
+        return usersService.getUserByLogin(externalContext.getUserPrincipal().getName());
+    }
 
     private void initiate()
     {
         membersBlock.initiate();
         // categories.clear();
+        event = new UserCalendarEventsDTO();
+        Date currentDate = new Date();
+        event.setName("Новое событие");
+        event.setStartDatetime(currentDate);
+        event.setEndDatetime(currentDate);
+        Long curTime = System.currentTimeMillis();
+        event.setStartTime(new Date(curTime));
+        event.setEndTime(new Date(curTime));
         selectedCategories = new ArrayList<String>();
         selectedRepeatTime = "";
         // repeatTimeList.clear();

@@ -9,7 +9,8 @@
 		modal="false" resizable="false" minWidth="450">
 		
 		<p:dataTable id="selectMembers" widgetVar="selectMembers"
-		value="#{eventHome.membersBlock.allUsers}" var="usersList">
+		value="#{eventHome.membersBlock.allUsers}" var="usersList"
+		style="width: 100%; max-width: 600px">
 
 		<p:column headerText="ФИО">
 			<p:commandLink value="#{usersList.toString()}"

@@ -80,7 +80,7 @@
 			oncomplete="PF('eventEditDlg').hide();" />
 
 		<p:commandButton value="Отмена" id="cancel"
-			actionListener="#{eventHome.deleteAll()}"
+			actionListener="#{eventHome.preCreateEvent()}"
 			oncomplete="PF('eventEditDlg').hide();" />
 	</p:dialog>
 </ui:composition>
