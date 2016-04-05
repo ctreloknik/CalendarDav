@@ -64,6 +64,12 @@
 							style="min-width: 200px; display: block">
 							<f:selectItems value="#{eventHome.repeatTimeList}" />
 						</p:selectOneMenu>
+						
+						<p:outputLabel for="importancy" value="Важность: " />
+						<p:selectOneMenu id="importancy" value="#{eventHome.importancy}"
+							style="min-width: 200px; display: block">
+							<f:selectItems value="#{eventHome.importancyCategories}" />
+						</p:selectOneMenu>
 					</p:panel>
 
 				</h:panelGrid>

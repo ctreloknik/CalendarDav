@@ -18,6 +18,7 @@ import ru.nik.dto.EventCategoriesDTO;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
+import ru.nik.enums.Importancy;
 import ru.nik.enums.RepeatTime;
 import ru.nik.services.servicesImpl.EventmembersServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
@@ -192,6 +193,26 @@ public class EventHome implements Serializable
     {
         this.selectedRepeatTime = selectedRepeatTime;
     }
+    
+    public String getImportancy()
+    {
+        return Importancy.getNameById(event.getImportancy());
+    }
+    
+    public void setImportancy(String selectedImportancy)
+    {
+        event.setImportancy(Importancy.getIdByName(selectedImportancy));
+    }
+    
+    public List<String> getImportancyCategories()
+    {
+        List<String> imp = new ArrayList<String>();
+        for (Importancy importancy : Importancy.values())
+        {
+            imp.add(importancy.getName());
+        }
+        return imp;
+    }
 
     /*// ////Методы для работы с участниками //////
 
@@ -310,7 +331,6 @@ public class EventHome implements Serializable
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка!",
                         "Введено неверное время или дата."));
     }
-    
 
     private UsersDTO getCurrentUser()
     {
@@ -322,10 +342,10 @@ public class EventHome implements Serializable
     private void initiate()
     {
         membersBlock.initiate();
-        // categories.clear();
         event = new UserCalendarEventsDTO();
         Date currentDate = new Date();
         event.setName("Новое событие");
+        event.setImportancy(Importancy.MEDIUM.getId());
         event.setStartDatetime(currentDate);
         event.setEndDatetime(currentDate);
         Long curTime = System.currentTimeMillis();
@@ -333,19 +353,14 @@ public class EventHome implements Serializable
         event.setEndTime(new Date(curTime));
         selectedCategories = new ArrayList<String>();
         selectedRepeatTime = "";
-        // repeatTimeList.clear();
-        // init();
     }
     
     public void deleteAll()
     {
         event = null;
         membersBlock.deleteAll();
-        // categories.clear();
         selectedCategories = null;
         selectedRepeatTime = "";
-        // repeatTimeList.clear();
-        // init();
     }
 
 }
