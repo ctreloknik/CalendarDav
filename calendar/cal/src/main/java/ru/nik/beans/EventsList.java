@@ -55,6 +55,11 @@ public class EventsList implements Serializable
     {
         this.selectedDate = selectedDate;
     }
+    
+    public List<String> getAllCategories()
+    {
+        return categories;
+    }
 
     public List<String> getSelectedCategories()
     {

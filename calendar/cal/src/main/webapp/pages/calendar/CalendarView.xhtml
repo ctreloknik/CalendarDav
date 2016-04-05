@@ -14,23 +14,34 @@
 				<p:ajax event="dateSelect" listener="#{eventsList.onDateSelect}"
 					update="eventsListDetails" />
 			</p:calendar>
+
+			<div class="row">
+				<p:commandButton value="Создать событие" oncomplete="openDialog()" />
+			</div>
+
+			<div class="row">
+				<p:outputLabel value="Фильтр по категориям:" />
+				<p:selectCheckboxMenu id="filterCategories"
+					widgetVar="filterCategories"
+					style="min-width: 200px; display: block"
+					value="#{eventsList.selectedCategories}" label="Категории"
+					filter="true" filterMatchMode="startsWith" panelStyle="width:240px">
+					<f:selectItems value="#{eventsList.allCategories}" />
+				</p:selectCheckboxMenu>
+
+				<p:commandButton value="Отфильтровать"
+					action="#{eventsList.getEventsByFilter()}" />
+			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-9">
 			<ui:include src="/pages/calendar/EventsList.xhtml" />
-
 		</div>
 
-		<div class="col-md-3">
-			<p:commandButton value="Создать событие"
-				action="#{eventHome.preCreateEvent()}"
-				update=":calendarForm:eventEditDlg"
-				oncomplete="PF('eventEditDlg').show();" />
+		<p:remoteCommand name="openDialog" action="#{eventHome.preCreateEvent()}" 
+			update=":calendarForm:eventEditDlg"
+			oncomplete="PF('eventEditDlg').show();"></p:remoteCommand>
 
-			<p:commandButton value="Отфильтровать"
-				action="#{eventsList.getEventsByFilter()}" />
-
-		</div>
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 	</h:form>
 </ui:composition>
