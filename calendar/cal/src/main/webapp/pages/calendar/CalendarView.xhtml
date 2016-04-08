@@ -30,7 +30,7 @@
 				</p:selectCheckboxMenu>
 
 				<p:commandButton value="Отфильтровать"
-					action="#{eventsList.getEventsByFilter()}" />
+					oncomplete="updateEventsList()" />
 			</div>
 		</div>
 
@@ -38,9 +38,13 @@
 			<ui:include src="/pages/calendar/EventsList.xhtml" />
 		</div>
 
-		<p:remoteCommand name="openDialog" action="#{eventHome.preCreateEvent()}" 
+		<p:remoteCommand name="openDialog"
+			action="#{eventHome.preCreateEvent()}"
 			update=":calendarForm:eventEditDlg"
 			oncomplete="PF('eventEditDlg').show();"></p:remoteCommand>
+
+		<p:remoteCommand name="updateEventsList"
+			action="#{eventsList.getEventsByFilter()}" update="eventsListDetails"></p:remoteCommand>
 
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 	</h:form>

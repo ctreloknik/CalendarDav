@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Класс для списков событий.
+ * 
  * @author Nikita
  *
  */
@@ -31,16 +32,17 @@ public class EventsList implements Serializable
 
     @EJB
     private UserCalendarEventsServiceBean eventsServiceBean;
-    
+
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
 
     private Date selectedDate;
-    
+
     // для фильтра
     private List<String> selectedCategories = new ArrayList<String>();
     private List<String> categories = new ArrayList<String>();
-    
-    @PostConstruct void init()
+
+    @PostConstruct
+    void init()
     {
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
@@ -55,7 +57,7 @@ public class EventsList implements Serializable
     {
         this.selectedDate = selectedDate;
     }
-    
+
     public List<String> getAllCategories()
     {
         return categories;
@@ -81,22 +83,25 @@ public class EventsList implements Serializable
         this.calendarEvents = calendarEvents;
     }
 
-    public void onDateSelect(SelectEvent selectEvent)
-    {
-        this.setSelectedDate((Date) selectEvent.getObject());
-        calendarEvents = eventsServiceBean.getEventsByDate((Date) selectEvent
-                .getObject());
-    }
-
     public List<UserCalendarEventsDTO> getAllEvents()
     {
         return eventsServiceBean.getAll();
     }
-    
-    public List<UserCalendarEventsDTO> getEventsByFilter()
+
+    public void getEventsByFilter()
     {
-        // MOCK
-        return new ArrayList<UserCalendarEventsDTO>();
+        getEventsByDate(selectedDate);
+    }
+
+    private void getEventsByDate(Date date)
+    {
+        calendarEvents = eventsServiceBean.getEventsByDate(date);
+    }
+
+    public void onDateSelect(SelectEvent selectEvent)
+    {
+        this.setSelectedDate((Date) selectEvent.getObject());
+        getEventsByDate(selectedDate);
     }
 
 }

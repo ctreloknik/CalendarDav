@@ -17,7 +17,8 @@
 
 			<p:commandButton icon="ui-icon-close"
 				actionListener="#{eventHome.deleteEvent(events.userCalendarEventsId)}"
-				update=":calendarForm:eventsListDetails">
+				update=":calendarForm:eventsListDetails"
+				oncomplete="updateEventsList()">
 			</p:commandButton>
 		</p:column>
 

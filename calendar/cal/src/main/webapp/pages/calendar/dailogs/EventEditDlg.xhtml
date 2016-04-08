@@ -83,7 +83,7 @@
 		<p:commandButton value="Сохранить" id="saveEvent"
 			actionListener="#{eventHome.saveEvent()}" ajax="true"
 			update=":calendarForm:messages :calendarForm:eventsListDetails"
-			oncomplete="PF('eventEditDlg').hide();" />
+			oncomplete="PF('eventEditDlg').hide();updateEventsList()" />
 
 		<p:commandButton value="Отмена" id="cancel"
 			actionListener="#{eventHome.preCreateEvent()}"
