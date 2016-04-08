@@ -3,6 +3,7 @@ package ru.nik.services;
 import java.util.List;
 
 import ru.nik.dto.EventMembersDTO;
+import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
 /**
@@ -23,4 +24,10 @@ public interface EventMembersService extends GenericCrud<EventMembersDTO, Long>
      * @return участники.
      */
     public List<EventMembersDTO> getMembersByEventId(Long eventId);
+    
+    /**
+     * Получить список неподтвежденных событий.
+     * @return события.
+     */
+    public List<UserCalendarEventsDTO> getUnerifiedEvents();
 }

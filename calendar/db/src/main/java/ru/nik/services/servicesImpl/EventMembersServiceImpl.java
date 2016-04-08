@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import ru.nik.dto.EventMembersDTO;
+import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 import ru.nik.services.EventMembersService;
 
@@ -60,6 +61,19 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
                 "select em from EventMembersDTO em "
                 + "where em.userCalendarEventsDTO.userCalendarEventsId =:eventId");
         q.setParameter("eventId", eventId);
+        return q.getResultList();
+    }
+
+    /**
+     * Получить список неподтвежденных событий.
+     * @return события.
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserCalendarEventsDTO> getUnerifiedEvents()
+    {
+        Query q = getEntityManager().createQuery(
+                "select em.userCalendarEventsDTO from EventMembersDTO em "
+                + "where em.isConfirmed = false");
         return q.getResultList();
     }
 }

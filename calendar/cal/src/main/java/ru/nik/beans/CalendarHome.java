@@ -2,18 +2,12 @@ package ru.nik.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.LazyScheduleModel;
-import org.primefaces.model.ScheduleModel;
-
-import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserCalendarServiceBean;
 
