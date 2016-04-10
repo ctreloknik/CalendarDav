@@ -29,11 +29,11 @@ public interface UserCalendarEventsService extends GenericCrud<UserCalendarEvent
     public void saveCategories(UserCalendarEventsDTO event, List<String> categories);
     
     /**
-     * Получить события за указанную дату.
+     * Получить события за указанную дату для выбранного календаря.
      * @param date дата
      * @return список событий
      */
-    public List<UserCalendarEventsDTO> getEventsByDate(Date date);
+    public List<UserCalendarEventsDTO> getEventsByDateAndUser(Date date, Long userId);
     
     /**
      * Получение ближайших событий.

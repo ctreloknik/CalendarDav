@@ -1,6 +1,5 @@
 package ru.nik.services.servicesImpl;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -105,7 +104,7 @@ public class UserCalendarEventsServiceImpl extends
     }
 
     /**
-     * Получить события за указанную дату.
+     * Получить события за указанную дату для выбранного календаря.
      * 
      * @param date
      *            дата
@@ -113,12 +112,14 @@ public class UserCalendarEventsServiceImpl extends
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<UserCalendarEventsDTO> getEventsByDate(Date date)
+    public List<UserCalendarEventsDTO> getEventsByDateAndUser(Date date, Long userId)
     {
         Query q = getEntityManager()
                 .createQuery(
                         "SELECT e FROM UserCalendarEventsDTO e "
-                                + "WHERE :date BETWEEN e.startDatetime AND e.endDatetime");
+                                + "WHERE e.userCalendar.user.userId=:userId "
+                                + "and (:date BETWEEN e.startDatetime AND e.endDatetime)");
+        q.setParameter("userId", userId);
         q.setParameter("date", date);
         return q.getResultList();
     }

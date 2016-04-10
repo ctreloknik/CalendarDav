@@ -4,13 +4,17 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
 import ru.nik.dto.UserCalendarEventsDTO;
+import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
+import ru.nik.services.servicesImpl.UserServiceBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +36,9 @@ public class EventsList implements Serializable
 
     @EJB
     private UserCalendarEventsServiceBean eventsServiceBean;
+    
+    @EJB
+    private UserServiceBean usersService;
 
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
 
@@ -95,7 +102,7 @@ public class EventsList implements Serializable
 
     private void getEventsByDate(Date date)
     {
-        calendarEvents = eventsServiceBean.getEventsByDate(date);
+        calendarEvents = eventsServiceBean.getEventsByDateAndUser(date, getCurrentUser().getUserId());
     }
 
     public void onDateSelect(SelectEvent selectEvent)
@@ -104,4 +111,11 @@ public class EventsList implements Serializable
         getEventsByDate(selectedDate);
     }
 
+    private UsersDTO getCurrentUser()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = fc.getExternalContext();
+        return usersService.getUserByLogin(externalContext.getUserPrincipal().getName());
+    }
+    
 }
