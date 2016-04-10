@@ -162,7 +162,9 @@ public class MembersBlock
         }
         for (Long userId : deletedUsers)
         {
-            eventHome.getMembersService().remove(userId);
+            Long eventId = eventHome.getEvent().getUserCalendarEventsId(); 
+            Long evMemId = eventHome.getMembersService().getEventMemberByEventAndMemberIDs(eventId, userId).getEventMemberId();
+            eventHome.getMembersService().remove(evMemId);
         }
     }
 

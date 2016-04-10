@@ -29,4 +29,10 @@ public interface EventMembersService extends GenericCrud<EventMembersDTO, Long>
      * @return события.
      */
     public List<EventMembersDTO> getUnerifiedEvents(Long userId);
+    
+    /**
+     * Получить сущность связи по ИД события и ИД участника.
+     * @return сущность.
+     */
+    public EventMembersDTO getEventMemberByEventAndMemberIDs(Long eventId, Long userId);
 }

@@ -76,4 +76,19 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
         q.setParameter("userId", userId);
         return q.getResultList();
     }
+    
+    /**
+     * Получить сущность связи по ИД события и ИД участника.
+     * @return сущность.
+     */
+    public EventMembersDTO getEventMemberByEventAndMemberIDs(Long eventId, Long userId)
+    {
+        Query q = getEntityManager().createQuery(
+                "select em from EventMembersDTO em "
+                + "where em.user.userId=:userId and "
+                + "em.userCalendarEventsDTO.userCalendarEventsId=:eventId");
+        q.setParameter("userId", userId);
+        q.setParameter("eventId", eventId);
+        return (EventMembersDTO) q.getSingleResult();
+    }
 }

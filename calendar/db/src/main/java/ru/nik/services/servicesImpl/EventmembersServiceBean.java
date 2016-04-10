@@ -7,7 +7,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import ru.nik.dto.EventMembersDTO;
-import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
 /**
@@ -73,7 +72,13 @@ public class EventmembersServiceBean extends EventMembersServiceImpl
     {
         return super.getUnerifiedEvents(userId);
     }
-    
-    
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public EventMembersDTO getEventMemberByEventAndMemberIDs(Long eventId,
+            Long userId)
+    {
+        return super.getEventMemberByEventAndMemberIDs(eventId, userId);
+    }
     
 }
