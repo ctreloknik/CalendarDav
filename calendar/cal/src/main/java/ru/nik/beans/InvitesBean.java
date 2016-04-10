@@ -46,6 +46,6 @@ public class InvitesBean
     
     public void deleteInvite(Long evMemId)
     {
-        
+        eventmembersService.remove(evMemId);
     }
 }

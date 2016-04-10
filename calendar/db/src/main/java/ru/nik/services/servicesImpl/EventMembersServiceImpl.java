@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import ru.nik.dto.EventMembersDTO;
-import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 import ru.nik.services.EventMembersService;
 

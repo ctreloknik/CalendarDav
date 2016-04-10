@@ -3,7 +3,6 @@ package ru.nik.services;
 import java.util.List;
 
 import ru.nik.dto.EventMembersDTO;
-import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 
 /**

@@ -23,11 +23,13 @@
 
 			<p:column headerText="Описание">
 				<p:commandButton value="Принять"
-					actionListener="#{invitesBean.acceptInvite(invitesList.eventMemberId)}">
+					actionListener="#{invitesBean.acceptInvite(invitesList.eventMemberId)}"
+					update=":calendarForm:invitesTable">
 				</p:commandButton>
 				
 				<p:commandButton value="Отклонить"
-					actionListener="#{invitesBean.deleteInvite(invitesList.eventMemberId)}">
+					actionListener="#{invitesBean.deleteInvite(invitesList.eventMemberId)}"
+					update=":calendarForm:invitesTable">
 				</p:commandButton>
 			</p:column>
 
