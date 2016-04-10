@@ -5,18 +5,33 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog id="invitesDlg" header="Приглашения на события" widgetVar="invitesDlg"
-		modal="false" resizable="false" minWidth="450">
-		
+	<p:dialog id="invitesDlg" header="Приглашения на события"
+		widgetVar="invitesDlg" modal="false" resizable="false" minWidth="450">
+
 		<p:dataTable id="invitesTable" widgetVar="invitesTable"
-		value="#{invitesBean.unverifiedEvents}" var="invitesList"
-		style="width: 100%; max-width: 600px">
+			value="#{invitesBean.unverifiedEvents}" var="invitesList"
+			style="width: 100%; max-width: 600px">
 
-		<p:column headerText="Название">
-			<h:outputText value="#{invitesList.name}" />/>
-		</p:column>
+			<p:column headerText="Название">
+				<h:outputText value="#{invitesList.userCalendarEventsDTO.name}" />
+			</p:column>
 
-	</p:dataTable>
+			<p:column headerText="Описание">
+				<h:outputText
+					value="#{invitesList.userCalendarEventsDTO.description}" />
+			</p:column>
+
+			<p:column headerText="Описание">
+				<p:commandButton value="Принять"
+					actionListener="#{invitesBean.acceptInvite(invitesList.eventMemberId)}">
+				</p:commandButton>
+				
+				<p:commandButton value="Отклонить"
+					actionListener="#{invitesBean.deleteInvite(invitesList.eventMemberId)}">
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
 	</p:dialog>
 
 </ui:composition>

@@ -69,11 +69,12 @@ public class EventMembersServiceImpl extends GenericCrudImpl<EventMembersDTO, Lo
      * @return события.
      */
     @SuppressWarnings("unchecked")
-    public List<UserCalendarEventsDTO> getUnerifiedEvents()
+    public List<EventMembersDTO> getUnerifiedEvents(Long userId)
     {
         Query q = getEntityManager().createQuery(
-                "select em.userCalendarEventsDTO from EventMembersDTO em "
-                + "where em.isConfirmed = false");
+                "select em from EventMembersDTO em "
+                + "where em.user.userId=:userId and em.isConfirmed = false");
+        q.setParameter("userId", userId);
         return q.getResultList();
     }
 }

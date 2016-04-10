@@ -69,9 +69,9 @@ public class EventmembersServiceBean extends EventMembersServiceImpl
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<UserCalendarEventsDTO> getUnerifiedEvents()
+    public List<EventMembersDTO> getUnerifiedEvents(Long userId)
     {
-        return super.getUnerifiedEvents();
+        return super.getUnerifiedEvents(userId);
     }
     
     

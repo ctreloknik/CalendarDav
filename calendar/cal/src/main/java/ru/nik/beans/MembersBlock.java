@@ -84,14 +84,17 @@ public class MembersBlock
 
     public List<EventMembersDTO> getEventMembers()
     {
-        if (eventHome.getEvent() == null
-                || eventHome.getEvent().getUserCalendarEventsId() == null)
+        List<EventMembersDTO> allMembers;
+        if (eventHome.getEvent().getUserCalendarEventsId() != null)
         {
-            return new ArrayList<EventMembersDTO>();
+            allMembers = eventHome.getMembersService().getMembersByEventId(
+                    eventHome.getEvent().getUserCalendarEventsId());
         }
-        List<EventMembersDTO> allMembers = eventHome.getMembersService()
-                .getMembersByEventId(
-                        eventHome.getEvent().getUserCalendarEventsId());
+        else
+        {
+            allMembers = new ArrayList<EventMembersDTO>();
+        }
+
         for (Long delUserId : deletedUsers)
         {
             int i = getMemberPosition(delUserId, allMembers);

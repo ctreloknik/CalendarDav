@@ -29,5 +29,5 @@ public interface EventMembersService extends GenericCrud<EventMembersDTO, Long>
      * Получить список неподтвежденных событий.
      * @return события.
      */
-    public List<UserCalendarEventsDTO> getUnerifiedEvents();
+    public List<EventMembersDTO> getUnerifiedEvents(Long userId);
 }

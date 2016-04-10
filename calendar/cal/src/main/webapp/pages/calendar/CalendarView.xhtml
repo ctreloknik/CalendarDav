@@ -20,6 +20,10 @@
 			</div>
 
 			<div class="row">
+				<p:commandButton value="Приглашения" update=":calendarForm:invitesTable" oncomplete="PF('invitesDlg').show();" />
+			</div>
+
+			<div class="row">
 				<p:outputLabel value="Фильтр по категориям:" />
 				<p:selectCheckboxMenu id="filterCategories"
 					widgetVar="filterCategories"
@@ -47,5 +51,6 @@
 			action="#{eventsList.getEventsByFilter()}" update="eventsListDetails"></p:remoteCommand>
 
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
+		<ui:include src="/pages/calendar/dailogs/InvitesDlg.xhtml" />
 	</h:form>
 </ui:composition>
