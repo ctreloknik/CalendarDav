@@ -116,9 +116,11 @@ public class UserCalendarEventsServiceImpl extends
     {
         Query q = getEntityManager()
                 .createQuery(
-                        "SELECT e FROM UserCalendarEventsDTO e "
+                        "SELECT distinct e FROM UserCalendarEventsDTO e "
                                 + "WHERE e.userCalendar.user.userId=:userId "
-                                + "and (:date BETWEEN e.startDatetime AND e.endDatetime)");
+                                + "and ( (:date BETWEEN e.startDatetime AND e.endDatetime) or "
+                                + "e.repeatTime=1 or "
+                                + "(e.repeatTime=2 and (:date - e.startDatetime)%7=0) ) ");
         q.setParameter("userId", userId);
         q.setParameter("date", date);
         return q.getResultList();

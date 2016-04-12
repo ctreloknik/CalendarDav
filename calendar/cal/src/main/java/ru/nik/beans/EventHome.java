@@ -286,9 +286,10 @@ public class EventHome implements Serializable
         if (!checkDate())
             return;
 
+        event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
+        //event.setNotificationTime(notificationTime);
         if (!managed)
         {
-            event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
             event.setUserCalendar(userCalendarService.getCalendarByUserId(getCurrentUser().getUserId()));
             event = eventsServiceBean.create(event);
         }
