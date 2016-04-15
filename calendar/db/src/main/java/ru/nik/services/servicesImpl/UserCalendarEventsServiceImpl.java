@@ -1,6 +1,9 @@
 package ru.nik.services.servicesImpl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -114,16 +117,56 @@ public class UserCalendarEventsServiceImpl extends
     @Override
     public List<UserCalendarEventsDTO> getEventsByDateAndUser(Date date, Long userId)
     {
-        Query q = getEntityManager()
-                .createQuery(
-                        "SELECT distinct e FROM UserCalendarEventsDTO e "
-                                + "WHERE e.userCalendar.user.userId=:userId "
-                                + "and ( (:date BETWEEN e.startDatetime AND e.endDatetime) or "
-                                + "e.repeatTime=1 or "
-                                + "(e.repeatTime=2 and (:date - e.startDatetime)%7=0) ) ");
+        List<UserCalendarEventsDTO> result = new ArrayList<UserCalendarEventsDTO>();
+        String select = "SELECT distinct e FROM UserCalendarEventsDTO e WHERE e.userCalendar.user.userId=:userId ";
+        StringBuilder builder = new StringBuilder(select);
+        builder.append("and ((:date BETWEEN e.startDatetime AND e.endDatetime) or e.repeatTime=1 or ");
+        builder.append("(e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
+        
+        result.addAll(getResultListFromQuery(builder.toString(), date, userId));
+        
+        List<UserCalendarEventsDTO> tmp = new ArrayList<UserCalendarEventsDTO>();
+        builder = new StringBuilder(select);
+        builder.append("and e.repeatTime=2 and (e.startDatetime < e.endDatetime)");
+        tmp.addAll(getResultListFromQuery(builder.toString(), date, userId));
+        
+        for (UserCalendarEventsDTO event : tmp)
+        {
+            Calendar startEvent = new GregorianCalendar();
+            startEvent.setTime(event.getStartDatetime());
+            Calendar endEvent = new GregorianCalendar();
+            endEvent.setTime(event.getEndDatetime());
+            Calendar calendarCurr = new GregorianCalendar();
+            calendarCurr.setTime(date);
+            if (date.after(event.getStartDatetime()))
+            {
+                while(date.after(event.getStartDatetime()))
+                {
+                    calendarCurr.add(Calendar.DAY_OF_YEAR, -7);
+                }
+                calendarCurr.add(Calendar.DAY_OF_YEAR, 7);
+                if (calendarCurr.after(startEvent) && calendarCurr.before(endEvent))
+                {
+                    result.add(event);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    @SuppressWarnings("unchecked")
+    private List<UserCalendarEventsDTO> getResultListFromQuery(String query, Date date, Long userId)
+    {
+        Query q = getEntityManager().createQuery(query);
         q.setParameter("userId", userId);
         q.setParameter("date", date);
         return q.getResultList();
+    }
+    
+    private List<UserCalendarEventsDTO> getEventsByWeekRepeat(List<UserCalendarEventsDTO>, Date date)
+    {
+        
     }
 
     /**

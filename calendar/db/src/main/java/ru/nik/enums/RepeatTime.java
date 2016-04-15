@@ -9,8 +9,8 @@ public enum RepeatTime
     NO_REPEAT(0, "Не повторять"),
     EVERY_DAY(1, "Каждый день"),
     EVERY_WEEK(2, "Каждую неделю"),
-    EVERY_TWO_WEEK(3, "Каждые две недели"),
-    EVERY_WEEKDAY(4, "Каждый будний день"),
+    //EVERY_TWO_WEEK(3, "Каждые две недели"),
+    //EVERY_WEEKDAY(4, "Каждый будний день"),
     EVERY_MONTH(5,"Кадый месяц"),
     EVERY_YEAR(6, "Каждый год");
     
