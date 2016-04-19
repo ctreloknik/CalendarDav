@@ -21,8 +21,7 @@ import ru.nik.services.UserCalendarEventsService;
  *
  */
 public class UserCalendarEventsServiceImpl extends
-        GenericCrudImpl<UserCalendarEventsDTO, Long> implements
-        UserCalendarEventsService
+        GenericCrudImpl<UserCalendarEventsDTO, Long> implements UserCalendarEventsService
 {
     @PersistenceContext(unitName = "PERSISTENCEUNIT")
     protected EntityManager eman;
@@ -54,8 +53,7 @@ public class UserCalendarEventsServiceImpl extends
     }
 
     @Override
-    public void saveCategories(UserCalendarEventsDTO event,
-            List<String> categories)
+    public void saveCategories(UserCalendarEventsDTO event, List<String> categories)
     {
         List<EventCategoriesDTO> currentCategories = getEventCategories(event
                 .getUserCalendarEventsId());
@@ -80,8 +78,7 @@ public class UserCalendarEventsServiceImpl extends
     }
 
     // //////// переделать на получение данных из бд !!!!!!!
-    private boolean isExist(String categoryName,
-            List<EventCategoriesDTO> categories)
+    private boolean isExist(String categoryName, List<EventCategoriesDTO> categories)
     {
         for (EventCategoriesDTO cat : categories)
         {
@@ -113,7 +110,6 @@ public class UserCalendarEventsServiceImpl extends
      *            дата
      * @return список событий
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<UserCalendarEventsDTO> getEventsByDateAndUser(Date date, Long userId)
     {
@@ -122,51 +118,42 @@ public class UserCalendarEventsServiceImpl extends
         StringBuilder builder = new StringBuilder(select);
         builder.append("and ((:date BETWEEN e.startDatetime AND e.endDatetime) or e.repeatTime=1 or ");
         builder.append("(e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
-        
         result.addAll(getResultListFromQuery(builder.toString(), date, userId));
-        
-        List<UserCalendarEventsDTO> tmp = new ArrayList<UserCalendarEventsDTO>();
+
         builder = new StringBuilder(select);
-        builder.append("and e.repeatTime=2 and (e.startDatetime < e.endDatetime)");
-        tmp.addAll(getResultListFromQuery(builder.toString(), date, userId));
-        
-        for (UserCalendarEventsDTO event : tmp)
-        {
-            Calendar startEvent = new GregorianCalendar();
-            startEvent.setTime(event.getStartDatetime());
-            Calendar endEvent = new GregorianCalendar();
-            endEvent.setTime(event.getEndDatetime());
-            Calendar calendarCurr = new GregorianCalendar();
-            calendarCurr.setTime(date);
-            if (date.after(event.getStartDatetime()))
-            {
-                while(date.after(event.getStartDatetime()))
-                {
-                    calendarCurr.add(Calendar.DAY_OF_YEAR, -7);
-                }
-                calendarCurr.add(Calendar.DAY_OF_YEAR, 7);
-                if (calendarCurr.after(startEvent) && calendarCurr.before(endEvent))
-                {
-                    result.add(event);
-                }
-            }
-        }
-        
+        builder.append("and e.repeatTime=2 and (:date > e.startDatetime) and (e.startDatetime < e.endDatetime)");
+        result.addAll(getEventsByWeekRepeat(builder.toString(), date, userId));
+
         return result;
     }
-    
+
     @SuppressWarnings("unchecked")
-    private List<UserCalendarEventsDTO> getResultListFromQuery(String query, Date date, Long userId)
+    private List<UserCalendarEventsDTO> getResultListFromQuery(String query, Date date,
+            Long userId)
     {
         Query q = getEntityManager().createQuery(query);
         q.setParameter("userId", userId);
         q.setParameter("date", date);
         return q.getResultList();
     }
-    
-    private List<UserCalendarEventsDTO> getEventsByWeekRepeat(List<UserCalendarEventsDTO>, Date date)
+
+    private List<UserCalendarEventsDTO> getEventsByWeekRepeat(String query, Date date,
+            Long userId)
     {
-        
+        List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
+        List<UserCalendarEventsDTO> tmp = getResultListFromQuery(query, date, userId);
+        for (UserCalendarEventsDTO event : tmp)
+        {
+            Long weeks = (date.getTime() - event.getStartDatetime().getTime()) / 604800000;
+            Date dateForCheck = new Date(date.getTime() - weeks * 7);
+            if (dateForCheck.getTime() > event.getStartDatetime().getTime()
+                    && dateForCheck.getTime() < event.getEndDatetime().getTime())
+            {
+                resultList.add(event);
+            }
+        }
+
+        return resultList;
     }
 
     /**
