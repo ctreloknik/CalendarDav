@@ -1,9 +1,7 @@
 package ru.nik.services.servicesImpl;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -116,12 +114,12 @@ public class UserCalendarEventsServiceImpl extends
         List<UserCalendarEventsDTO> result = new ArrayList<UserCalendarEventsDTO>();
         String select = "SELECT distinct e FROM UserCalendarEventsDTO e WHERE e.userCalendar.user.userId=:userId ";
         StringBuilder builder = new StringBuilder(select);
-        builder.append("and ((:date BETWEEN e.startDatetime AND e.endDatetime) or e.repeatTime=1 or ");
-        builder.append("(e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
+        builder.append("and :date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1");
+        builder.append(" or e.repeatTime=2 and e.startDatetime = e.endDatetime and (:date - e.startDatetime)%7=0");
         result.addAll(getResultListFromQuery(builder.toString(), date, userId));
 
         builder = new StringBuilder(select);
-        builder.append("and e.repeatTime=2 and (:date > e.startDatetime) and (e.startDatetime < e.endDatetime)");
+        builder.append("and e.repeatTime=2 and (e.startDatetime < e.endDatetime)");
         result.addAll(getEventsByWeekRepeat(builder.toString(), date, userId));
 
         return result;
@@ -141,13 +139,16 @@ public class UserCalendarEventsServiceImpl extends
             Long userId)
     {
         List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
-        List<UserCalendarEventsDTO> tmp = getResultListFromQuery(query, date, userId);
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("userId", userId);
+        List<UserCalendarEventsDTO> tmp = q.getResultList();
         for (UserCalendarEventsDTO event : tmp)
         {
             Long weeks = (date.getTime() - event.getStartDatetime().getTime()) / 604800000;
-            Date dateForCheck = new Date(date.getTime() - weeks * 7);
-            if (dateForCheck.getTime() > event.getStartDatetime().getTime()
-                    && dateForCheck.getTime() < event.getEndDatetime().getTime())
+            System.out.println(weeks);
+            Date dateForCheck = new Date(date.getTime() - weeks * 604800000);
+            if (dateForCheck.getTime() >= event.getStartDatetime().getTime()
+                    && dateForCheck.getTime() <= event.getEndDatetime().getTime())
             {
                 resultList.add(event);
             }
