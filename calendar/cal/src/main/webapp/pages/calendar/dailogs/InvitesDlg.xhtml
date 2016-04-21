@@ -10,10 +10,23 @@
 
 		<p:dataTable id="invitesTable" widgetVar="invitesTable"
 			value="#{invitesBean.unverifiedEvents}" var="invitesList"
-			style="width: 100%; max-width: 600px">
+			style="width: 100%; max-width: 800px">
 
-			<p:column headerText="Название">
+			<p:column headerText="Название" width="150">
 				<h:outputText value="#{invitesList.userCalendarEventsDTO.name}" />
+			</p:column>
+
+			<p:column headerText="Время" width="120">
+				<h:outputText
+					value="С: #{invitesList.userCalendarEventsDTO.startDatetime}" />
+				<br />
+				<h:outputText
+					value="в #{invitesList.userCalendarEventsDTO.startTime}" />
+				<br />
+				<h:outputText
+					value="По: #{invitesList.userCalendarEventsDTO.endDatetime}" />
+				<br />
+				<h:outputText value="в #{invitesList.userCalendarEventsDTO.endTime}" />
 			</p:column>
 
 			<p:column headerText="Описание">
@@ -21,12 +34,12 @@
 					value="#{invitesList.userCalendarEventsDTO.description}" />
 			</p:column>
 
-			<p:column headerText="Описание">
+			<p:column headerText="Действие" width="120">
 				<p:commandButton value="Принять"
 					actionListener="#{invitesBean.acceptInvite(invitesList.eventMemberId)}"
 					update=":calendarForm:invitesTable">
 				</p:commandButton>
-				
+
 				<p:commandButton value="Отклонить"
 					actionListener="#{invitesBean.deleteInvite(invitesList.eventMemberId)}"
 					update=":calendarForm:invitesTable">

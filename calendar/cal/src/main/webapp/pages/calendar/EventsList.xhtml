@@ -8,7 +8,7 @@
 
 	<p:dataTable widgetVar="eventsListDetails" id="eventsListDetails"
 		var="events" value="#{eventsList.calendarEvents}">
-		<p:column>
+		<p:column width="100">
 			<p:commandButton icon="ui-icon-info"
 				actionListener="#{eventHome.loadEvent(events.userCalendarEventsId)}"
 				update=":calendarForm:eventEditDlg"
@@ -23,26 +23,22 @@
 		</p:column>
 
 		<!-- убрать в будущем колонку. только для тестов-->
-		<p:column headerText="id">
+		<p:column headerText="id" width="50">
 			<h:outputText value="#{events.userCalendarEventsId}" />
 		</p:column>
 
-		<p:column headerText="Название">
+		<p:column headerText="Название" width="150">
 			<h:outputText value="#{events.name}" />
+		</p:column>
+
+		<p:column headerText="Время" width="110">
+			<h:outputText value="#{events.startDatetime} в #{events.startTime}" />
+			<br />
+			<h:outputText value="#{events.endDatetime} в #{events.endTime}" />
 		</p:column>
 
 		<p:column headerText="Описание">
 			<h:outputText value="#{events.description}" />
-		</p:column>
-
-
-		<p:column headerText="Начало">
-			<h:outputText value="#{events.startDatetime} #{events.startTime}" />
-		</p:column>
-
-
-		<p:column headerText="Конец">
-			<h:outputText value="#{events.endDatetime} #{events.endTime}" />
 		</p:column>
 	</p:dataTable>
 
