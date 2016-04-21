@@ -151,14 +151,9 @@ public class MembersBlock
 
     public void saveMembers()
     {
-        EventMembersDTO evm;
         for (Long userId : addedUsers)
         {
-            evm = new EventMembersDTO();
-            evm.setUser(eventHome.getUsersService().find(userId));
-            evm.setUserCalendarEventsDTO(eventHome.getEvent());
-            evm.setIsConfirmed(false);
-            eventHome.getMembersService().create(evm);
+            createInvite(userId, false);
         }
         for (Long userId : deletedUsers)
         {
@@ -166,6 +161,16 @@ public class MembersBlock
             Long evMemId = eventHome.getMembersService().getEventMemberByEventAndMemberIDs(eventId, userId).getEventMemberId();
             eventHome.getMembersService().remove(evMemId);
         }
+    }
+    
+    public void createInvite(Long userId, Boolean isConfirmed)
+    {
+        EventMembersDTO evm;
+        evm = new EventMembersDTO();
+        evm.setUser(eventHome.getUsersService().find(userId));
+        evm.setUserCalendarEventsDTO(eventHome.getEvent());
+        evm.setIsConfirmed(isConfirmed);
+        eventHome.getMembersService().create(evm);
     }
 
     public void initiate()

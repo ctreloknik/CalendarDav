@@ -292,6 +292,7 @@ public class EventHome implements Serializable
         {
             event.setUserCalendar(userCalendarService.getCalendarByUserId(getCurrentUser().getUserId()));
             event = eventsServiceBean.create(event);
+            membersBlock.createInvite(getCurrentUser().getUserId(), true);
         }
         else
         {
