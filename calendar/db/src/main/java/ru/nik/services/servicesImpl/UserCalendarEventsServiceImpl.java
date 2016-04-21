@@ -112,16 +112,17 @@ public class UserCalendarEventsServiceImpl extends
     public List<UserCalendarEventsDTO> getEventsByDateAndUser(Date date, Long userId)
     {
         List<UserCalendarEventsDTO> result = new ArrayList<UserCalendarEventsDTO>();
-        String select = "SELECT distinct e FROM UserCalendarEventsDTO e WHERE e.userCalendar.user.userId=:userId ";
-        StringBuilder builder = new StringBuilder(select);
-        builder.append("and :date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1");
-        builder.append(" or e.repeatTime=2 and e.startDatetime = e.endDatetime and (:date - e.startDatetime)%7=0");
+        String select = "SELECT distinct e FROM UserCalendarEventsDTO e ";
+        String where = "WHERE e.userCalendar.user.userId=:userId ";
+        StringBuilder builder = new StringBuilder(select + where);
+        builder.append("and (:date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1");
+        builder.append(" or (e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
         result.addAll(getResultListFromQuery(builder.toString(), date, userId));
 
-        builder = new StringBuilder(select);
-        builder.append("and e.repeatTime=2 and (e.startDatetime < e.endDatetime)");
+        builder = new StringBuilder(select + where);
+        builder.append("and (e.startDatetime < e.endDatetime) and e.repeatTime=2 and :date not BETWEEN e.startDatetime AND e.endDatetime");
         result.addAll(getEventsByWeekRepeat(builder.toString(), date, userId));
-
+        
         return result;
     }
 
@@ -139,9 +140,7 @@ public class UserCalendarEventsServiceImpl extends
             Long userId)
     {
         List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
-        Query q = getEntityManager().createQuery(query);
-        q.setParameter("userId", userId);
-        List<UserCalendarEventsDTO> tmp = q.getResultList();
+        List<UserCalendarEventsDTO> tmp = getResultListFromQuery(query, date, userId);
         for (UserCalendarEventsDTO event : tmp)
         {
             Long weeks = (date.getTime() - event.getStartDatetime().getTime()) / 604800000;
@@ -153,7 +152,6 @@ public class UserCalendarEventsServiceImpl extends
                 resultList.add(event);
             }
         }
-
         return resultList;
     }
 
