@@ -9,7 +9,6 @@
   <modules>
     <module>db</module>
     <module>console</module>
-    <module>web</module>
     <module>cal</module>
   </modules>
   <build>

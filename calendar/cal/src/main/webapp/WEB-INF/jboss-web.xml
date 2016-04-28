@@ -2,4 +2,5 @@
 <jboss-web>
     <!-- Links with JBoss the Realm to use  -->
     <security-domain>LoginJSFRealm</security-domain>
+    <context-root>/</context-root>
 </jboss-web>

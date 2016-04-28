@@ -2,15 +2,17 @@ package ru.nik.console;
 
 import ru.nik.dto.UsersDTO;
 import ru.nik.services.servicesImpl.UserServiceBean;
+import ru.nik.services.servicesImpl.UserServiceImpl;
 
 public class Main
 {
 	public static void main( String[] args )
     {
 		UsersDTO u = new UsersDTO();
-		UserServiceBean userLocalServiceImpl = new UserServiceBean();
+		UserServiceImpl userLocalServiceImpl = new UserServiceImpl();
 		
-		u.setUserId(2L);
-		userLocalServiceImpl.create(u);
+		System.out.println(userLocalServiceImpl.find(1L).getUserLogin());
+		//u.setUserId(2L);
+		//userLocalServiceImpl.create(u);
     }
 }
