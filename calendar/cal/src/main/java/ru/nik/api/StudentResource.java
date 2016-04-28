@@ -1,4 +1,4 @@
-package api;
+package ru.nik.api;
 
 import java.util.ArrayList;
 import java.util.Arrays;
