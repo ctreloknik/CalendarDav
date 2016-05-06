@@ -75,7 +75,6 @@ public class UserCalendarEventsServiceImpl extends
         }
     }
 
-    // //////// переделать на получение данных из бд !!!!!!!
     private boolean isExist(String categoryName, List<EventCategoriesDTO> categories)
     {
         for (EventCategoriesDTO cat : categories)
@@ -102,7 +101,22 @@ public class UserCalendarEventsServiceImpl extends
     }
 
     /**
-     * Получить события за указанную дату для выбранного календаря.
+     * Получение событий, которые относятся к определенному календарю по ссылке.
+     * @param url ссылка на календарь
+     * @return список событий
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserCalendarEventsDTO> getEventsByCalendarURL(String url)
+    {
+        String query = "SELECT e FROM UserCalendarEventsDTO e WHERE "
+                + "e.userCalendar.url=:url";
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("url", url);
+        return q.getResultList();
+    }
+    
+    /**
+     * Получить события за указанную дату для выбранного пользователя.
      * 
      * @param date
      *            дата

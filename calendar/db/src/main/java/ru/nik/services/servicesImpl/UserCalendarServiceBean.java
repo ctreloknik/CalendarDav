@@ -65,4 +65,10 @@ public class UserCalendarServiceBean extends UserCalendarServiceImpl
         super.remove(id);
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public UserCalendarDTO getCalendarByURL(String url)
+    {
+        return super.getCalendarByURL(url);
+    }
 }

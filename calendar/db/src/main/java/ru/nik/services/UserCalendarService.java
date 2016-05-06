@@ -25,4 +25,11 @@ public interface UserCalendarService extends GenericCrud<UserCalendarDTO, Long>
      * @return
      */
     public UsersDTO getUserByCalendarId(Long userCalendarId);
+    
+    /**
+     * Получение календаря по URL.
+     * @param url - ссылка.
+     * @return календарь.
+     */
+    public UserCalendarDTO getCalendarByURL(String url);
 }

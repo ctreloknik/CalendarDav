@@ -88,4 +88,11 @@ public class UserCalendarEventsServiceBean extends UserCalendarEventsServiceImpl
         return super.getEventCategories(eventId);
     }
     
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<UserCalendarEventsDTO> getEventsByCalendarURL(String url)
+    {
+        return super.getEventsByCalendarURL(url);
+    }
+    
 }

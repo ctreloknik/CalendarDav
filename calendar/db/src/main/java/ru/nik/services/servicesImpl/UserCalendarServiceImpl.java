@@ -57,4 +57,17 @@ public class UserCalendarServiceImpl extends GenericCrudImpl<UserCalendarDTO, Lo
         return (UserCalendarDTO) this.getResultList(jpa, parameters).get(0);
     }
 
+    /**
+     * Получение календаря по URL.
+     * @param url - ссылка.
+     * @return календарь.
+     */
+    public UserCalendarDTO getCalendarByURL(String url)
+    {
+        String jpa = "select uc from UserCalendarDTO uc " +
+                "where uc.url=:url";
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("url",url);
+        return (UserCalendarDTO) this.getResultList(jpa, parameters).get(0);
+    }
 }
