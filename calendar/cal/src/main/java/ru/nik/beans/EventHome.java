@@ -61,18 +61,17 @@ public class EventHome implements Serializable
 
     private Boolean managed = false;
 
-    // ////// По возможности вынести работу с участниками в отдельный класс
-/*    private List<EventMembersDTO> currentMembers;
-    private List<Long> addedUsers = new ArrayList<Long>();
-    private List<Long> deletedUsers = new ArrayList<Long>();*/
-
+    public String logout(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "success";
+    }
+    
     @PostConstruct
     public void init()
     {
         initBlocks();
         
         event = new UserCalendarEventsDTO();
-        //currentMembers = new ArrayList<EventMembersDTO>();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
 
@@ -119,39 +118,7 @@ public class EventHome implements Serializable
     {
         this.membersBlock = membersBlock;
     }
-
-    // //// Getters and setters for members //////
-
-/*    public List<Long> getAddedUsers()
-    {
-        return addedUsers;
-    }
-
-    public void setAddedUsers(List<Long> addedUsers)
-    {
-        this.addedUsers = addedUsers;
-    }
-
-    public List<Long> getDeletedUsers()
-    {
-        return deletedUsers;
-    }
-
-    public void setDeletedUsers(List<Long> deletedUsers)
-    {
-        this.deletedUsers = deletedUsers;
-    }
-
-    public List<EventMembersDTO> getCurrentMembers()
-    {
-        return currentMembers;
-    }
-
-    public void setCurrentMembers(List<EventMembersDTO> currentMembers)
-    {
-        this.currentMembers = currentMembers;
-    }*/
-
+    
     // ////Getters and setters //////
 
     public UserCalendarEventsDTO getEvent()
@@ -213,52 +180,6 @@ public class EventHome implements Serializable
         }
         return imp;
     }
-
-    /*// ////Методы для работы с участниками //////
-
-    // исправить в дальнейшем передачу, чтобы не было явно видно ИД
-    public void addMemder(Long userId)
-    {
-        addedUsers.add(userId);
-    }
-
-    public void deleteMember(Long eventMemberId)
-    {
-        deletedUsers.add(eventMemberId);
-    }
-
-    public List<EventMembersDTO> getEventMembers()
-    {
-        List<EventMembersDTO> allMembers = new ArrayList<EventMembersDTO>(
-                currentMembers);
-        int i = 0;
-        for (Long delUserId : deletedUsers)
-        {
-            if (delUserId == null)
-                break;
-            if (allMembers.get(i).getUser().getUserId().equals(delUserId))
-            {
-                allMembers.remove(i);
-            }
-            i++;
-        }
-        for (Long userId : addedUsers)
-        {
-            if (userId == null)
-                break;
-            EventMembersDTO eventMem = new EventMembersDTO();
-            eventMem.setUser(usersService.find(userId));
-            eventMem.setIsConfirmed(false);
-            eventMem.setUserCalendarEventsDTO(event);
-            allMembers.add(eventMem);
-        }
-        return allMembers;
-    }
-
-    public List<UsersDTO> getAllUsers()
-    {
-        return usersService.getAll();
-    }*/
 
     // //// Методы для работы с событиями //////
     public void preCreateEvent()

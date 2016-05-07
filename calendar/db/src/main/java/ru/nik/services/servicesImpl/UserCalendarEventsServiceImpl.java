@@ -158,7 +158,6 @@ public class UserCalendarEventsServiceImpl extends
         for (UserCalendarEventsDTO event : tmp)
         {
             Long weeks = (date.getTime() - event.getStartDatetime().getTime()) / 604800000;
-            System.out.println(weeks);
             Date dateForCheck = new Date(date.getTime() - weeks * 604800000);
             if (dateForCheck.getTime() >= event.getStartDatetime().getTime()
                     && dateForCheck.getTime() <= event.getEndDatetime().getTime())

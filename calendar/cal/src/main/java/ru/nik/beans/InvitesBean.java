@@ -37,6 +37,11 @@ public class InvitesBean
         return ev;
     }
     
+    public Integer unverifiedEventsCount()
+    {
+        return getUnverifiedEvents().size();
+    }
+    
     public void acceptInvite(Long evMemId)
     {
         EventMembersDTO evMem = eventmembersService.find(evMemId);
