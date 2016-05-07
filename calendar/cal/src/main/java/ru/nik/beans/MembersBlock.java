@@ -14,7 +14,6 @@ public class MembersBlock
 {
     private EventHome eventHome;
 
-    // private List<EventMembersDTO> currentMembers;
     private List<Long> addedUsers = new ArrayList<Long>();
     private List<Long> deletedUsers = new ArrayList<Long>();
 
@@ -22,11 +21,6 @@ public class MembersBlock
     {
         this.eventHome = eventHome;
     }
-
-    /*
-     * public List<UsersDTO> getUsers() { return users; } public void
-     * setUsers(List<UsersDTO> users) { this.users = users; }
-     */
 
     public List<Long> getAddedUsers()
     {
@@ -48,14 +42,7 @@ public class MembersBlock
         this.deletedUsers = deletedUsers;
     }
 
-    /*
-     * public List<EventMembersDTO> getCurrentMembers() { return currentMembers;
-     * } public void setCurrentMembers(List<EventMembersDTO> currentMembers) {
-     * this.currentMembers = currentMembers; }
-     */
     // ////Методы для работы с участниками //////
-
-    // исправить в дальнейшем передачу, чтобы не было явно видно ИД
     public void addMemder(Long userId)
     {
         int i = getMemberPosition(deletedUsers, userId);
@@ -175,14 +162,12 @@ public class MembersBlock
 
     public void initiate()
     {
-        // currentMembers = new ArrayList<EventMembersDTO>();
         addedUsers = new ArrayList<Long>();
         deletedUsers = new ArrayList<Long>();
     }
 
     public void deleteAll()
     {
-        // currentMembers = null;
         addedUsers = null;
         deletedUsers = null;
     }

@@ -45,19 +45,4 @@ public class UserServiceImpl extends GenericCrudImpl<UsersDTO, Long> implements 
         parameters.put("login",login);
         return (UsersDTO) this.getResultList(jpa, parameters).get(0);
     }
-
- /*   public UsersDTO findUserById(Long userId)
-    {
-        String jpa = "SELECT p FROM UsersDTO p WHERE p.userId = :userId";
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("userId",userId);
-        return (UsersDTO) this.getResultList(jpa, parameters).get(0);
-    }
-
-    @Transactional
-    public UsersDTO createUser(UsersDTO user)
-    {
-        eman.persist(user);
-        return user;
-    }*/
 }
