@@ -9,16 +9,11 @@
 		<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" onclick="openDialog()">Ссылка</a></li>
+				<li><a href="#" onclick="openDialog()">Создать событие</a></li>
+				<li><a href="#" onclick="openInvitesDialog()">Приглашения</a></li>
 			</ul>
-
-			<p:commandButton value="Создать событие" oncomplete="openDialog()"
-				style=" top: 5px;" />
-			<p:commandButton value="Приглашения" style=" top: 5px;"
-				oncomplete="openInvitesDialog()" />
-
 			<ul class="nav navbar-nav navbar-right">
-				<p:commandButton value="Выход" actionListener="#{eventHome.logout()}" style=" top: 5px;" />
+				<li><a href="/pages/Basic.xhtml" onclick="logout()">Выход</a></li>
 			</ul>
 		</div>
 		</nav>
@@ -60,6 +55,9 @@
 
 		<p:remoteCommand name="updateEventsList"
 			action="#{eventsList.getEventsByFilter()}" update="eventsListDetails"></p:remoteCommand>
+			
+		<p:remoteCommand name="logout"
+			action="#{eventHome.logout()}" update="calendarForm"></p:remoteCommand>
 
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 		<ui:include src="/pages/calendar/dailogs/InvitesDlg.xhtml" />

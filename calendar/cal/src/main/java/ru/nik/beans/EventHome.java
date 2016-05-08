@@ -63,7 +63,7 @@ public class EventHome implements Serializable
 
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "success";
+        return "Basic";
     }
     
     @PostConstruct
