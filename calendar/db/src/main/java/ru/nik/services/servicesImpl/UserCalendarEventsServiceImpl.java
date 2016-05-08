@@ -102,7 +102,9 @@ public class UserCalendarEventsServiceImpl extends
 
     /**
      * Получение событий, которые относятся к определенному календарю по ссылке.
-     * @param url ссылка на календарь
+     * 
+     * @param url
+     *            ссылка на календарь
      * @return список событий
      */
     @SuppressWarnings("unchecked")
@@ -114,7 +116,7 @@ public class UserCalendarEventsServiceImpl extends
         q.setParameter("url", url);
         return q.getResultList();
     }
-    
+
     /**
      * Получить события за указанную дату для выбранного пользователя.
      * 
@@ -131,11 +133,16 @@ public class UserCalendarEventsServiceImpl extends
         StringBuilder builder = new StringBuilder(select + where);
         builder.append("and (:date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1");
         builder.append(" or (e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
+        builder.append(" or (e.repeatTime=5 and (e.startDatetime = e.endDatetime))");
         result.addAll(getResultListFromQuery(builder.toString(), date, userId));
 
         builder = new StringBuilder(select + where);
         builder.append("and (e.startDatetime < e.endDatetime) and e.repeatTime=2 and :date not BETWEEN e.startDatetime AND e.endDatetime");
         result.addAll(getEventsByWeekRepeat(builder.toString(), date, userId));
+
+        builder = new StringBuilder(select + where);
+        builder.append("and (e.startDatetime < e.endDatetime) and e.repeatTime=5 and :date not BETWEEN e.startDatetime AND e.endDatetime");
+        result.addAll(getEventsByMonthRepeat(builder.toString(), date, userId));
         
         return result;
     }
@@ -165,6 +172,24 @@ public class UserCalendarEventsServiceImpl extends
                 resultList.add(event);
             }
         }
+        return resultList;
+    }
+
+    private List<UserCalendarEventsDTO> getEventsByMonthRepeat(String query, Date date,
+            Long userId)
+    {
+        List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
+        List<UserCalendarEventsDTO> tmp = getResultListFromQuery(query, date, userId);
+        for (UserCalendarEventsDTO event : tmp)
+        {
+            int startDayforCheck = event.getStartDatetime().getDate();
+            int endDayforCheck = event.getEndDatetime().getDate();
+            if (date.getDate() >= startDayforCheck && date.getDate() <= endDayforCheck)
+            {
+                resultList.add(event);
+            }
+        }
+        
         return resultList;
     }
 
