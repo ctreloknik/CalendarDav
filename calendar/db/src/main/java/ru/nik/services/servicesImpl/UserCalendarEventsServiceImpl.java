@@ -131,7 +131,7 @@ public class UserCalendarEventsServiceImpl extends
         String select = "SELECT distinct e FROM UserCalendarEventsDTO e ";
         String where = "WHERE e.userCalendar.user.userId=:userId ";
         StringBuilder builder = new StringBuilder(select + where);
-        builder.append("and (:date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1");
+        builder.append("and (:date BETWEEN e.startDatetime AND e.endDatetime or e.repeatTime=1 and e.repeatTime<>6");
         builder.append(" or (e.repeatTime=2 and (e.startDatetime = e.endDatetime) and (:date - e.startDatetime)%7=0))");
         builder.append(" or (e.repeatTime=5 and (e.startDatetime = e.endDatetime))");
         result.addAll(getResultListFromQuery(builder.toString(), date, userId));
@@ -143,7 +143,11 @@ public class UserCalendarEventsServiceImpl extends
         builder = new StringBuilder(select + where);
         builder.append("and (e.startDatetime < e.endDatetime) and e.repeatTime=5 and :date not BETWEEN e.startDatetime AND e.endDatetime");
         result.addAll(getEventsByMonthRepeat(builder.toString(), date, userId));
-        
+
+        builder = new StringBuilder(select + where);
+        builder.append("and e.repeatTime=6");
+        result.addAll(getEventsByYearRepeat(builder.toString(), date, userId));
+
         return result;
     }
 
@@ -189,7 +193,27 @@ public class UserCalendarEventsServiceImpl extends
                 resultList.add(event);
             }
         }
-        
+        return resultList;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<UserCalendarEventsDTO> getEventsByYearRepeat(String query, Date date,
+            Long userId)
+    {
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("userId", userId);
+        List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
+        List<UserCalendarEventsDTO> tmp =  q.getResultList();
+        for (UserCalendarEventsDTO event : tmp)
+        {
+            if (date.getMonth() >= event.getStartDatetime().getMonth()
+                    && date.getMonth() <= event.getEndDatetime().getMonth()
+                    && date.getDate() >= event.getStartDatetime().getDate()
+                    && date.getDate() <= event.getEndDatetime().getDate())
+            {
+                resultList.add(event);
+            }
+        }
         return resultList;
     }
 

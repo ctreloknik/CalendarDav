@@ -11,7 +11,7 @@ public enum RepeatTime
     EVERY_WEEK(2, "Каждую неделю"),
     //EVERY_TWO_WEEK(3, "Каждые две недели"),
     //EVERY_WEEKDAY(4, "Каждый будний день"),
-    EVERY_MONTH(5,"Кадый месяц"),
+    EVERY_MONTH(5,"Каждый месяц"),
     EVERY_YEAR(6, "Каждый год");
     
     private Integer id;
