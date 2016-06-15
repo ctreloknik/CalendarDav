@@ -24,26 +24,32 @@
 				<h:panelGrid id="dialogEventGrid" columns="2">
 
 					<p:panel style="border-style: none">
-						<div>
-							<p:outputLabel for="bStartDate" value="Начало:"
-								style="display: inline" />
-							<p:calendar id="bStartDate" pattern="dd/MM/yyyy"
-								value="#{eventHome.event.startDatetime}" style="display: inline" />
-
-							<p:calendar id="bStartTime" pattern="HH:mm" timeOnly="true"
-								value="#{eventHome.event.startTime}" style="display: inline" />
+						<div class="row">
+							<div class="col-md-2">
+								<p:outputLabel for="bStartDate" value="Начало:" />
+							</div>
+							<div class="col-md-4">
+								<p:calendar id="bStartDate" pattern="dd/MM/yyyy"
+									value="#{eventHome.event.startDatetime}" />
+							</div>
+							<div class="col-md-3">
+								<p:calendar id="bStartTime" pattern="HH:mm" timeOnly="true"
+									value="#{eventHome.event.startTime}" />
+							</div>
 						</div>
-
-						<div>
-							<p:outputLabel for="bEndDate" value="Конец:"
-								style="display: inline" />
-							<p:calendar id="bEndDate" pattern="dd/MM/yyyy"
-								value="#{eventHome.event.endDatetime}" style="display: inline" />
-
-							<p:calendar id="bEndTime" pattern="HH:mm" timeOnly="true"
-								value="#{eventHome.event.endTime}" style="display: inline" />
+						<div class="row">
+							<div class="col-md-2">
+								<p:outputLabel for="bEndDate" value="Конец:" />
+							</div>
+							<div class="col-md-4">
+								<p:calendar id="bEndDate" pattern="dd/MM/yyyy"
+									value="#{eventHome.event.endDatetime}" />
+							</div>
+							<div class="col-md-3">
+								<p:calendar id="bEndTime" pattern="HH:mm" timeOnly="true"
+									value="#{eventHome.event.endTime}" />
+							</div>
 						</div>
-
 						<p:outputLabel for="allDay" value="Весь день:" />
 						<h:selectBooleanCheckbox id="allDay"
 							value="#{eventHome.event.allDay}" />
@@ -51,7 +57,8 @@
 
 					<p:panel style="border-style: none">
 						<p:outputLabel value="Категории:" />
-						<p:selectCheckboxMenu id="categoriesMenu" widgetVar="categoriesMenu"
+						<p:selectCheckboxMenu id="categoriesMenu"
+							widgetVar="categoriesMenu"
 							style="min-width: 200px; display: block"
 							value="#{eventHome.selectedCategories}" label="Категории"
 							filter="true" filterMatchMode="startsWith"
@@ -64,7 +71,7 @@
 							style="min-width: 200px; display: block">
 							<f:selectItems value="#{eventHome.repeatTimeList}" />
 						</p:selectOneMenu>
-						
+
 						<p:outputLabel for="importancy" value="Важность: " />
 						<p:selectOneMenu id="importancy" value="#{eventHome.importancy}"
 							style="min-width: 200px; display: block">

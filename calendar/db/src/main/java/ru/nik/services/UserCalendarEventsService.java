@@ -39,7 +39,7 @@ public interface UserCalendarEventsService extends GenericCrud<UserCalendarEvent
      * Получение ближайших событий.
      * @return
      */
-    public List<UserCalendarEventsDTO> getNextEvents();
+    public List<UserCalendarEventsDTO> getNextEvents(int filter, Long userId);
     
     /**
      * Получить категории события по ид события.

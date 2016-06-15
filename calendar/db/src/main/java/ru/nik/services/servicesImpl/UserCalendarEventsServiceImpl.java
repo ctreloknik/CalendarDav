@@ -1,7 +1,9 @@
 package ru.nik.services.servicesImpl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -203,7 +205,7 @@ public class UserCalendarEventsServiceImpl extends
         Query q = getEntityManager().createQuery(query);
         q.setParameter("userId", userId);
         List<UserCalendarEventsDTO> resultList = new ArrayList<UserCalendarEventsDTO>();
-        List<UserCalendarEventsDTO> tmp =  q.getResultList();
+        List<UserCalendarEventsDTO> tmp = q.getResultList();
         for (UserCalendarEventsDTO event : tmp)
         {
             if (date.getMonth() >= event.getStartDatetime().getMonth()
@@ -218,18 +220,34 @@ public class UserCalendarEventsServiceImpl extends
     }
 
     /**
-     * Получение ближайших событий.
+     * Получение ближайших событий по фильтру.
      * 
-     * @return
+     * @return список событий
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<UserCalendarEventsDTO> getNextEvents()
+    public List<UserCalendarEventsDTO> getNextEvents(int filter, Long userId)
     {
-        Query q = getEntityManager()
-                .createQuery(
-                        "SELECT DISTINCT e from UserCalendarEventsDTO e "
-                                + "WHERE e.startDatetime > current_date ORDER BY e.startDatetime");
+        String select = "SELECT distinct e FROM UserCalendarEventsDTO e ";
+        String where = "WHERE e.userCalendar.user.userId=:userId ";
+        StringBuilder builder = new StringBuilder(select + where);
+        builder.append(" and e.startDatetime > current_date");
+        Calendar calendar = new GregorianCalendar();
+        switch(filter) {
+            case 1: 
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                break;
+            case 2: 
+                calendar.add(Calendar.DAY_OF_YEAR, 7);
+                break;
+            case 3: 
+                calendar.add(Calendar.DAY_OF_YEAR, 30);
+                break;
+        }
+        builder.append(" and e.endDatetime <= :date");
+        Query q = getEntityManager().createQuery(builder.toString());
+        q.setParameter("userId", userId);
+        q.setParameter("date", calendar.getTime());
         return q.getResultList();
     }
 

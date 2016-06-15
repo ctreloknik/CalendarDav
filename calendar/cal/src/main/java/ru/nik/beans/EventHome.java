@@ -27,6 +27,7 @@ import ru.nik.services.servicesImpl.UserServiceBean;
 
 /**
  * Класс для работы с событием.
+ * 
  * @author Nikita
  *
  */
@@ -61,16 +62,17 @@ public class EventHome implements Serializable
 
     private Boolean managed = false;
 
-    public String logout(){
+    public String logout()
+    {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "Basic";
     }
-    
+
     @PostConstruct
     public void init()
     {
         initBlocks();
-        
+
         event = new UserCalendarEventsDTO();
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
@@ -84,7 +86,7 @@ public class EventHome implements Serializable
         MembersBlock membersBlock = new MembersBlock(this);
         this.setMembersBlock(membersBlock);
     }
-    
+
     // //// Getters and setters for services //////
 
     public UserServiceBean getUsersService()
@@ -118,7 +120,7 @@ public class EventHome implements Serializable
     {
         this.membersBlock = membersBlock;
     }
-    
+
     // ////Getters and setters //////
 
     public UserCalendarEventsDTO getEvent()
@@ -160,17 +162,17 @@ public class EventHome implements Serializable
     {
         this.selectedRepeatTime = selectedRepeatTime;
     }
-    
+
     public String getImportancy()
     {
         return Importancy.getNameById(event.getImportancy());
     }
-    
+
     public void setImportancy(String selectedImportancy)
     {
         event.setImportancy(Importancy.getIdByName(selectedImportancy));
     }
-    
+
     public List<String> getImportancyCategories()
     {
         List<String> imp = new ArrayList<String>();
@@ -189,17 +191,21 @@ public class EventHome implements Serializable
         initiate();
     }
 
+    /**
+     * Загрузка события по ИД.
+     * @param eventId ИД события.
+     */
     public void loadEvent(Long eventId)
     {
         initiate();
         managed = true;
         event = eventsServiceBean.find(eventId);
         setSelectedRepeatTime(RepeatTime.getNameById(event.getRepeatTime()));
-        List<EventCategoriesDTO> cat = eventsServiceBean
-                .getEventCategories(event.getUserCalendarEventsId());
+        List<EventCategoriesDTO> cat = eventsServiceBean.getEventCategories(event
+                .getUserCalendarEventsId());
         for (EventCategoriesDTO ec : cat)
-            selectedCategories.add(EventCategories.getNameById(ec
-                    .getCategoryId().intValue()));
+            selectedCategories.add(EventCategories.getNameById(ec.getCategoryId()
+                    .intValue()));
     }
 
     public void saveEvent()
@@ -208,10 +214,10 @@ public class EventHome implements Serializable
             return;
 
         event.setRepeatTime(RepeatTime.getIdByName(selectedRepeatTime));
-        //event.setNotificationTime(notificationTime);
         if (!managed)
         {
-            event.setUserCalendar(userCalendarService.getCalendarByUserId(getCurrentUser().getUserId()));
+            event.setUserCalendar(userCalendarService
+                    .getCalendarByUserId(getCurrentUser().getUserId()));
             event = eventsServiceBean.create(event);
             membersBlock.createInvite(getCurrentUser().getUserId(), true);
         }
@@ -224,7 +230,7 @@ public class EventHome implements Serializable
         deleteAll();
         initiate();
     }
-    
+
     public void deleteEvent(Long eventId)
     {
         eventsServiceBean.remove(eventId);
@@ -243,7 +249,6 @@ public class EventHome implements Serializable
             makeMessAboutWrongDateOrTime();
             return false;
         }
-
         return true;
     }
 
@@ -277,7 +282,7 @@ public class EventHome implements Serializable
         selectedCategories = new ArrayList<String>();
         selectedRepeatTime = "";
     }
-    
+
     public void deleteAll()
     {
         event = null;

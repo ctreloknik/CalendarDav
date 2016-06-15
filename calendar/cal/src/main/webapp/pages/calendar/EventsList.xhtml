@@ -22,16 +22,11 @@
 			</p:commandButton>
 		</p:column>
 
-		<!-- убрать в будущем колонку. только для тестов-->
-		<p:column headerText="id" width="50">
-			<h:outputText value="#{events.userCalendarEventsId}" />
-		</p:column>
-
 		<p:column headerText="Название" width="150">
 			<h:outputText value="#{events.name}" />
 		</p:column>
 
-		<p:column headerText="Время" width="110">
+		<p:column headerText="Время" width="180">
 			<h:outputText value="#{events.startDatetime} в #{events.startTime}" />
 			<br />
 			<h:outputText value="#{events.endDatetime} в #{events.endTime}" />

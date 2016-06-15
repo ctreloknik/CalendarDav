@@ -13,6 +13,7 @@ import org.primefaces.event.SelectEvent;
 import ru.nik.dto.UserCalendarEventsDTO;
 import ru.nik.dto.UsersDTO;
 import ru.nik.enums.EventCategories;
+import ru.nik.enums.FilterOnFuture;
 import ru.nik.services.servicesImpl.UserCalendarEventsServiceBean;
 import ru.nik.services.servicesImpl.UserServiceBean;
 
@@ -34,25 +35,36 @@ public class EventsList implements Serializable
 {
     private static final long serialVersionUID = 1122455087740410829L;
 
+    /* Бины */
     @EJB
     private UserCalendarEventsServiceBean eventsServiceBean;
-    
+
     @EJB
     private UserServiceBean usersService;
 
+    /* Поля */
+    
     private List<UserCalendarEventsDTO> calendarEvents = new ArrayList<UserCalendarEventsDTO>();
 
     private Date selectedDate;
 
-    // для фильтра
+    private String selectedFilterDate = "";
+
+    /* для фильтров */
+    // Для фильтра категорий
     private List<String> selectedCategories = new ArrayList<String>();
     private List<String> categories = new ArrayList<String>();
+    
+    // Для фильтра по дате
+    private List<String> filterOnFuture = new ArrayList<String>();
 
     @PostConstruct
     void init()
     {
         for (EventCategories ec : EventCategories.values())
             categories.add(ec.getName());
+        for (FilterOnFuture fof : FilterOnFuture.values())
+            filterOnFuture.add(fof.getName());
     }
 
     public Date getSelectedDate()
@@ -73,6 +85,21 @@ public class EventsList implements Serializable
     public List<String> getSelectedCategories()
     {
         return selectedCategories;
+    }
+
+    public List<String> getFiltesrOnFuture()
+    {
+        return filterOnFuture;
+    }
+
+    public String getSelectedFilterDate()
+    {
+        return selectedFilterDate;
+    }
+
+    public void setSelectedFilterDate(String selectedFilterDate)
+    {
+        this.selectedFilterDate = selectedFilterDate;
     }
 
     public void setSelectedCategories(List<String> selectedCategories)
@@ -100,9 +127,16 @@ public class EventsList implements Serializable
         getEventsByDate(selectedDate);
     }
 
+    public void getEventsByDatefilter()
+    {
+        calendarEvents = eventsServiceBean.getNextEvents(FilterOnFuture
+                .getIdByName(selectedFilterDate), getCurrentUser().getUserId());
+    }
+
     private void getEventsByDate(Date date)
     {
-        calendarEvents = eventsServiceBean.getEventsByDateAndUser(date, getCurrentUser().getUserId());
+        calendarEvents = eventsServiceBean.getEventsByDateAndUser(date, getCurrentUser()
+                .getUserId());
     }
 
     public void onDateSelect(SelectEvent selectEvent)
@@ -117,5 +151,5 @@ public class EventsList implements Serializable
         ExternalContext externalContext = fc.getExternalContext();
         return usersService.getUserByLogin(externalContext.getUserPrincipal().getName());
     }
-    
+
 }

@@ -21,6 +21,9 @@ public class GenericCrudImpl<T, PK> extends AbstructImpl<T, PK> implements Gener
         this.instance = instance;
     }
 
+    /**
+     * Создание.
+     */
     public T create(T t)
     {
         em = getEntityManager();
@@ -29,6 +32,9 @@ public class GenericCrudImpl<T, PK> extends AbstructImpl<T, PK> implements Gener
         return t;
     }
 
+    /**
+     * Поиск.
+     */
     public T find(PK id)
     {
         em  = getEntityManager();
@@ -37,7 +43,9 @@ public class GenericCrudImpl<T, PK> extends AbstructImpl<T, PK> implements Gener
         return t;
     }
 
-
+    /**
+     * Получение всех элементов.
+     */
     public List<T> getAll()
     {
         em  = getEntityManager();
@@ -50,6 +58,10 @@ public class GenericCrudImpl<T, PK> extends AbstructImpl<T, PK> implements Gener
         return t;
     }
 
+
+    /**
+     * Обновление записи.
+     */
     public T update(T t)
     {
         em  = getEntityManager();
@@ -58,6 +70,9 @@ public class GenericCrudImpl<T, PK> extends AbstructImpl<T, PK> implements Gener
         return t;
     }
 
+    /**
+     * Удаление записи.
+     */
     public void remove(PK id)
     {
         em  = getEntityManager();

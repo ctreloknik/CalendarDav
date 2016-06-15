@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/pages/public/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="center_block">
+        <br/>
+
+        <div class="col-md-10 col-md-offset-1">
+            <h:form class="form-horizontal">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="padding: 0">
+                        <p:steps id="steps" activeIndex="#{signUpBean.step}">
+                            <p:menuitem value="Главная"></p:menuitem>
+                            <p:menuitem value="Информация пользователя"/>
+                            <p:menuitem value="Завершение"/>
+                        </p:steps>
+                    </div>
+                    <p:panel id="panel" class="panel-body" style="border: none; padding: 0">
+                        <h3>
+                            <b>Регистрация</b>
+                        </h3>
+                        <hr/>
+                        <p:messages id="msgs"/>
+                        <h:panelGroup rendered="#{signUpBean.step == 0}">
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">Логин</label>
+
+                                <div class="col-xs-8">
+                                    <p:inputText value="#{signUpBean.login}" validator="#{loginValidator.validate}"
+                                                 class="form-control" id="login" label="Логин"
+                                                 placeholder="Введите логин" required="true">
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">Пароль</label>
+
+                                <div class="col-xs-8">
+                                    <p:inputText label="Пароль" type="password" value="#{signUpBean.password}"
+                                                 class="form-control" id="password" placeholder="Введите пароль"
+                                                 required="true">
+                                        <f:validator validatorId="confirmPasswordValidator"/>
+                                        <f:attribute name="confirm" value="#{confirm}"></f:attribute>
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">Повторите пароль</label>
+
+                                <div class="col-xs-8">
+                                    <p:inputText label="Повторите пароль" id="confirm" type="password"
+                                                 binding="#{confirm}" class="form-control" placeholder="Введите пароль"
+                                                 required="true"></p:inputText>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{signUpBean.step == 1}">
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">Полное имя</label>
+
+                                <div class="col-xs-4">
+                                    <p:inputText value="#{signUpBean.lastname}"
+                                                 class="form-control" label="Фамилия"
+                                                 placeholder="Введите фамилию" required="true">
+                                    </p:inputText>
+                                </div>
+                                
+                                <div class="col-xs-4">
+                                    <p:inputText value="#{signUpBean.firstname}"
+                                                 class="form-control" label="Имя"
+                                                 placeholder="Введите имя" required="true">
+                                    </p:inputText>
+                                </div>
+                                
+                                <div class="col-xs-4">
+                                    <p:inputText value="#{signUpBean.middlename}"
+                                                 class="form-control" label="Отчество"
+                                                 placeholder="Введите отчество" required="true">
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">E-mail</label>
+
+                                <div class="col-xs-8">
+                                    <p:inputText label="E-mail" value="#{signUpBean.email}"
+                                                 class="form-control" placeholder="Введите e-mail"
+                                                 validatorMessage="Invalid email format"
+                                                 required="true">
+                                        <f:validateRegex
+                                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                    </p:inputText>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{signUpBean.step == 2}">
+                            <p><h:outputLabel value="Спасибо за регистрацию!"></h:outputLabel></p>
+                            <p><h:outputLabel value="#{signUpBean.lastname} #{signUpBean.firstname} вы зарегистрировались под логином #{signUpBean.login}"></h:outputLabel></p>
+                            <p><h:outputLabel value="Нажмите на кнопку Завершить, что бы завершить регистрацию"></h:outputLabel> </p>
+                        </h:panelGroup>
+                    </p:panel>
+                    <div class="panel-footer" style="height: 59px;">
+                        <h:panelGroup id="button">
+                            <p:commandButton value="Далее" rendered="#{signUpBean.step lt 2}" update="panel steps button" class="btn btn-primary" style="float: right"
+                                             action="#{signUpBean.nextStep}">
+                            </p:commandButton>
+
+                            <p:commandButton value="Завершить" rendered="#{signUpBean.step eq 2}" update="panel steps button" class="btn btn-primary" style="float: right"
+                                             action="#{signUpBean.complite}">
+                            </p:commandButton>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

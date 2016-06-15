@@ -76,9 +76,9 @@ public class UserCalendarEventsServiceBean extends UserCalendarEventsServiceImpl
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<UserCalendarEventsDTO> getNextEvents()
+    public List<UserCalendarEventsDTO> getNextEvents(int filter, Long userId)
     {
-        return super.getNextEvents();
+        return super.getNextEvents(filter, userId);
     }
 
     @Override

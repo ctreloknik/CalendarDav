@@ -5,21 +5,25 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog id="membersSelectDlg" header="Выбрать участников" widgetVar="membersSelectDlg"
-		modal="false" resizable="false" minWidth="450">
-		
+	<p:dialog id="membersSelectDlg" header="Выбрать участников"
+		widgetVar="membersSelectDlg" modal="false" resizable="false"
+		minWidth="450">
+
 		<p:dataTable id="selectMembers" widgetVar="selectMembers"
-		value="#{eventHome.membersBlock.allUsers}" var="usersList"
-		style="width: 100%; max-width: 600px">
+			value="#{eventHome.membersBlock.allUsers}" var="usersList"
+			style="width: 100%; max-width: 600px">
 
-		<p:column headerText="ФИО">
-			<p:commandLink value="#{usersList.toString()}"
-				actionListener="#{eventHome.membersBlock.addMemder(usersList.userId)}"
-				update=":calendarForm:informationTabView"
-				oncomplete="PF('membersSelectDlg').hide();"/>
-		</p:column>
+			<p:column headerText="ФИО">
+				<h:outputText value="#{usersList.toString()}" />
+			</p:column>
+			<p:column headerText="">
+				<p:commandButton value="Пригласить"
+					action="#{eventHome.membersBlock.addMemder(usersList.userId)}"
+					update=":calendarForm:informationTabView"
+					oncomplete="PF('membersSelectDlg').hide();" />
+			</p:column>
 
-	</p:dataTable>
+		</p:dataTable>
 	</p:dialog>
 
 </ui:composition>

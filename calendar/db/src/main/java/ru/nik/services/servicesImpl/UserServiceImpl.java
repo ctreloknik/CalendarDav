@@ -1,6 +1,7 @@
 package ru.nik.services.servicesImpl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,31 +9,31 @@ import javax.persistence.PersistenceContext;
 import ru.nik.dto.UsersDTO;
 import ru.nik.services.UserService;
 
-
 /**
  * @author Nikita
  *
  */
-public class UserServiceImpl extends GenericCrudImpl<UsersDTO, Long> implements UserService
+public class UserServiceImpl extends GenericCrudImpl<UsersDTO, Long> implements
+        UserService
 {
     @PersistenceContext(unitName = "PERSISTENCEUNIT")
     protected EntityManager eman;
-    
+
     @Override
     protected void closeEntityManager()
-	{
-	}
+    {
+    }
 
     @Override
     protected EntityManager getEntityManager()
     {
         return eman;
     }
-	
+
     public UserServiceImpl()
     {
-		super(UsersDTO.class);
-	}
+        super(UsersDTO.class);
+    }
 
     /**
      * Получение пользователя по логину.
@@ -43,6 +44,14 @@ public class UserServiceImpl extends GenericCrudImpl<UsersDTO, Long> implements 
         String jpa = "SELECT u FROM UsersDTO u WHERE u.userLogin = :login";
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("login",login);
-        return (UsersDTO) this.getResultList(jpa, parameters).get(0);
+        List<UsersDTO> result = this.getResultList(jpa, parameters);
+        if (result.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return result.get(0);
+        }
     }
 }

@@ -26,18 +26,31 @@
 					update="eventsListDetails" />
 			</p:calendar>
 
-			<p:outputLabel value="Фильтр по категориям:" />
-			<p:selectCheckboxMenu id="filterCategories"
-				widgetVar="filterCategories"
-				style="min-width: 200px; display: block"
-				value="#{eventsList.selectedCategories}" label="Категории"
-				filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-				<f:selectItems value="#{eventsList.allCategories}" />
-			</p:selectCheckboxMenu>
+			<div class="well well-sm" style="min-width: 200px">
+				<p:outputLabel value="Фильтр по категориям:" />
+				<p:selectCheckboxMenu id="filterCategories"
+					widgetVar="filterCategories"
+					style="min-width: 200px; display: block"
+					value="#{eventsList.selectedCategories}" label="Категории"
+					filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+					<f:selectItems value="#{eventsList.allCategories}" />
+				</p:selectCheckboxMenu>
 
-			<p:commandButton value="Отфильтровать" style="top: 5px;"
-				oncomplete="updateEventsList()" />
+				<p:commandButton value="Отфильтровать" style="top: 5px;"
+					oncomplete="updateEventsList()" />
+			</div>
 
+			<div class="well well-sm">
+				<p:outputLabel value="Фильтр по дате:" />
+				<p:selectOneMenu id="filterDate"
+					value="#{eventsList.selectedFilterDate}"
+					style="min-width: 200px; display: block">
+					<f:selectItems value="#{eventsList.filtesrOnFuture}" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Отфильтровать" style="top: 5px;"
+					oncomplete="dateFilter()" />
+			</div>
 		</div>
 
 		<div class="col-md-9">
@@ -55,9 +68,12 @@
 
 		<p:remoteCommand name="updateEventsList"
 			action="#{eventsList.getEventsByFilter()}" update="eventsListDetails"></p:remoteCommand>
+
+		<p:remoteCommand name="dateFilter"
+			action="#{eventsList.getEventsByDatefilter()}" update="eventsListDetails"></p:remoteCommand>
 			
-		<p:remoteCommand name="logout"
-			action="#{eventHome.logout()}" update="calendarForm"></p:remoteCommand>
+		<p:remoteCommand name="logout" action="#{eventHome.logout()}"
+			update="calendarForm"></p:remoteCommand>
 
 		<ui:include src="/pages/calendar/dailogs/EventEditDlg.xhtml" />
 		<ui:include src="/pages/calendar/dailogs/InvitesDlg.xhtml" />
